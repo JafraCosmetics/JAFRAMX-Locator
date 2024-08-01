@@ -1,9 +1,6 @@
 import { NumberedListIcon } from "./Icons";
-import { useTranslation } from "react-i18next";
 
 const renderLocation = (props) => {
-  let { t } = useTranslation();
-
   if (props.consultant.defaultAddress) {
     if (
       props.consultant.defaultAddress.city &&
@@ -35,8 +32,6 @@ const renderLocation = (props) => {
   }
 };
 const ConsultantCard = (props) => {
-  let { t } = useTranslation();
-
   return (
     <div
       className="consultant-card flex gap-4 md:grid md:grid-cols-10-90 consultant-card__unselected py-4 px-6 max-h-720 cursor-default	"

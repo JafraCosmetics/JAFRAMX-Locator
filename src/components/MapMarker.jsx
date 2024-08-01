@@ -1,20 +1,17 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {Marker, InfoWindow} from '@react-google-maps/api';
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Marker, InfoWindow } from "@react-google-maps/api";
 import {
   NumberedListIcon,
   PhoneIcon,
   EmailIcon,
   WebIcon,
-} from '../components/Icons';
-import {UserContext} from './Locator';
-import {AsYouType} from 'libphonenumber-js';
-import {useTranslation} from 'react-i18next';
+} from "../components/Icons";
+import { UserContext } from "./Locator";
+import { AsYouType } from "libphonenumber-js";
 
 const MapMarker = (props) => {
-  const {selectedInfoWindow, setSelectedInfoWindow} = useContext(UserContext);
+  const { selectedInfoWindow, setSelectedInfoWindow } = useContext(UserContext);
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
-  let {t} = useTranslation();
-
   console.log(props.consultant);
 
   const onMarkerClick = () => {
@@ -25,13 +22,13 @@ const MapMarker = (props) => {
   const onCloseClick = () => {
     // set all consultatnt card buttons to false
     var radioButtons = document.getElementsByClassName(
-      'consultant-card__radio',
+      "consultant-card__radio"
     );
 
     for (let i = 0; i < radioButtons.length; i++) {
       delete radioButtons[i].dataset.checked;
     }
-    setSelectedInfoWindow('');
+    setSelectedInfoWindow("");
   };
 
   return (
@@ -43,7 +40,7 @@ const MapMarker = (props) => {
       className="map-mark"
       title={props.consultant.email}
       onClick={() => onMarkerClick()}
-      icon={'/marker.svg'}
+      icon={"/marker.svg"}
       key={props.consultant.displayName}
     >
       {selectedInfoWindow === props.consultant.email &&
@@ -67,21 +64,21 @@ const MapMarker = (props) => {
               <img
                 name={props.consultant.displayName}
                 className="mb-3 h-12 w-12 rounded object-contain"
-                src={props.consultant.profileImage ?? '/avatar.png'}
+                src={props.consultant.profileImage ?? "/avatar.png"}
               />
 
               <div className="mb-3">
                 <h2>{props.consultant.displayName}</h2>
                 <p>
-                  {props.consultant.distance} {t('consultant_card.distance')}
+                  {props.consultant.distance} {t("consultant_card.distance")}
                 </p>
               </div>
 
               <div className="flex gap-1 items-center mb-2">
-                <WebIcon />{' '}
+                <WebIcon />{" "}
                 <a
                   href={
-                    'https://jafraadmin.myshopify.com/' +
+                    "https://jafraadmin.myshopify.com/" +
                     props.consultant.siteName
                   }
                   target="_parent"
@@ -92,17 +89,17 @@ const MapMarker = (props) => {
 
               {props.consultant.phone ? (
                 props.consultant.hidePhone === null ||
-                props.consultant.hidePhone === 'false' ? (
+                props.consultant.hidePhone === "false" ? (
                   <div className="flex gap-1 items-center mb-2">
-                    <PhoneIcon />{' '}
+                    <PhoneIcon />{" "}
                     <a
                       href={
-                        'tel:' +
-                        new AsYouType('US').input(props.consultant.phone)
+                        "tel:" +
+                        new AsYouType("US").input(props.consultant.phone)
                       }
                       target="_parent"
                     >
-                      {new AsYouType('US').input(props.consultant.phone)}
+                      {new AsYouType("US").input(props.consultant.phone)}
                     </a>
                   </div>
                 ) : null
@@ -110,11 +107,11 @@ const MapMarker = (props) => {
 
               {props.consultant.email ? (
                 props.consultant.hideEmail === null ||
-                props.consultant.hideEmail === 'false' ? (
+                props.consultant.hideEmail === "false" ? (
                   <div className="flex gap-1 items-center mb-2">
-                    <EmailIcon />{' '}
+                    <EmailIcon />{" "}
                     <a
-                      href={'mailto:' + props.consultant.email}
+                      href={"mailto:" + props.consultant.email}
                       target="_parent"
                     >
                       {props.consultant.email}

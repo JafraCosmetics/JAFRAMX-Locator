@@ -7,11 +7,9 @@ import {
 } from "./Icons";
 import { useEffect, useState } from "react";
 import { AsYouType } from "libphonenumber-js";
-import { useTranslation } from "react-i18next";
 
 const ConsultantViewDetails = (props) => {
   const [profileImage, setProfileImage] = useState();
-  let { t } = useTranslation();
 
   const getShopifyConsultant = async (email) => {
     let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;

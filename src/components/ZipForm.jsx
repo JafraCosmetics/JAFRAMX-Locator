@@ -1,12 +1,10 @@
 import React, { useContext, useState } from "react";
 import { SubmitIcon } from "../components/Icons";
 import { UserContext } from "./Locator";
-import { useTranslation } from "react-i18next";
 
 const ZipForm = (props) => {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const { showWarning, setShowWarning } = useContext(UserContext);
-  let { t } = useTranslation();
 
   const zipCheck = (event) => {
     var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(event.target.value);

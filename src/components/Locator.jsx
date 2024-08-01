@@ -10,7 +10,6 @@ import { ConsultantSelectedContext } from "./ConsultantFinder";
 import { LocationIcon } from "./Icons";
 import MapAccordion from "./MapAccordion";
 import ConsultantViewDetails from "./ConsultantViewDetails";
-import { useTranslation } from "react-i18next";
 
 export const UserContext = React.createContext(null);
 
@@ -27,7 +26,6 @@ export default function Locator(props) {
   const [selectedConsultant, setSelectedConsultant] = useState(null);
   const [map, setMap] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
-  let { t } = useTranslation();
 
   const {
     consultantSelected,

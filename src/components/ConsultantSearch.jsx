@@ -5,8 +5,6 @@ import ConsultantCard from "./ConsultantCard";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
 
-import { useTranslation } from "react-i18next";
-
 export default function ConsultantSearch(props) {
   const [searchQuery, setSearchQuery] = useState();
   const [searchResults, setSearchResults] = useState(null);
@@ -19,7 +17,6 @@ export default function ConsultantSearch(props) {
   const [selectedConsultant, setSelectedConsultant] = useState(null);
   const [loadingConsultants, setLoadingConsultants] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-  let { t } = useTranslation();
 
   const findConsultantByWebsite = async () => {
     // validate searchQuery
