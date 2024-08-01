@@ -7,7 +7,9 @@ import {
 } from "./Icons";
 import { useEffect, useState } from "react";
 import { AsYouType } from "libphonenumber-js";
+import Image from "next/image";
 
+import AvatarImage from "/public/images/avatar.png";
 const ConsultantViewDetails = (props) => {
   const [profileImage, setProfileImage] = useState();
 
@@ -89,10 +91,12 @@ const ConsultantViewDetails = (props) => {
         <div className="view-details h-full" key={props.consultant.email}>
           <div className="flex flex-col h-full">
             <div className="flex flex-col gap-2 justify-center items-center md:h-full">
-              <img
+              <Image
                 name={props.consultant.displayName}
                 className="h-32 w-32 md:h-40 md:w-40 rounded object-contain"
-                src={profileImage ?? "/images/avatar.png"}
+                src={profileImage ?? AvatarImage}
+                alt="profile image"
+                fill={false}
               />
               <div className="view-details__name">
                 {props.consultant.displayName}

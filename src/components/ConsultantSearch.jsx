@@ -1,9 +1,11 @@
-import { useContext, useMemo, useState, useEffect } from "react";
+import { useContext, useMemo, useState, useEffect, useCallback } from "react";
 
 import { SubmitIcon, BackIcon } from "../components/Icons";
 import ConsultantCard from "./ConsultantCard";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
+import Image from "next/image";
+import KnowConsultantImage from "/public/images/knowConsultant.png";
 
 export default function ConsultantSearch(props) {
   const [searchQuery, setSearchQuery] = useState();
@@ -85,15 +87,18 @@ export default function ConsultantSearch(props) {
     setSelectedConsultant(consultant);
   };
 
-  const selectConsultantHandler = (consultant) => {
-    let data = {
-      type: "setPrefPartner",
-      data: consultant,
-    };
-    parent.postMessage(data, "*"); //  `*` on any domain
+  const selectConsultantHandler = useCallback(
+    (consultant) => {
+      let data = {
+        type: "setPrefPartner",
+        data: consultant,
+      };
+      parent.postMessage(data, "*"); //  `*` on any domain
 
-    setModalState("confirmation");
-  };
+      setModalState("confirmation");
+    },
+    [setModalState]
+  );
 
   const renderConsultantList = useMemo(() => {
     if (searchResults !== null) {
@@ -139,7 +144,13 @@ export default function ConsultantSearch(props) {
         );
       }
     }
-  }, [searchResults, selectedConsultant]);
+  }, [
+    searchResults,
+    consultantSelected,
+    props.dict,
+    setConsultantSelected,
+    selectConsultantHandler,
+  ]);
 
   const inputHandler = (event) => {
     setSearchQuery(event.target.value);
@@ -167,7 +178,7 @@ export default function ConsultantSearch(props) {
         <span className="sr-only"> {props.dict.i_know_an_insider.loading}</span>
       </div>
     );
-  });
+  }, [props.dict]);
 
   return selectedConsultant ? (
     <>
@@ -304,9 +315,9 @@ export default function ConsultantSearch(props) {
             )}
           </div>
           <div className="hidden md:block">
-            <img
+            <Image
               className="h-720 w-full object-cover	rounded-r-lg"
-              src="/images/knowConsultant.jpeg"
+              src={KnowConsultantImage}
               alt="Consultant Locator Modal Search"
             />
           </div>

@@ -8,11 +8,13 @@ import {
 } from "../components/Icons";
 import { UserContext } from "./Locator";
 import { AsYouType } from "libphonenumber-js";
+import Image from "next/image";
+import AvatarImage from "/public/images/avatar.png";
 
 const MapMarker = (props) => {
   const { selectedInfoWindow, setSelectedInfoWindow } = useContext(UserContext);
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
-  console.log(props.consultant);
+  // console.log(props.consultant);
 
   const onMarkerClick = () => {
     // set selectedConsultant
@@ -40,8 +42,8 @@ const MapMarker = (props) => {
       className="map-mark"
       title={props.consultant.email}
       onClick={() => onMarkerClick()}
-      icon={"/marker.svg"}
-      key={props.consultant.displayName}
+      icon={"/public/marker.svg"}
+      key={props.consultant.siteName}
     >
       {selectedInfoWindow === props.consultant.email &&
       windowSize.current[0] >= 768 ? (
@@ -61,16 +63,19 @@ const MapMarker = (props) => {
               />
             </div>
             <div>
-              <img
+              <Image
                 name={props.consultant.displayName}
                 className="mb-3 h-12 w-12 rounded object-contain"
-                src={props.consultant.profileImage ?? "/avatar.png"}
+                src={props.consultant.profileImage ?? AvatarImage}
+                alt="profile image"
+                fill={false}
               />
 
               <div className="mb-3">
                 <h2>{props.consultant.displayName}</h2>
                 <p>
-                  {props.consultant.distance} {t("consultant_card.distance")}
+                  {props.consultant.distance}{" "}
+                  {props.dict.consultant_card.distance}
                 </p>
               </div>
 

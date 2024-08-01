@@ -1,10 +1,12 @@
 "use client"; // This is a client component 👈🏽
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import { CloseIcon, CheckIcon } from "../components/Icons";
 import Locator from "./Locator";
-// import consultantLanding from "/consultant-landing.jpeg";
 import ConsultantSearch from "./ConsultantSearch";
+import Image from "next/image";
+
+import ConsultantLanding from "/public/images/consultantLanding.png";
 
 export const ConsultantSelectedContext = React.createContext(null);
 
@@ -34,91 +36,91 @@ export default function ConsultantFinder(props) {
     parent.postMessage(data, "*"); //  `*` on any domain
   };
 
-  const startBody = () => {
-    return (
-      <div className="modal-container">
-        <div className="modal grid md:grid-cols-2-3">
-          <div className="p-4 md:p-6 h-280 order-2 md:order-1 ">
-            <div
-              data-close-modal="find-your-consultant"
-              className="hidden md:block cursor-pointer"
-            >
-              <CloseIcon className="close-icon" onClick={closeModal} />
-            </div>
-
-            <div className="my-6">
-              <div as="h1" className="modal-heading mb-3">
-                {props.dict.find_your_insider.title}
+  const getModalBody = useCallback(() => {
+    const startBody = () => {
+      return (
+        <div className="modal-container">
+          <div className="modal grid md:grid-cols-2-3">
+            <div className="p-4 md:p-6 h-280 order-2 md:order-1 ">
+              <div
+                data-close-modal="find-your-consultant"
+                className="hidden md:block cursor-pointer"
+              >
+                <CloseIcon className="close-icon" onClick={closeModal} />
               </div>
 
-              <div className="modal-text mb-6">
-                {props.dict.find_your_insider.body}
+              <div className="my-6">
+                <div as="h1" className="modal-heading mb-3">
+                  {props.dict.find_your_insider.title}
+                </div>
+
+                <div className="modal-text mb-6">
+                  {props.dict.find_your_insider.body}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <button
+                  className="bg-mine-shaft text-white hover:bg-black capitalize w-full py-4 rounded"
+                  onClick={handleKnowConsultant}
+                >
+                  {props.dict.find_your_insider.know_btn}
+                </button>
+                <button
+                  className="bg-white text-black hover:bg-black capitalize w-full py-4 rounded border-2 border-black"
+                  onClick={handleFindConsultant}
+                >
+                  {props.dict.find_your_insider.match_btn}
+                </button>
               </div>
             </div>
-
-            <div className="flex flex-col gap-3">
-              <button
-                className="bg-mine-shaft text-white hover:bg-black capitalize w-full py-4 rounded"
-                onClick={handleKnowConsultant}
+            <div className="order-1 md:order-2 md:h-unset">
+              <div
+                data-close-modal="find-your-consultant"
+                className="md:hidden cursor-pointer absolute top-2 left-2"
               >
-                {props.dict.find_your_insider.know_btn}
-              </button>
-              <button
-                className="bg-white text-black hover:bg-black capitalize w-full py-4 rounded border-2 border-black"
-                onClick={handleFindConsultant}
-              >
-                {props.dict.find_your_insider.match_btn}
-              </button>
-            </div>
-          </div>
-          <div className="order-1 md:order-2 md:h-unset">
-            <div
-              data-close-modal="find-your-consultant"
-              className="md:hidden cursor-pointer absolute top-2 left-2"
-            >
-              <CloseIcon
-                className="close-icon"
-                onClick={closeModal}
-                pathFill="#eeeeee"
-                circleFill="#717171"
+                <CloseIcon
+                  className="close-icon"
+                  onClick={closeModal}
+                  pathFill="#eeeeee"
+                  circleFill="#717171"
+                />
+              </div>
+              <Image
+                className="w-full md:h-720 object-cover rounded-r-lg"
+                src={ConsultantLanding}
+                alt="Consultant Locator Modal"
               />
             </div>
-            <img
-              className="w-full md:h-720 object-cover rounded-r-lg"
-              src="/images/consultantLanding.jpeg"
-              alt="Consultant Locator Modal"
-            />
           </div>
         </div>
-      </div>
-    );
-  };
+      );
+    };
 
-  const confirmationBody = () => {
-    return (
-      <div className="modal-container flex flex-col h-full md:h-720 md:w-1080">
-        <div className="hidden md:block cursor-pointer">
-          <CloseIcon className="close-icon" onClick={closeModal} />
-        </div>
-        <div className="modal justify-center items-center flex flex-col gap-9 p-4 w-full h-full">
-          <div className="flex flex-col justify-center items-center gap-4">
-            <CheckIcon />
-            <p className="modal-heading text-center">
-              {props.dict.selection_confirmation.confirm_msg}
-            </p>
+    const confirmationBody = () => {
+      return (
+        <div className="modal-container flex flex-col h-full md:h-720 md:w-1080">
+          <div className="hidden md:block cursor-pointer">
+            <CloseIcon className="close-icon" onClick={closeModal} />
           </div>
-          <button
-            onClick={() => closeModal()}
-            className="bg-mine-shaft text-white hover:bg-black capitalize w-full md:w-1/3 py-4 rounded"
-          >
-            {props.dict.selection_confirmation.close_btn}
-          </button>
+          <div className="modal justify-center items-center flex flex-col gap-9 p-4 w-full h-full">
+            <div className="flex flex-col justify-center items-center gap-4">
+              <CheckIcon />
+              <p className="modal-heading text-center">
+                {props.dict.selection_confirmation.confirm_msg}
+              </p>
+            </div>
+            <button
+              onClick={() => closeModal()}
+              className="bg-mine-shaft text-white hover:bg-black capitalize w-full md:w-1/3 py-4 rounded"
+            >
+              {props.dict.selection_confirmation.close_btn}
+            </button>
+          </div>
         </div>
-      </div>
-    );
-  };
+      );
+    };
 
-  const getModalBody = () => {
     setModalBody(startBody());
 
     if (modalState === "start") {
@@ -160,11 +162,11 @@ export default function ConsultantFinder(props) {
     } else if (modalState === "confirmation") {
       setModalBody(confirmationBody);
     }
-  };
+  }, [consultantSelected, modalState, props.dict]);
 
   useMemo(() => {
     getModalBody();
-  }, [modalState]);
+  }, [getModalBody]);
 
   return (
     <div

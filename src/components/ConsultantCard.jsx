@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { NumberedListIcon } from "./Icons";
 
 const renderLocation = (props) => {
@@ -43,14 +44,16 @@ const ConsultantCard = (props) => {
         <NumberedListIcon className="h-8 w-8" number={props.number} />
       </div>
       <div className="flex flex-col gap-1">
-        <img
+        <Image
           name={props.consultant.displayName}
           className="hidden h-12 w-12 rounded"
+          fill={true}
           src={
             props.consultant.profileImage
               ? props.consultant.profileImage
-              : `https://randomuser.me/api/portraits/women/${props.number}.jpg`
+              : `https://randomuser.me/api/portraits/women/${props.number}.png`
           }
+          alt="profile image"
         />
         <div className="consultant-box__name">
           {props.consultant.displayName}

@@ -1,4 +1,11 @@
-import React, { useContext, useMemo, useState, useEffect, useRef } from "react";
+import React, {
+  useContext,
+  useMemo,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { fromAddress, setKey } from "react-geocode";
 
@@ -10,6 +17,8 @@ import { ConsultantSelectedContext } from "./ConsultantFinder";
 import { LocationIcon } from "./Icons";
 import MapAccordion from "./MapAccordion";
 import ConsultantViewDetails from "./ConsultantViewDetails";
+import Image from "next/image";
+import MapPlaceholder from "/public/images/mapPlaceholder.png";
 
 export const UserContext = React.createContext(null);
 
@@ -39,22 +48,25 @@ export default function Locator(props) {
   });
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
-  const setPrefPartner = async (consultant) => {
-    // get consultant data from shopify
-    const shopifyConsultant = await getShopifyConsultant(consultant.email);
+  const setPrefPartner = useCallback(
+    (consultant) => {
+      // get consultant data from shopify
+      // const shopifyConsultant = await getShopifyConsultant(consultant.email);
 
-    // let prefPartner = consultantList.filter(
-    //   (el) => el.email === consultant.email,
-    // );
+      // let prefPartner = consultantList.filter(
+      //   (el) => el.email === consultant.email,
+      // );
 
-    let data = {
-      type: "setPrefPartner",
-      data: { ...consultant, siteName: consultant.siteName },
-    };
-    parent.postMessage(data, "*"); //  `*` on any domain
+      let data = {
+        type: "setPrefPartner",
+        data: { ...consultant, siteName: consultant.siteName },
+      };
+      parent.postMessage(data, "*"); //  `*` on any domain
 
-    setModalState("confirmation");
-  };
+      setModalState("confirmation");
+    },
+    [setModalState]
+  );
 
   const getShopifyConsultant = (email) => {
     let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
@@ -72,25 +84,6 @@ export default function Locator(props) {
       .catch((err) => console.error("error:" + err));
   };
 
-  // Place Markers on Map for consultants
-  const findAllStoresAndPlaceOnMap = (data) => {
-    return data.map((consultant, index) => {
-      return (
-        <UserContext.Provider
-          value={{ selectedInfoWindow, setSelectedInfoWindow }}
-          key={consultant.email}
-        >
-          <MapMarker
-            key={consultant.email}
-            consultant={consultant}
-            number={index + 1}
-            selectConsultantHandler={() => setPrefPartner(consultant)}
-          />
-        </UserContext.Provider>
-      );
-    });
-  };
-
   useMemo(() => {
     return consultantList.map((consultant, index) => {
       return (
@@ -103,35 +96,35 @@ export default function Locator(props) {
             consultant={consultant}
             number={index + 1}
             selectConsultantHandler={() => setPrefPartner(consultant)}
+            dict={props.dict}
           />
         </UserContext.Provider>
       );
     });
-  }, [consultantList]);
-
-  const getLocations = async () => {
-    if (currentLocation) {
-      let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/locatorDB?lat=${currentLocation.lat}&lng=${currentLocation.lng}&zip=${currentZip}`;
-
-      console.log(url);
-      let options = { method: "GET" };
-
-      let data = await fetch(url, options)
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(json);
-          return json;
-        })
-        .catch((err) => console.error("error:" + err));
-      console.log(data);
-      sortAndSetConsultantList(data);
-      setLocationsLoaded(true);
-    }
-  };
+  }, [consultantList, props.dict, selectedInfoWindow, setPrefPartner]);
 
   useEffect(() => {
+    const getLocations = async () => {
+      if (currentLocation) {
+        let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/locatorDB?lat=${currentLocation.lat}&lng=${currentLocation.lng}&zip=${currentZip}`;
+
+        // console.log(url);
+        let options = { method: "GET" };
+
+        let data = await fetch(url, options)
+          .then((res) => res.json())
+          .then((json) => {
+            // console.log(json);
+            return json;
+          })
+          .catch((err) => console.error("error:" + err));
+        // console.log(data);
+        sortAndSetConsultantList(data);
+        setLocationsLoaded(true);
+      }
+    };
     getLocations();
-  }, [currentLocation]);
+  }, [currentLocation, currentZip]);
 
   const sortAndSetConsultantList = (consultants) => {
     consultants.sort(function (a, b) {
@@ -157,53 +150,78 @@ export default function Locator(props) {
     marker[0].click();
   };
 
-  const viewDetailsHandler = (event, consultant) => {
-    if (windowSize.current[0] >= 768) {
-      consultantCardClickHandler(event, consultant);
-    } else {
-      setSelectedConsultant(consultant);
-    }
-  };
-
-  const renderConsultantList = () => {
-    const list = consultantList.map((consultant, i) => {
-      return (
-        <ConsultantSelectedContext.Provider
-          value={{ consultantSelected, setConsultantSelected }}
-          key={consultant.displayName}
-        >
-          <ConsultantCard
-            consultant={consultant}
-            number={i + 1}
-            key={consultant.displayName}
-            radioClickHandler={consultantCardClickHandler}
-            selectConsultantHandler={() => setPrefPartner(consultant)}
-            viewDetailsHandler={viewDetailsHandler}
-            distance={true}
-            dict={props.dict}
-          />
-        </ConsultantSelectedContext.Provider>
-      );
-    });
-
-    // render consultants list
-    if (list.length > 0) {
-      setConsultantCards(<div className="flex flex-col gap-2">{list}</div>);
-    } else {
-      setConsultantCards(
-        <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
-          <div>{props.dict.match_insider.no_insiders_found}</div>
-        </div>
-      );
-    }
-  };
-
   useEffect(() => {
+    const viewDetailsHandler = (event, consultant) => {
+      if (windowSize.current[0] >= 768) {
+        consultantCardClickHandler(event, consultant);
+      } else {
+        setSelectedConsultant(consultant);
+      }
+    };
+    // Place Markers on Map for consultants
+    const findAllStoresAndPlaceOnMap = (data) => {
+      return data.map((consultant, index) => {
+        return (
+          <UserContext.Provider
+            value={{ selectedInfoWindow, setSelectedInfoWindow }}
+            key={consultant.email}
+          >
+            <MapMarker
+              key={consultant.email}
+              consultant={consultant}
+              number={index + 1}
+              selectConsultantHandler={() => setPrefPartner(consultant)}
+              dict={props.dict}
+            />
+          </UserContext.Provider>
+        );
+      });
+    };
+    const renderConsultantList = () => {
+      const list = consultantList.map((consultant, i) => {
+        return (
+          <ConsultantSelectedContext.Provider
+            value={{ consultantSelected, setConsultantSelected }}
+            key={consultant.email}
+          >
+            <ConsultantCard
+              consultant={consultant}
+              number={i + 1}
+              key={consultant.email}
+              radioClickHandler={consultantCardClickHandler}
+              selectConsultantHandler={() => setPrefPartner(consultant)}
+              viewDetailsHandler={viewDetailsHandler}
+              distance={true}
+              dict={props.dict}
+            />
+          </ConsultantSelectedContext.Provider>
+        );
+      });
+
+      // render consultants list
+      if (list.length > 0) {
+        setConsultantCards(<div className="flex flex-col gap-2">{list}</div>);
+      } else {
+        setConsultantCards(
+          <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
+            <div>{props.dict.match_insider.no_insiders_found}</div>
+          </div>
+        );
+      }
+    };
+
     renderConsultantList();
     // render location markers
     let res = findAllStoresAndPlaceOnMap(consultantList);
     setMarkerList(res);
-  }, [consultantList, selectedInfoWindow]);
+  }, [
+    consultantList,
+    selectedInfoWindow,
+    setPrefPartner,
+    props.dict,
+    consultantSelected,
+    setConsultantSelected,
+  ]);
 
   useEffect(() => {
     const card = document.getElementById(
@@ -283,7 +301,7 @@ export default function Locator(props) {
         {markerList}
       </GoogleMap>
     );
-  }, [markerList]);
+  }, [markerList, currentLocation]);
 
   const renderResultsMessage = useMemo(() => {
     if (currentZip) {
@@ -301,7 +319,7 @@ export default function Locator(props) {
         </>
       );
     }
-  }, [consultantList]);
+  }, [consultantList, currentZip, props.dict]);
 
   const renderLoadingMessage = useMemo(() => {
     return (
@@ -325,7 +343,7 @@ export default function Locator(props) {
         <span className="sr-only"> {props.dict.match_insider.loading}</span>
       </div>
     );
-  });
+  }, [props.dict]);
 
   return isLoaded && locationsLoaded ? (
     selectedConsultant ? (
@@ -429,10 +447,11 @@ export default function Locator(props) {
 
           <div className="hidden md:block">
             <div className="map-loading flex flex-col gap-5 justify-center items-center h-full relative">
-              <img
+              <Image
                 className="h-720 object-cover	"
-                src="/images/mapPlaceholder.png"
+                src={MapPlaceholder}
                 alt="map loading image"
+                fill={true}
               />
               {gettingCurrentLocation == false && currentZip == null ? (
                 <p> {props.dict.match_insider.map_text}</p>
