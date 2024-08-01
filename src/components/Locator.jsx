@@ -78,6 +78,7 @@ export default function Locator(props) {
       return (
         <UserContext.Provider
           value={{ selectedInfoWindow, setSelectedInfoWindow }}
+          key={consultant.email}
         >
           <MapMarker
             key={consultant.email}
@@ -95,6 +96,7 @@ export default function Locator(props) {
       return (
         <UserContext.Provider
           value={{ selectedInfoWindow, setSelectedInfoWindow }}
+          key={consultant.email}
         >
           <MapMarker
             key={consultant.email}
@@ -168,6 +170,7 @@ export default function Locator(props) {
       return (
         <ConsultantSelectedContext.Provider
           value={{ consultantSelected, setConsultantSelected }}
+          key={consultant.displayName}
         >
           <ConsultantCard
             consultant={consultant}

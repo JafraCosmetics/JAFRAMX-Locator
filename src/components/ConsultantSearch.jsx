@@ -101,6 +101,7 @@ export default function ConsultantSearch(props) {
         return (
           <ConsultantSelectedContext.Provider
             value={{ consultantSelected, setConsultantSelected }}
+            key={i}
           >
             <ConsultantCard
               consultant={consultant}
