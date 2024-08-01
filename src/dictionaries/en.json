@@ -1,0 +1,52 @@
+{
+  "find_your_insider": {
+    "title": "Find A Life Changer",
+    "body": "Get direct support to meet your needs by connecting with a Life Changer!",
+    "know_btn": "I Know a Life Changer",
+    "match_btn": "Find a Life Changer",
+    "go_back": "Go Back"
+  },
+  "i_know_an_insider": {
+    "header": "I Know a Life Changer",
+    "body": "Did a Life Changer introduce you to TLC? Sign up as part of their team!",
+    "help_link": "Help me find a Life Changer in my area",
+    "search_header": "Search by Name",
+    "input_placeholder": "Enter Life Changer's Name",
+    "loading_insiders": "Loading Life Changers in your area.",
+    "loading": "Loading...",
+    "no_results": "No Life Changers Found",
+    "results_found": "Results Found"
+  },
+  "match_insider": {
+    "header": "Find A Life Changer",
+    "body": "Looking for one-on-one guidance as you get started? Find a Life Changer near you!",
+    "help_link": "I already have a Life Changer I want to sign up with.",
+    "search_header": "Please enter your city or country.",
+    "input_placeholder": "Enter your city or country.",
+    "use_location": "Use my current location",
+    "map_text": "Enter your city or country",
+    "results_found": "Results Found Near You",
+    "distance": "Miles Away",
+    "view_details": "View Details",
+    "loading_insiders": "Loading Life Changers In Your Area.",
+    "no_insiders_found": "There are no Life Changers in your area.",
+    "results_found_within": "Results Found Within 50 Mi of",
+    "results_found_near_you": "Results Found Near You",
+    "loading": "Loading...",
+    "zip_error_msg": "Please Enter A Valid Zip Code"
+  },
+  "consultant_card": {
+    "distance": "Miles Away",
+    "view_details": "View Details",
+    "select_insider": "Select A Life Changer",
+    "located_at": "Located in"
+  },
+  "view_details": {
+    "select_btn": "Select Life Changer",
+    "located_at": "Located in"
+  },
+  "selection_confirmation": {
+    "confirm_msg": "Your Life Changer Has Been Selected",
+    "close_btn": "Close"
+  }
+}

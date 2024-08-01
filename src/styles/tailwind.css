@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* New component styles can go here */
+}
+
+@layer utilities {
+  .h-unset {
+    height: unset;
+  }
+
+  .w-unset {
+    width: unset;
+  }
+  .h-280 {
+    height: 280px;
+  }
+  .w-320 {
+    width: 320px;
+  }
+  .h-320 {
+    height: 320px;
+  }
+
+  .max-h-270 {
+    max-height: 270px;
+  }
+  .max-h-320 {
+    max-height: 320px;
+  }
+  .max-h-336 {
+    max-height: 336px;
+  }
+  .max-h-500 {
+    max-height: 500px;
+  }
+  .max-h-600 {
+    max-height: 600px;
+  }
+  .h-600 {
+    height: 600px;
+  }
+  .max-h-600 {
+    max-height: 600px;
+  }
+  .max-h-720 {
+    max-height: 720px;
+  }
+  .h-720 {
+    height: 720px;
+  }
+  .w-1080 {
+    width: 1080px;
+  }
+  .max-w-1080 {
+    max-width: 1080px;
+  }
+  .grid-cols-2-3 {
+    grid-template-columns: 33% 67%;
+  }
+
+  .grid-cols-10-90 {
+    grid-template-columns: 10% 90%;
+  }
+
+  .grid-cols-20-80 {
+    grid-template-columns: 20% 80%;
+  }
+
+  .text-white {
+    color: white;
+  }
+}
