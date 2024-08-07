@@ -10,8 +10,19 @@ import { AsYouType } from "libphonenumber-js";
 import Image from "next/image";
 
 import AvatarImage from "/public/images/avatar.png";
+import { Avatar } from "@nextui-org/avatar";
 const ConsultantViewDetails = (props) => {
   const [profileImage, setProfileImage] = useState();
+
+  props.consultant.email = "test@tlc.com"
+  props.consultant.hideEmail = "false"
+
+  props.consultant.phone = "+13438574663"
+  props.consultant.hidePhone = "false"
+
+  console.log((props.consultant.email))
+  console.log((props.consultant.hideEmail))
+
 
   const getShopifyConsultant = async (email) => {
     let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
@@ -79,21 +90,21 @@ const ConsultantViewDetails = (props) => {
   }, [props]);
 
   return (
-    <div className="modal-container h-screen md:h-full">
-      <div className="modal flex flex-col gap-9 py-6 px-4 w-full ">
+    <div className=" flex h-screen w-full md:h-full md:w-full bg-white">
+      <div className="flex flex-col gap-9 w-full ">
         <div
-          className="close-modal flex items-center gap-2 md:hidden"
+          className="close-modal flex items-center gap-2 md:hidden "
           onClick={props.goBackHandler}
         >
           <BackIcon color="#272727" />
           <p>{props.dict.find_your_insider.go_back}</p>
         </div>
-        <div className="view-details h-full" key={props.consultant.email}>
-          <div className="flex flex-col h-full">
-            <div className="flex flex-col gap-2 justify-center items-center md:h-full">
+        <div className="view-details w-full flex justify-center h-full" key={props.consultant.email}>
+          <div className="flex flex-col h-full bg-stone-700">
+            <div className="flex flex-col gap-6 justify-center items-center md:h-full">
               <Image
                 name={props.consultant.displayName}
-                className="h-32 w-32 md:h-40 md:w-40 rounded object-contain"
+                className="h-32 w-32 md:h-40 md:w-40 bg-white rounded-full border-8 border-white object-contain"
                 src={profileImage ?? AvatarImage}
                 alt="profile image"
                 fill={false}
@@ -102,68 +113,71 @@ const ConsultantViewDetails = (props) => {
                 {props.consultant.displayName}
               </div>
 
-              {props.consultant.phone ? (
-                props.consultant.hidePhone === null ||
-                props.consultant.hidePhone === "false" ? (
-                  <div className="flex gap-1 items-center">
-                    <PhoneIcon />
-                    <p className="view-details__contact ">
-                      <a
-                        href={
-                          "tel:" +
-                          new AsYouType("US").input(props.consultant.phone)
-                        }
-                        target="_parent"
-                      >
-                        {new AsYouType("US").input(props.consultant.phone)}
-                      </a>
-                    </p>
-                  </div>
-                ) : null
-              ) : null}
+              <div className="flex flex-col gap-4 items-center">
+                {props.consultant.phone ? (
+                  props.consultant.hidePhone === null ||
+                    props.consultant.hidePhone === "false" ? (
+                    <div className="flex gap-1 items-center">
+                      <PhoneIcon />
+                      <p className="view-details__contact ">
+                        <a
+                          href={
+                            "tel:" +
+                            new AsYouType("US").input(props.consultant.phone)
+                          }
+                          target="_parent"
+                        >
+                          {new AsYouType("US").input(props.consultant.phone)}
+                        </a>
+                      </p>
+                    </div>
+                  ) : null
+                ) : null}
 
-              {props.consultant.email ? (
-                props.consultant.hideEmail === null ||
-                props.consultant.hideEmail === "false" ? (
-                  <div className="flex gap-1 items-center">
-                    <EmailIcon />
-                    <p className="view-details__contact">
-                      <a
-                        href={"mailto:" + props.consultant.email}
-                        target="_parent"
-                      >
-                        {props.consultant.email}
-                      </a>
-                    </p>
-                  </div>
-                ) : null
-              ) : null}
+                {props.consultant.email ? (
+                  props.consultant.hideEmail === null ||
+                    props.consultant.hideEmail === "false" ? (
+                    <div className="flex gap-1 items-center">
+                      <EmailIcon />
+                      <p className="view-details__contact">
+                        <a
+                          href={"mailto:" + props.consultant.email}
+                          target="_parent"
+                        >
+                          {props.consultant.email}
+                        </a>
+                      </p>
+                    </div>
+                  ) : null
+                ) : null}
 
-              <div className="flex gap-1 items-center">
-                <WebIcon />
+                <div className="flex gap-1 items-center">
+                  <WebIcon />
 
-                <p className="view-details__contact">
-                  <a
-                    href={
-                      "https://jafraadmin.myshopify.com/" +
-                      props.consultant.siteName
-                    }
-                    target="_parent"
-                  >
-                    jafra.com/{props.consultant.siteName}
-                  </a>
-                </p>
+                  <p className="view-details__contact">
+                    <a
+                      href={
+                        "https://jafraadmin.myshopify.com/" +
+                        props.consultant.siteName
+                      }
+                      target="_parent"
+                    >
+                      jafra.com/{props.consultant.siteName}
+                    </a>
+                  </p>
+                </div>
+                <div className="flex gap-1 items-center">
+                  {renderLocation(props)}
+                </div>
               </div>
-              <div className="flex gap-1 items-center">
-                {renderLocation(props)}
-              </div>
+              <button
+                className="bg-tlc-purple text-white hover:bg-tlc-purple py-5 px-9 rounded uppercase"
+                onClick={props.selectConsultantHandler}
+              >
+                {props.dict.view_details.select_btn}
+              </button>
             </div>
-            <button
-              className="bg-mine-shaft text-white hover:bg-black capitalize w-full py-4 rounded mt-auto"
-              onClick={props.selectConsultantHandler}
-            >
-              {props.dict.view_details.select_btn}
-            </button>
+
           </div>
         </div>
       </div>

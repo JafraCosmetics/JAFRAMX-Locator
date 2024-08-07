@@ -14,6 +14,15 @@
   .w-unset {
     width: unset;
   }
+
+  .p-unset {
+    padding: unset;
+  }
+
+  .w-730 {
+    width: 730px;
+  }
+
   .h-280 {
     height: 280px;
   }
@@ -32,6 +41,9 @@
   }
   .max-h-336 {
     max-height: 336px;
+  }
+  .max-h-450 {
+    max-height: 450px;
   }
   .max-h-500 {
     max-height: 500px;
@@ -54,11 +66,33 @@
   .w-1080 {
     width: 1080px;
   }
+.max-w-420 {
+  max-width: 420px;
+}
+
+.max-w-730 {
+  max-width: 730px;
+}
+
   .max-w-1080 {
     max-width: 1080px;
   }
+
+  .max-w-1300 {
+    max-width: 1300px;
+  }
+
+  .modal-container-grid {
+    grid-template-columns: 506px 730px;
+
+  }
+
   .grid-cols-2-3 {
     grid-template-columns: 33% 67%;
+  }
+
+  .grid-cols-40-60 {
+    grid-template-columns: 40% 60%;
   }
 
   .grid-cols-10-90 {

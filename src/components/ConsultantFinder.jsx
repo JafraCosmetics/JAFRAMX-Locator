@@ -15,7 +15,7 @@ export default function ConsultantFinder(props) {
   const [modalState, setModalState] = useState("start");
   const [consultantSelected, setConsultantSelected] = useState(false);
 
-  useEffect(() => {}, [consultantSelected]);
+  useEffect(() => { }, [consultantSelected]);
 
   const handleFindConsultant = () => {
     setModalState("find");
@@ -40,11 +40,11 @@ export default function ConsultantFinder(props) {
     const startBody = () => {
       return (
         <div className="modal-container">
-          <div className="modal grid md:grid-cols-2-3">
-            <div className="p-4 md:p-6 h-280 order-2 md:order-1 ">
+          <div className="modal flex flex-col md:grid modal-container-grid md:p-8">
+            <div className="order-2 p-4 md:order-1 max-w-md">
               <div
                 data-close-modal="find-your-consultant"
-                className="hidden md:block cursor-pointer"
+                className="hidden md:block cursor-pointer absolute top-6 left-6"
               >
                 <CloseIcon className="close-icon" onClick={closeModal} />
               </div>
@@ -59,15 +59,15 @@ export default function ConsultantFinder(props) {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 items-center md:items-start">
                 <button
-                  className="bg-mine-shaft text-white hover:bg-black capitalize w-full py-4 rounded"
+                  className="bg-tlc-purple text-white hover:bg-black capitalize max-w-64 p-4 rounded font-bold"
                   onClick={handleKnowConsultant}
                 >
                   {props.dict.find_your_insider.know_btn}
                 </button>
                 <button
-                  className="bg-white text-black hover:bg-black capitalize w-full py-4 rounded border-2 border-black"
+                  className="bg-white text-tlc-purple hover:bg-black capitalize max-w-64 p-4 rounded border-2 border-tlc-purple font-bold"
                   onClick={handleFindConsultant}
                 >
                   {props.dict.find_your_insider.match_btn}
@@ -83,11 +83,11 @@ export default function ConsultantFinder(props) {
                   className="close-icon"
                   onClick={closeModal}
                   pathFill="#eeeeee"
-                  circleFill="#717171"
+                // circleFill="#717171"
                 />
               </div>
               <Image
-                className="w-full md:h-720 object-cover rounded-r-lg"
+                className="w-full h-full object-cover"
                 src={ConsultantLanding}
                 alt="Consultant Locator Modal"
               />
@@ -99,11 +99,12 @@ export default function ConsultantFinder(props) {
 
     const confirmationBody = () => {
       return (
-        <div className="modal-container flex flex-col h-full md:h-720 md:w-1080">
-          <div className="hidden md:block cursor-pointer">
-            <CloseIcon className="close-icon" onClick={closeModal} />
-          </div>
+        <div className="modal-container flex flex-col">
+
           <div className="modal justify-center items-center flex flex-col gap-9 p-4 w-full h-full">
+            <div className="hidden md:block cursor-pointer absolute top-6 left-6">
+              <CloseIcon className="close-icon" onClick={closeModal} />
+            </div>
             <div className="flex flex-col justify-center items-center gap-4">
               <CheckIcon />
               <p className="modal-heading text-center">
@@ -171,7 +172,7 @@ export default function ConsultantFinder(props) {
   return (
     <div
       id="consultant-locator-modal"
-      className="relative w-auto mx-auto max-w-1080 flex justify-center items-center  overflow-hidden md:w-unset"
+      className="relative w-auto mx-auto max-w-1300 flex justify-center items-center  overflow-hidden md:w-unset"
     >
       {/*content*/}
       <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">

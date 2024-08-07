@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { NumberedListIcon } from "./Icons";
+import { Avatar } from "@nextui-org/react";
+
 
 const renderLocation = (props) => {
   if (props.consultant.defaultAddress) {
@@ -35,15 +36,15 @@ const renderLocation = (props) => {
 const ConsultantCard = (props) => {
   return (
     <div
-      className="consultant-card flex gap-4 md:grid md:grid-cols-10-90 consultant-card__unselected py-4 px-6 max-h-720 cursor-default	"
+      className="consultant-card flex gap-4 consultant-card__unselected max-h-860 cursor-default border border-tlc-purple rounded-md	"
       id={"consultant-card-" + props.consultant.email}
       key={props.consultant.email}
-      // onClick={(event) => props.radioClickHandler(event, props.consultant)}
+    // onClick={(event) => props.radioClickHandler(event, props.consultant)}
     >
-      <div className="flex items-start justify-start">
-        <NumberedListIcon className="h-8 w-8" number={props.number} />
+      <div className="flex items-start justify-start hidden md:block">
+        <Avatar src={`https://randomuser.me/api/portraits/women/${props.number}.jpg`} className="w-8 md:w-14 rounded-full" />
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col justify-evenly w-full">
         <Image
           name={props.consultant.displayName}
           className="hidden h-12 w-12 rounded"
@@ -51,21 +52,23 @@ const ConsultantCard = (props) => {
           src={
             props.consultant.profileImage
               ? props.consultant.profileImage
-              : `https://randomuser.me/api/portraits/women/${props.number}.png`
+              : `https://randomuser.me/api/portraits/women/${props.number}.jpg`
           }
           alt="profile image"
         />
-        <div className="consultant-box__name">
-          {props.consultant.displayName}
+        <div className="flex justify-between">
+          <div className="consultant-box__name">
+            {props.consultant.displayName}
+          </div>
+          {props.distance ? (
+            <p className="consultant-box__location">
+              {props.consultant.distance} {props.dict.consultant_card.distance}
+            </p>
+          ) : null}
         </div>
-        {props.distance ? (
-          <p className="consultant-box__location">
-            {props.consultant.distance} {props.dict.consultant_card.distance}
-          </p>
-        ) : null}
-        {props.consultant.defaultAddress ? renderLocation(props) : null}
+        {/* {props.consultant.defaultAddress ? renderLocation(props) : null} */}
 
-        <div className="flex gap-6">
+        <div className="flex justify-between">
           <a
             className="text-xs cursor-pointer"
             onClick={(event) =>

@@ -12,7 +12,7 @@ import { fromAddress, setKey } from "react-geocode";
 import MapMarker from "./MapMarker";
 import ConsultantCard from "./ConsultantCard";
 import ZipForm from "./ZipForm";
-import { BackIcon } from "./Icons";
+import { BackIcon, LocationPinIcon } from "./Icons";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
 import { LocationIcon } from "./Icons";
 import MapAccordion from "./MapAccordion";
@@ -285,9 +285,8 @@ export default function Locator(props) {
     };
     if (windowSize.current[0] >= 768) {
       containerStyle = {
-        width: "720px",
-        height: "720px",
-        borderRadius: "0px 8px 8px 0px",
+        width: "730px",
+        height: "796px",
       };
     }
     setMap(
@@ -337,7 +336,7 @@ export default function Locator(props) {
           />
           <path
             d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-            fill="#fe6e9c"
+            fill="#5A52B9"
           />
         </svg>
         <span className="sr-only"> {props.dict.match_insider.loading}</span>
@@ -347,65 +346,71 @@ export default function Locator(props) {
 
   return isLoaded && locationsLoaded ? (
     selectedConsultant ? (
-      <ConsultantViewDetails
-        consultant={selectedConsultant}
-        goBackHandler={() => setSelectedConsultant(null)}
-        selectConsultantHandler={() => setPrefPartner(selectedConsultant)}
-        dict={props.dict}
-      />
-    ) : (
-      <div className="modal-container md:h-720 md:max-h-720 md:grid md:grid-cols-2-3">
-        <div className="modal-container__left overflow-hidden py-6 w-full md:w-unset">
-          <div className="px-6">
-            <div
-              data-close-modal
-              className="close-modal flex items-center gap-4 mb-9"
-              onClick={props.returnToStartHandler}
-            >
-              <BackIcon color="#272727" />
-              <p>{props.dict.find_your_insider.go_back}</p>
-            </div>
-            <div className="modal-info-body mb-6">
-              <div className="modal-heading mb-3">
-                {props.dict.match_insider.header}
-              </div>
-              <p className="hidden md:block">
-                {props.dict.match_insider.body} <br />
-                <br />
-                <a className="cursor-pointer" onClick={props.goToKnowHandler}>
-                  {props.dict.match_insider.help_link}
-                </a>
-              </p>
-            </div>
-            <UserContext.Provider value={{ showWarning, setShowWarning }}>
-              <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
-            </UserContext.Provider>
-          </div>
-          <div className="md:hidden">
-            <MapAccordion body={map} />
-          </div>
-
-          <div className="mt-3">
-            <p className="px-6 mb-6">{renderResultsMessage}</p>
-            {consultantList.length > 0 ? (
-              <div className="overflow-y-scroll max-h-500 h-screen md:max-h-320">
-                {consultantCards}
-              </div>
-            ) : (
-              <div>{consultantCards}</div>
-            )}
-          </div>
+      <div className="modal-container h-full md:h-860">
+        <div className="modal p-4 w-full flex md:grid md:p-8 modal-container-grid">
+          <ConsultantViewDetails
+            consultant={selectedConsultant}
+            goBackHandler={() => setSelectedConsultant(null)}
+            selectConsultantHandler={() => setPrefPartner(selectedConsultant)}
+            dict={props.dict}
+          />
         </div>
-        <div className="hidden md:block modal-container__right rounded-r-lg">
-          {map}
+      </div>
+    ) : (
+      <div className="modal-container ">
+        <div className="modal flex p-4 md:p-8 justify-between w-full">
+          <div className="modal-container__left overflow-hidden max-w-420">
+            <div className="">
+              <div
+                data-close-modal
+                className="close-modal flex items-center gap-4 mb-9"
+                onClick={props.returnToStartHandler}
+              >
+                <BackIcon color="#272727" />
+                <p>{props.dict.find_your_insider.go_back}</p>
+              </div>
+              <div className="modal-info-body mb-6">
+                <div className="modal-heading mb-3">
+                  {props.dict.match_insider.header}
+                </div>
+                <p className="hidden md:block">
+                  {props.dict.match_insider.body} <br />
+                  <br />
+                  <a className="cursor-pointer" onClick={props.goToKnowHandler}>
+                    {props.dict.match_insider.help_link}
+                  </a>
+                </p>
+              </div>
+              <UserContext.Provider value={{ showWarning, setShowWarning }}>
+                <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
+              </UserContext.Provider>
+            </div>
+            <div className="md:hidden">
+              <MapAccordion body={map} />
+            </div>
+
+            <div className="mt-3">
+              <p className="px-6 mb-6">{renderResultsMessage}</p>
+              {consultantList.length > 0 ? (
+                <div className="overflow-y-scroll max-h-450">
+                  {consultantCards}
+                </div>
+              ) : (
+                <div>{consultantCards}</div>
+              )}
+            </div>
+          </div>
+          <div className="hidden md:block modal-container__right rounded-r-lg">
+            {map}
+          </div>
         </div>
       </div>
     )
   ) : (
     <>
-      <div className="modal-container h-screen md:h-720">
-        <div className="modal flex flex-col md:grid md:grid-cols-2-3 w-full md:w-unset">
-          <div className="p-6">
+      <div className="modal-container">
+        <div className="modal flex flex-col p-4 md:p-8 md:flex-row w-full justify-between">
+          <div className="max-w-420">
             <div
               className="close-modal flex items-center gap-2 mb-10"
               onClick={props.returnToStartHandler}
@@ -430,7 +435,7 @@ export default function Locator(props) {
               <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
             </UserContext.Provider>
             <div className="flex items-center gap-2 mt-4">
-              <LocationIcon />
+              <LocationPinIcon />
               <a className="underline" onClick={getCurrentLocation}>
                 {props.dict.match_insider.use_location}
               </a>
@@ -445,8 +450,8 @@ export default function Locator(props) {
             )}
           </div>
 
-          <div className="hidden md:block">
-            <div className="map-loading flex flex-col gap-5 justify-center items-center h-full relative">
+          <div className="hidden md:block max-w-730">
+            <div className="map-loading flex flex-col gap-5 justify-center items-center h-full relative w-730">
               <Image
                 className="h-720 object-cover	"
                 src={MapPlaceholder}

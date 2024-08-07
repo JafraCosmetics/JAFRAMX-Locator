@@ -1,10 +1,10 @@
-import {Fragment, useState} from 'react';
+import { Fragment, useState } from 'react';
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
 } from '@material-tailwind/react';
-import {AccordionOpenIcon, AccordionCloseIcon} from './Icons';
+import { AccordionOpenIcon, AccordionCloseIcon } from './Icons';
 
 const MapAccordion = (props) => {
   const [open, setOpen] = useState();
@@ -14,7 +14,7 @@ const MapAccordion = (props) => {
   };
 
   return (
-    <div className="px-6">
+    <div className="">
       <Fragment>
         <Accordion open={open === 1}>
           <AccordionHeader onClick={() => handleOpen(1)}>
