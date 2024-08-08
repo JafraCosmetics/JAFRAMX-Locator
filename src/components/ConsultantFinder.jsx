@@ -1,7 +1,7 @@
 "use client"; // This is a client component 👈🏽
 
 import React, { useMemo, useState, useEffect, useCallback } from "react";
-import { CloseIcon, CheckIcon } from "../components/Icons";
+import { CloseIcon, CheckIcon, ArrowIcon } from "../components/Icons";
 import Locator from "./Locator";
 import ConsultantSearch from "./ConsultantSearch";
 import Image from "next/image";
@@ -67,10 +67,11 @@ export default function ConsultantFinder(props) {
                   {props.dict.find_your_insider.know_btn}
                 </button>
                 <button
-                  className="bg-white text-tlc-purple hover:bg-black capitalize max-w-64 p-4 rounded border-2 border-tlc-purple font-bold"
+                  className="bg-white text-tlc-purple hover:bg-black capitalize max-w-64 p-4 rounded border-2 border-tlc-purple font-bold flex gap-2 justify-center items-center"
                   onClick={handleFindConsultant}
                 >
                   {props.dict.find_your_insider.match_btn}
+                  <ArrowIcon />
                 </button>
               </div>
             </div>

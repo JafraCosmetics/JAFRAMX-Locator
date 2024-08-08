@@ -50,13 +50,6 @@ export default function Locator(props) {
 
   const setPrefPartner = useCallback(
     (consultant) => {
-      // get consultant data from shopify
-      // const shopifyConsultant = await getShopifyConsultant(consultant.email);
-
-      // let prefPartner = consultantList.filter(
-      //   (el) => el.email === consultant.email,
-      // );
-
       let data = {
         type: "setPrefPartner",
         data: { ...consultant, siteName: consultant.siteName },
@@ -67,22 +60,6 @@ export default function Locator(props) {
     },
     [setModalState]
   );
-
-  const getShopifyConsultant = (email) => {
-    let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
-
-    let options = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
-
-    return fetch(url, options)
-      .then((res) => res.json())
-      .then((json) => {
-        return json.partners ? json.partners[0] : null;
-      })
-      .catch((err) => console.error("error:" + err));
-  };
 
   useMemo(() => {
     return consultantList.map((consultant, index) => {
@@ -106,7 +83,7 @@ export default function Locator(props) {
   useEffect(() => {
     const getLocations = async () => {
       if (currentLocation) {
-        let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/locatorDB?lat=${currentLocation.lat}&lng=${currentLocation.lng}&zip=${currentZip}`;
+        let url = `https://jaf102gd80.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}&zip=${currentZip}`;
 
         // console.log(url);
         let options = { method: "GET" };
@@ -282,6 +259,7 @@ export default function Locator(props) {
     const defaultMapOptions = {
       disableDefaultUI: true,
       maxZoom: 12,
+      clickableIcons: false
     };
     if (windowSize.current[0] >= 768) {
       containerStyle = {
@@ -299,6 +277,18 @@ export default function Locator(props) {
       >
         {markerList}
       </GoogleMap>
+
+      // <APIProvider apiKey="AIzaSyDuAN1dGgV5iShaAaUkiuN5ksaQm3XlH68">
+      //   <Map
+      //     style={containerStyle}
+      //     defaultCenter={currentLocation}
+      //     defaultZoom={10}
+      //     gestureHandling={'greedy'}
+      //     disableDefaultUI={true}
+      //   >
+      //     {markerList}
+      //   </Map>
+      // </APIProvider>
     );
   }, [markerList, currentLocation]);
 

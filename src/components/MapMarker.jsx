@@ -10,6 +10,8 @@ import { UserContext } from "./Locator";
 import { AsYouType } from "libphonenumber-js";
 import Image from "next/image";
 import AvatarImage from "/public/images/avatar.png";
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
+
 
 const MapMarker = (props) => {
   const { selectedInfoWindow, setSelectedInfoWindow } = useContext(UserContext);
@@ -42,11 +44,22 @@ const MapMarker = (props) => {
       className="map-mark"
       title={props.consultant.email}
       onClick={() => onMarkerClick()}
-      icon={"/public/marker.svg"}
+      icon={{
+        path: faLocationDot.icon[4],
+        fillColor: "#5A52B9",
+        fillOpacity: 1,
+        anchor: new google.maps.Point(
+          faLocationDot.icon[0] / 2, // width
+          faLocationDot.icon[1] // height
+        ),
+        strokeWeight: 1,
+        strokeColor: "#5A52B9",
+        scale: 0.075,
+      }}
       key={props.consultant.siteName}
     >
       {selectedInfoWindow === props.consultant.email &&
-      windowSize.current[0] >= 768 ? (
+        windowSize.current[0] >= 768 ? (
         <InfoWindow
           position={{
             lat: props.consultant.latitude,
@@ -88,13 +101,13 @@ const MapMarker = (props) => {
                   }
                   target="_parent"
                 >
-                  jafra.com/{props.consultant.siteName}
+                  tlc.com/{props.consultant.siteName}
                 </a>
               </div>
 
               {props.consultant.phone ? (
                 props.consultant.hidePhone === null ||
-                props.consultant.hidePhone === "false" ? (
+                  props.consultant.hidePhone === "false" ? (
                   <div className="flex gap-1 items-center mb-2">
                     <PhoneIcon />{" "}
                     <a
@@ -112,7 +125,7 @@ const MapMarker = (props) => {
 
               {props.consultant.email ? (
                 props.consultant.hideEmail === null ||
-                props.consultant.hideEmail === "false" ? (
+                  props.consultant.hideEmail === "false" ? (
                   <div className="flex gap-1 items-center mb-2">
                     <EmailIcon />{" "}
                     <a
@@ -136,7 +149,7 @@ const MapMarker = (props) => {
         </InfoWindow>
       ) : null}
       ;
-    </Marker>
+    </Marker >
   );
 };
 

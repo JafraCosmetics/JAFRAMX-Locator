@@ -8,7 +8,7 @@ import Image from "next/image";
 import KnowConsultantImage from "/public/images/knowConsultant.png";
 
 export default function ConsultantSearch(props) {
-  const [searchQuery, setSearchQuery] = useState();
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const {
     consultantSelected,
@@ -30,7 +30,7 @@ export default function ConsultantSearch(props) {
       setSelectedConsultant(false);
       setLoadingConsultants(true);
 
-      let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=LOCATOR&locator=${searchQuery.replace(
+      let url = `https://jaf102gd80.execute-api.us-west-2.amazonaws.com/Prod/partners/search?searchType=LOCATOR&locator=${searchQuery.replace(
         " ",
         "%20"
       )}`;

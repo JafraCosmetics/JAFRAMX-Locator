@@ -25,7 +25,7 @@ const ConsultantViewDetails = (props) => {
 
 
   const getShopifyConsultant = async (email) => {
-    let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
+    let url = `https://jaf102gd80.execute-api.us-west-2.amazonaws.com/Prod/partners/search?searchType=EMAIL&email=${email}`;
 
     let options = {
       method: "GET",
@@ -162,7 +162,7 @@ const ConsultantViewDetails = (props) => {
                       }
                       target="_parent"
                     >
-                      jafra.com/{props.consultant.siteName}
+                      tlc.com/{props.consultant.siteName}
                     </a>
                   </p>
                 </div>
