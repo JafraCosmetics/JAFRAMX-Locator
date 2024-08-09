@@ -183,7 +183,7 @@ export default function ConsultantSearch(props) {
   return selectedConsultant ? (
     <>
       <div className="modal-container h-full lg:h-860">
-        <div className="modal p-4 w-full flex lg:grid lg:p-8 modal-container-grid">
+        <div className="modal p-4 w-full flex lg:grid lg:p-8 lg:modal-container-grid">
           <div className="hidden lg:flex flex-col justify-between w-full">
             <div>
               <div className="w-full lg:max-w-420">

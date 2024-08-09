@@ -40,7 +40,7 @@ export default function ConsultantFinder(props) {
     const startBody = () => {
       return (
         <div className="modal-container">
-          <div className="modal flex flex-col lg:grid modal-container-grid lg:p-8">
+          <div className="modal flex flex-col lg:grid lg:modal-container-grid lg:p-8">
             <div className="modal__left order-2 p-4 lg:order-1">
               <div
                 data-close-modal="find-your-consultant"
