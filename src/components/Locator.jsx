@@ -129,7 +129,7 @@ export default function Locator(props) {
 
   useEffect(() => {
     const viewDetailsHandler = (event, consultant) => {
-      if (windowSize.current[0] >= 768) {
+      if (windowSize.current[0] >= 1024) {
         consultantCardClickHandler(event, consultant);
       } else {
         setSelectedConsultant(consultant);
@@ -263,6 +263,11 @@ export default function Locator(props) {
     };
     if (windowSize.current[0] >= 768) {
       containerStyle = {
+        width: "100%",
+        height: "578px",
+      };
+    } else if (windowSize.current[0] >= 1300) {
+      containerStyle = {
         width: "730px",
         height: "796px",
       };
@@ -336,8 +341,8 @@ export default function Locator(props) {
 
   return isLoaded && locationsLoaded ? (
     selectedConsultant ? (
-      <div className="modal-container h-full md:h-860">
-        <div className="modal p-4 w-full flex md:grid md:p-8 modal-container-grid">
+      <div className="modal-container h-full lg:h-860">
+        <div className="modal p-4 w-full flex lg:grid lg:p-8 modal-container-grid">
           <ConsultantViewDetails
             consultant={selectedConsultant}
             goBackHandler={() => setSelectedConsultant(null)}
@@ -348,9 +353,9 @@ export default function Locator(props) {
       </div>
     ) : (
       <div className="modal-container ">
-        <div className="modal flex p-4 md:p-8 justify-between w-full">
-          <div className="modal-container__left overflow-hidden max-w-420">
-            <div className="">
+        <div className="modal flex p-4 lg:p-8 justify-between w-full">
+          <div className="modal__left overflow-hidden">
+            <>
               <div
                 data-close-modal
                 className="close-modal flex items-center gap-4 mb-9"
@@ -363,7 +368,7 @@ export default function Locator(props) {
                 <div className="modal-heading mb-3">
                   {props.dict.match_insider.header}
                 </div>
-                <p className="hidden md:block">
+                <p className="hidden lg:block">
                   {props.dict.match_insider.body} <br />
                   <br />
                   <a className="cursor-pointer" onClick={props.goToKnowHandler}>
@@ -374,8 +379,8 @@ export default function Locator(props) {
               <UserContext.Provider value={{ showWarning, setShowWarning }}>
                 <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
               </UserContext.Provider>
-            </div>
-            <div className="md:hidden">
+            </>
+            <div className="lg:hidden">
               <MapAccordion body={map} />
             </div>
 
@@ -390,7 +395,7 @@ export default function Locator(props) {
               )}
             </div>
           </div>
-          <div className="hidden md:block modal-container__right rounded-r-lg">
+          <div className="hidden lg:block modal-container__right map-container rounded-r-lg">
             {map}
           </div>
         </div>
@@ -399,8 +404,8 @@ export default function Locator(props) {
   ) : (
     <>
       <div className="modal-container">
-        <div className="modal flex flex-col p-4 md:p-8 md:flex-row w-full justify-between">
-          <div className="max-w-420">
+        <div className="modal flex flex-col p-4 lg:p-8  w-full justify-between  lg:grid lg:modal-container-grid">
+          <div className="modal__left">
             <div
               className="close-modal flex items-center gap-2 mb-10"
               onClick={props.returnToStartHandler}
@@ -413,7 +418,7 @@ export default function Locator(props) {
               {props.dict.match_insider.header}
             </div>
 
-            <p className="hidden md:block mb-6">
+            <p className="hidden lg:block mb-6">
               {props.dict.match_insider.body}
               <br />
               <br />
@@ -431,7 +436,7 @@ export default function Locator(props) {
               </a>
             </div>
             {gettingCurrentLocation == false && currentZip == null ? null : (
-              <div className="h-full md:hidden">
+              <div className="h-full lg:hidden">
                 <div className="flex flex-col justify-center items-center gap-2 h-full">
                   <p>{props.dict.match_insider.loading_insiders}</p>
                   {renderLoadingMessage}
@@ -440,10 +445,10 @@ export default function Locator(props) {
             )}
           </div>
 
-          <div className="hidden md:block max-w-730">
-            <div className="map-loading flex flex-col gap-5 justify-center items-center h-full relative w-730">
+          <div className="hidden lg:block max-w-730">
+            <div className="map-loading flex flex-col gap-5 justify-center items-center h-full relative xl:w-730">
               <Image
-                className="h-720 object-cover	"
+                className="lg:w-full lg:h-full object-cover	"
                 src={MapPlaceholder}
                 alt="map loading image"
                 fill={true}

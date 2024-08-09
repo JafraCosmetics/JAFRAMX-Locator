@@ -40,11 +40,11 @@ export default function ConsultantFinder(props) {
     const startBody = () => {
       return (
         <div className="modal-container">
-          <div className="modal flex flex-col md:grid modal-container-grid md:p-8">
-            <div className="order-2 p-4 md:order-1 max-w-md">
+          <div className="modal flex flex-col lg:grid modal-container-grid lg:p-8">
+            <div className="modal__left order-2 p-4 lg:order-1">
               <div
                 data-close-modal="find-your-consultant"
-                className="hidden md:block cursor-pointer absolute top-6 left-6"
+                className="close-button hidden lg:block cursor-pointer absolute top-6 left-6"
               >
                 <CloseIcon className="close-icon" onClick={closeModal} />
               </div>
@@ -75,10 +75,10 @@ export default function ConsultantFinder(props) {
                 </button>
               </div>
             </div>
-            <div className="order-1 md:order-2 md:h-unset">
+            <div className="order-1 lg:order-2 lg:h-unset">
               <div
                 data-close-modal="find-your-consultant"
-                className="md:hidden cursor-pointer absolute top-2 left-2"
+                className="close-button lg:hidden cursor-pointer absolute top-2 left-2"
               >
                 <CloseIcon
                   className="close-icon"
@@ -88,7 +88,7 @@ export default function ConsultantFinder(props) {
                 />
               </div>
               <Image
-                className="w-full h-full object-cover"
+                className="lg:w-full lg:h-full object-cover"
                 src={ConsultantLanding}
                 alt="Consultant Locator Modal"
               />
@@ -103,7 +103,7 @@ export default function ConsultantFinder(props) {
         <div className="modal-container flex flex-col">
 
           <div className="modal justify-center items-center flex flex-col gap-9 p-4 w-full h-full">
-            <div className="hidden md:block cursor-pointer absolute top-6 left-6">
+            <div className="hidden lg:block cursor-pointer absolute top-6 left-6">
               <CloseIcon className="close-icon" onClick={closeModal} />
             </div>
             <div className="flex flex-col justify-center items-center gap-4">
@@ -114,7 +114,7 @@ export default function ConsultantFinder(props) {
             </div>
             <button
               onClick={() => closeModal()}
-              className="bg-mine-shaft text-white hover:bg-black capitalize w-full md:w-1/3 py-4 rounded"
+              className="bg-mine-shaft text-white hover:bg-black capitalize w-full lg:w-1/3 py-4 rounded"
             >
               {props.dict.selection_confirmation.close_btn}
             </button>
@@ -173,7 +173,7 @@ export default function ConsultantFinder(props) {
   return (
     <div
       id="consultant-locator-modal"
-      className="relative w-auto mx-auto max-w-1300 flex justify-center items-center  overflow-hidden md:w-unset"
+      className="relative w-auto mx-auto  flex justify-center items-center  overflow-hidden lg:w-unset"
     >
       {/*content*/}
       <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">

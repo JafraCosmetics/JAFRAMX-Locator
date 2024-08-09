@@ -90,10 +90,10 @@ const ConsultantViewDetails = (props) => {
   }, [props]);
 
   return (
-    <div className=" flex h-screen w-full md:h-full md:w-full bg-white">
+    <div className=" flex h-screen w-full lg:h-full lg:w-full bg-white">
       <div className="flex flex-col gap-9 w-full ">
         <div
-          className="close-modal flex items-center gap-2 md:hidden "
+          className="close-modal flex items-center gap-2 lg:hidden "
           onClick={props.goBackHandler}
         >
           <BackIcon color="#272727" />
@@ -101,10 +101,10 @@ const ConsultantViewDetails = (props) => {
         </div>
         <div className="view-details w-full flex justify-center h-full" key={props.consultant.email}>
           <div className="flex flex-col h-full bg-stone-700">
-            <div className="flex flex-col gap-6 justify-center items-center md:h-full">
+            <div className="flex flex-col gap-6 justify-center items-center lg:h-full">
               <Image
                 name={props.consultant.displayName}
-                className="h-32 w-32 md:h-40 md:w-40 bg-white rounded-full border-8 border-white object-contain"
+                className="h-32 w-32 lg:h-40 lg:w-40 bg-white rounded-full border-8 border-white object-contain"
                 src={profileImage ?? AvatarImage}
                 alt="profile image"
                 fill={false}

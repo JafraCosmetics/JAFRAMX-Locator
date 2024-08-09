@@ -41,8 +41,8 @@ const ConsultantCard = (props) => {
       key={props.consultant.email}
     // onClick={(event) => props.radioClickHandler(event, props.consultant)}
     >
-      <div className="flex items-start justify-start hidden md:block">
-        <Avatar src={`https://randomuser.me/api/portraits/women/${props.number}.jpg`} className="w-8 md:w-14 rounded-full" />
+      <div className="flex items-start justify-start hidden lg:block">
+        <Avatar src={`https://randomuser.me/api/portraits/women/${props.number}.jpg`} className="w-8 lg:w-14 rounded-full" />
       </div>
       <div className="flex flex-col justify-evenly w-full">
         <Image

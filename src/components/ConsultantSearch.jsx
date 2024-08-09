@@ -182,11 +182,11 @@ export default function ConsultantSearch(props) {
 
   return selectedConsultant ? (
     <>
-      <div className="modal-container h-full md:h-860">
-        <div className="modal p-4 w-full flex md:grid md:p-8 modal-container-grid">
-          <div className="hidden md:flex flex-col justify-between w-full">
+      <div className="modal-container h-full lg:h-860">
+        <div className="modal p-4 w-full flex lg:grid lg:p-8 modal-container-grid">
+          <div className="hidden lg:flex flex-col justify-between w-full">
             <div>
-              <div className="w-full md:max-w-420">
+              <div className="w-full lg:max-w-420">
                 <div
                   className="close-modal flex items-center gap-2 mb-10"
                   onClick={props.returnToStartHandler}
@@ -199,7 +199,7 @@ export default function ConsultantSearch(props) {
                   {props.dict.i_know_an_insider.header}
                 </div>
 
-                <p className="hidden md:block mb-6">
+                <p className="hidden lg:block mb-6">
                   {props.dict.i_know_an_insider.body}
 
                   <br />
@@ -250,9 +250,9 @@ export default function ConsultantSearch(props) {
     </>
   ) : (
     <>
-      <div className="modal-container h-screen md:h-full">
-        <div className="modal flex md:grid modal-container-grid w-full p-4 md:p-8">
-          <div className="flex flex-col w-full md:max-w-420">
+      <div className="modal-container h-screen lg:h-full">
+        <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
+          <div className="modal__left flex flex-col w-full lg:max-w-420">
             {/* <div className=""> */}
             <div
               className="close-modal flex items-center gap-2 mb-10"
@@ -266,7 +266,7 @@ export default function ConsultantSearch(props) {
               {props.dict.i_know_an_insider.header}
             </div>
 
-            <p className="hidden md:block mb-6">
+            <p className="hidden lg:block mb-6">
               {props.dict.i_know_an_insider.body}
 
               <br />
@@ -312,9 +312,9 @@ export default function ConsultantSearch(props) {
               renderConsultantList
             )}
           </div>
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <Image
-              className="w-full h-full object-cover"
+              className="lg:w-full lg:h-full object-cover"
               src={KnowConsultantImage}
               alt="Consultant Locator Modal Search"
             />
