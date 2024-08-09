@@ -261,17 +261,22 @@ export default function Locator(props) {
       maxZoom: 12,
       clickableIcons: false
     };
-    if (windowSize.current[0] >= 768) {
-      containerStyle = {
-        width: "100%",
-        height: "578px",
-      };
-    } else if (windowSize.current[0] >= 1300) {
-      containerStyle = {
-        width: "730px",
-        height: "796px",
-      };
-    }
+    // if (windowSize.current[0] >= 768) {
+    //   containerStyle = {
+    //     width: "100%",
+    //     height: "578px",
+    //   };
+    // } else if (windowSize.current[0] >= 1300) {
+    //   containerStyle = {
+    //     width: "730px",
+    //     height: "796px",
+    //   };
+    // }
+
+    containerStyle = {
+      width: "100%",
+      height: "100%",
+    };
     setMap(
       <GoogleMap
         mapContainerStyle={containerStyle}
