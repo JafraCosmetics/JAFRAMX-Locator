@@ -48,18 +48,17 @@ export default function Locator(props) {
   });
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
-  const setPrefPartner = useCallback(
-    (consultant) => {
-      let data = {
-        type: "setPrefPartner",
-        data: { ...consultant, siteName: consultant.siteName },
-      };
-      parent.postMessage(data, "*"); //  `*` on any domain
+  const setPrefPartner = (consultant) => {
+    let data = {
+      type: "setPrefPartner",
+      data: { ...consultant, siteName: consultant.siteName },
+    };
+    console.log(data)
+    parent.postMessage(data, "*"); //  `*` on any domain
 
-      setModalState("confirmation");
-    },
-    [setModalState]
-  );
+    setModalState("confirmation");
+  }
+
 
   useMemo(() => {
     return consultantList.map((consultant, index) => {
