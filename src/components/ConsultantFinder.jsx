@@ -61,13 +61,13 @@ export default function ConsultantFinder(props) {
 
               <div className="flex flex-col gap-3 items-center md:items-start">
                 <button
-                  className="bg-tlc-purple text-white hover:bg-black capitalize max-w-64 p-4 rounded font-bold"
+                  className="bg-tlc-purple text-white hover:bg-black capitalize max-w-64 p-4 rounded font-bold w-56"
                   onClick={handleKnowConsultant}
                 >
                   {props.dict.find_your_insider.know_btn}
                 </button>
                 <button
-                  className="bg-white text-tlc-purple hover:bg-black capitalize max-w-64 p-4 rounded border-2 border-tlc-purple font-bold flex gap-2 justify-center items-center"
+                  className="bg-white text-tlc-purple hover:bg-black capitalize max-w-64 p-4 rounded border-2 border-tlc-purple font-bold flex gap-2 justify-center items-center w-56"
                   onClick={handleFindConsultant}
                 >
                   {props.dict.find_your_insider.match_btn}
