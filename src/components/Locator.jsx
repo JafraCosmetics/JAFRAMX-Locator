@@ -391,7 +391,7 @@ export default function Locator(props) {
             <div className="mt-3">
               <p className="px-6 mb-6">{renderResultsMessage}</p>
               {consultantList.length > 0 ? (
-                <div className="overflow-y-scroll max-h-450">
+                <div className="flex flex-col gap-2 overflow-auto max-h-450">
                   {consultantCards}
                 </div>
               ) : (
