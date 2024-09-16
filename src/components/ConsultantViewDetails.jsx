@@ -10,19 +10,8 @@ import { AsYouType } from "libphonenumber-js";
 import Image from "next/image";
 
 import AvatarImage from "/public/images/avatar.png";
-import { Avatar } from "@nextui-org/avatar";
 const ConsultantViewDetails = (props) => {
   const [profileImage, setProfileImage] = useState();
-
-  props.consultant.email = "test@tlc.com"
-  props.consultant.hideEmail = "false"
-
-  props.consultant.phone = "+13438574663"
-  props.consultant.hidePhone = "false"
-
-  console.log((props.consultant.email))
-  console.log((props.consultant.hideEmail))
-
 
   const getShopifyConsultant = async (email) => {
     let url = `https://jaf102gd80.execute-api.us-west-2.amazonaws.com/Prod/partners/search?searchType=EMAIL&email=${email}`;
@@ -99,7 +88,10 @@ const ConsultantViewDetails = (props) => {
           <BackIcon color="#272727" />
           <p>{props.dict.find_your_insider.go_back}</p>
         </div>
-        <div className="view-details w-full flex justify-center h-full" key={props.consultant.email}>
+        <div
+          className="view-details w-full flex justify-center h-full"
+          key={props.consultant.email}
+        >
           <div className="flex flex-col h-full bg-stone-700">
             <div className="flex flex-col gap-6 justify-center items-center lg:h-full">
               <Image
@@ -116,7 +108,7 @@ const ConsultantViewDetails = (props) => {
               <div className="flex flex-col gap-4 items-center">
                 {props.consultant.phone ? (
                   props.consultant.hidePhone === null ||
-                    props.consultant.hidePhone === "false" ? (
+                  props.consultant.hidePhone === "false" ? (
                     <div className="flex gap-1 items-center">
                       <PhoneIcon />
                       <p className="view-details__contact ">
@@ -136,7 +128,7 @@ const ConsultantViewDetails = (props) => {
 
                 {props.consultant.email ? (
                   props.consultant.hideEmail === null ||
-                    props.consultant.hideEmail === "false" ? (
+                  props.consultant.hideEmail === "false" ? (
                     <div className="flex gap-1 items-center">
                       <EmailIcon />
                       <p className="view-details__contact">
@@ -177,7 +169,6 @@ const ConsultantViewDetails = (props) => {
                 {props.dict.view_details.select_btn}
               </button>
             </div>
-
           </div>
         </div>
       </div>
