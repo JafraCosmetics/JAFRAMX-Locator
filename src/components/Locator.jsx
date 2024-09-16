@@ -53,12 +53,10 @@ export default function Locator(props) {
       type: "setPrefPartner",
       data: { ...consultant, siteName: consultant.siteName },
     };
-    console.log(data)
     parent.postMessage(data, "*"); //  `*` on any domain
 
     setModalState("confirmation");
-  }
-
+  };
 
   useMemo(() => {
     return consultantList.map((consultant, index) => {
@@ -258,7 +256,7 @@ export default function Locator(props) {
     const defaultMapOptions = {
       disableDefaultUI: true,
       maxZoom: 12,
-      clickableIcons: false
+      clickableIcons: false,
     };
     // if (windowSize.current[0] >= 768) {
     //   containerStyle = {
