@@ -10,8 +10,7 @@ import { UserContext } from "./Locator";
 import { AsYouType } from "libphonenumber-js";
 import Image from "next/image";
 import AvatarImage from "/public/images/avatar.png";
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
-
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const MapMarker = (props) => {
   const { selectedInfoWindow, setSelectedInfoWindow } = useContext(UserContext);
@@ -59,7 +58,7 @@ const MapMarker = (props) => {
       key={props.consultant.siteName}
     >
       {selectedInfoWindow === props.consultant.email &&
-        windowSize.current[0] >= 768 ? (
+      windowSize.current[0] >= 768 ? (
         <InfoWindow
           position={{
             lat: props.consultant.latitude,
@@ -107,7 +106,7 @@ const MapMarker = (props) => {
 
               {props.consultant.phone ? (
                 props.consultant.hidePhone === null ||
-                  props.consultant.hidePhone === "false" ? (
+                props.consultant.hidePhone === false ? (
                   <div className="flex gap-1 items-center mb-2">
                     <PhoneIcon />{" "}
                     <a
@@ -125,7 +124,7 @@ const MapMarker = (props) => {
 
               {props.consultant.email ? (
                 props.consultant.hideEmail === null ||
-                  props.consultant.hideEmail === "false" ? (
+                props.consultant.hideEmail === false ? (
                   <div className="flex gap-1 items-center mb-2">
                     <EmailIcon />{" "}
                     <a
@@ -149,7 +148,7 @@ const MapMarker = (props) => {
         </InfoWindow>
       ) : null}
       ;
-    </Marker >
+    </Marker>
   );
 };
 

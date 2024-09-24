@@ -108,7 +108,7 @@ const ConsultantViewDetails = (props) => {
               <div className="flex flex-col gap-4 items-center">
                 {props.consultant.phone ? (
                   props.consultant.hidePhone === null ||
-                  props.consultant.hidePhone === "false" ? (
+                  props.consultant.hidePhone === false ? (
                     <div className="flex gap-1 items-center">
                       <PhoneIcon />
                       <p className="view-details__contact ">
@@ -128,7 +128,7 @@ const ConsultantViewDetails = (props) => {
 
                 {props.consultant.email ? (
                   props.consultant.hideEmail === null ||
-                  props.consultant.hideEmail === "false" ? (
+                  props.consultant.hideEmail === false ? (
                     <div className="flex gap-1 items-center">
                       <EmailIcon />
                       <p className="view-details__contact">
