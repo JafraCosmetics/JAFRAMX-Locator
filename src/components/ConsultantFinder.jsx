@@ -15,7 +15,7 @@ export default function ConsultantFinder(props) {
   const [modalState, setModalState] = useState("start");
   const [consultantSelected, setConsultantSelected] = useState(false);
 
-  useEffect(() => { }, [consultantSelected]);
+  useEffect(() => {}, [consultantSelected]);
 
   const handleFindConsultant = () => {
     setModalState("find");
@@ -61,13 +61,13 @@ export default function ConsultantFinder(props) {
 
               <div className="flex flex-col gap-3 items-center md:items-start">
                 <button
-                  className="bg-tlc-purple text-white hover:bg-black capitalize max-w-64 p-4 rounded font-bold w-56"
+                  className="bg-senegence-purple text-white hover:bg-black capitalize max-w-64 p-4 rounded font-bold w-56"
                   onClick={handleKnowConsultant}
                 >
                   {props.dict.find_your_insider.know_btn}
                 </button>
                 <button
-                  className="bg-white text-tlc-purple hover:bg-black capitalize max-w-64 p-4 rounded border-2 border-tlc-purple font-bold flex gap-2 justify-center items-center w-56"
+                  className="bg-white text-senegence-purple hover:bg-black capitalize max-w-64 p-4 rounded border-2 border-senegence-purple font-bold flex gap-2 justify-center items-center w-56"
                   onClick={handleFindConsultant}
                 >
                   {props.dict.find_your_insider.match_btn}
@@ -84,7 +84,7 @@ export default function ConsultantFinder(props) {
                   className="close-icon"
                   onClick={closeModal}
                   pathFill="#eeeeee"
-                // circleFill="#717171"
+                  // circleFill="#717171"
                 />
               </div>
               <Image
@@ -101,7 +101,6 @@ export default function ConsultantFinder(props) {
     const confirmationBody = () => {
       return (
         <div className="modal-container flex flex-col">
-
           <div className="modal justify-center items-center flex flex-col gap-9 p-4 w-full h-full">
             <div className="hidden lg:block cursor-pointer absolute top-6 left-6">
               <CloseIcon className="close-icon" onClick={closeModal} />

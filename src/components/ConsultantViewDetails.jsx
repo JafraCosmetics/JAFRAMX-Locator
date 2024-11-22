@@ -163,7 +163,7 @@ const ConsultantViewDetails = (props) => {
                 </div>
               </div>
               <button
-                className="bg-tlc-purple text-white hover:bg-tlc-purple py-5 px-9 rounded uppercase"
+                className="bg-senegence-purple text-white hover:bg-senegence-purple py-5 px-9 rounded uppercase"
                 onClick={props.selectConsultantHandler}
               >
                 {props.dict.view_details.select_btn}

@@ -36,7 +36,7 @@ const renderLocation = (props) => {
 const ConsultantCard = (props) => {
   return (
     <div
-      className="consultant-card flex gap-4 consultant-card__unselected max-h-860 cursor-default border border-tlc-purple rounded-md	"
+      className="consultant-card flex gap-4 consultant-card__unselected max-h-860 cursor-default border border-senegence-purple rounded-md	"
       id={"consultant-card-" + props.consultant.email}
       key={props.consultant.email}
     >

@@ -11,14 +11,14 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        },
+      },
     },
     colors: {
       "mine-shaft": "#272727",
       "border-gray": "#eeeeee",
       "border-gray-selected": "#848484",
       "pr-pink": "#fe6e9c",
-      "tlc-purple": "#5A52B9",
+      "senegence-purple": "#5A52B9",
     },
   },
   plugins: [],
