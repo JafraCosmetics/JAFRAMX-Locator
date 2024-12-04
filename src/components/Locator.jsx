@@ -8,17 +8,31 @@ import React, {
 } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { fromAddress, setKey } from "react-geocode";
+import Radar from "radar-sdk-js";
+import "radar-sdk-js/dist/radar.css";
+import ReactDOMServer, {
+  renderToStaticMarkup,
+  renderToString,
+} from "react-dom/server";
 
 import MapMarker from "./MapMarker";
 import ConsultantCard from "./ConsultantCard";
 import ZipForm from "./ZipForm";
-import { BackIcon, LocationPinIcon } from "./Icons";
+import {
+  BackIcon,
+  EmailIcon,
+  LocationPinIcon,
+  NumberedListIcon,
+  PhoneIcon,
+  WebIcon,
+} from "./Icons";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
 import { LocationIcon } from "./Icons";
 import MapAccordion from "./MapAccordion";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import Image from "next/image";
 import MapPlaceholder from "/public/images/mapPlaceholder.png";
+import { AsYouType } from "libphonenumber-js";
 
 export const UserContext = React.createContext(null);
 
@@ -35,7 +49,8 @@ export default function Locator(props) {
   const [selectedConsultant, setSelectedConsultant] = useState(null);
   const [map, setMap] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
-
+  const [mapCenter, setMapCenter] = useState(null);
+  const [mapTest, setMapTest] = useState(null);
   const {
     consultantSelected,
     setConsultantSelected,
@@ -43,12 +58,11 @@ export default function Locator(props) {
     setModalState,
   } = useContext(ConsultantSelectedContext);
 
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDUDxPArJiIDwhBu0BYMQtZhfLDxvpJII4",
-  });
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
   const setPrefPartner = (consultant) => {
+    console.log("setting pref partner");
+    console.log(consultant);
     let data = {
       type: "setPrefPartner",
       data: { ...consultant, siteName: consultant.siteName },
@@ -58,146 +72,63 @@ export default function Locator(props) {
     setModalState("confirmation");
   };
 
-  useMemo(() => {
-    return consultantList.map((consultant, index) => {
-      return (
-        <UserContext.Provider
-          value={{ selectedInfoWindow, setSelectedInfoWindow }}
-          key={consultant.email}
-        >
-          <MapMarker
-            key={consultant.email}
-            consultant={consultant}
-            number={index + 1}
-            selectConsultantHandler={() => setPrefPartner(consultant)}
-            dict={props.dict}
-          />
-        </UserContext.Provider>
-      );
-    });
-  }, [consultantList, props.dict, selectedInfoWindow, setPrefPartner]);
+  const testgn = () => {
+    console.log("test");
+  };
 
   useEffect(() => {
+    console.log("getting locations");
     const getLocations = async () => {
-      if (currentLocation) {
-        let url = `https://jaf102gd80.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}&zip=${currentZip}`;
+      if (currentZip) {
+        // let url = `https://jaf102gd80.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}&zip=${currentZip}`;
+        let url = `https://sen-stg.api.sultans.co/locator?query=${currentZip}`;
 
         // console.log(url);
         let options = { method: "GET" };
 
-        let data = await fetch(url, options)
+        fetch(url, options)
           .then((res) => res.json())
-          .then((json) => {
+          .then((data) => {
             // console.log(json);
-            return json;
+            sortAndSetConsultantList(data);
+            setMapCenter(data.origin);
+            setLocationsLoaded(true);
           })
           .catch((err) => console.error("error:" + err));
         // console.log(data);
-        sortAndSetConsultantList(data);
-        setLocationsLoaded(true);
       }
     };
     getLocations();
   }, [currentLocation, currentZip]);
 
   const sortAndSetConsultantList = (consultants) => {
-    consultants.sort(function (a, b) {
-      let aDistance = parseInt(a.distance);
-      let bDistance = parseInt(b.distance);
-      if (aDistance < bDistance) return -1;
-      if (aDistance > bDistance) return 1;
-      return 0;
-    });
-    consultants.length = Math.min(consultants.length, 250);
-    setConsultantList(consultants);
+    console.log(consultants);
+    // consultants.locations.sort(function (a, b) {
+    //   let aDistance = parseInt(a.distance);
+    //   let bDistance = parseInt(b.distance);
+    //   if (aDistance < bDistance) return -1;
+    //   if (aDistance > bDistance) return 1;
+    //   return 0;
+    // });
+    // consultants.length = Math.min(consultants.length, 250);
+    if (consultants.locations !== null) {
+      setConsultantList(consultants.locations);
+    } else {
+      setConsultantList([]);
+    }
   };
 
-  const consultantCardClickHandler = (event, consultant) => {
+  const consultantCardClickHandler = (event, marker) => {
     event.preventDefault();
 
     if (event.target === event.currentTarget) {
       // do nothing
     }
-
-    // find marker and click
-    let marker = document.querySelectorAll(`[title="${consultant.email}"]`);
-    marker[0].click();
+    marker.click();
   };
 
   useEffect(() => {
-    const viewDetailsHandler = (event, consultant) => {
-      if (windowSize.current[0] >= 1024) {
-        consultantCardClickHandler(event, consultant);
-      } else {
-        setSelectedConsultant(consultant);
-      }
-    };
-    // Place Markers on Map for consultants
-    const findAllStoresAndPlaceOnMap = (data) => {
-      return data.map((consultant, index) => {
-        return (
-          <UserContext.Provider
-            value={{ selectedInfoWindow, setSelectedInfoWindow }}
-            key={consultant.email}
-          >
-            <MapMarker
-              key={consultant.email}
-              consultant={consultant}
-              number={index + 1}
-              selectConsultantHandler={() => setPrefPartner(consultant)}
-              dict={props.dict}
-            />
-          </UserContext.Provider>
-        );
-      });
-    };
-    const renderConsultantList = () => {
-      const list = consultantList.map((consultant, i) => {
-        return (
-          <ConsultantSelectedContext.Provider
-            value={{ consultantSelected, setConsultantSelected }}
-            key={consultant.email}
-          >
-            <ConsultantCard
-              consultant={consultant}
-              number={i + 1}
-              key={consultant.email}
-              radioClickHandler={consultantCardClickHandler}
-              selectConsultantHandler={() => setPrefPartner(consultant)}
-              viewDetailsHandler={viewDetailsHandler}
-              distance={true}
-              dict={props.dict}
-            />
-          </ConsultantSelectedContext.Provider>
-        );
-      });
-
-      // render consultants list
-      if (list.length > 0) {
-        setConsultantCards(<div className="flex flex-col gap-2">{list}</div>);
-      } else {
-        setConsultantCards(
-          <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
-            <div>{props.dict.match_insider.no_insiders_found}</div>
-          </div>
-        );
-      }
-    };
-
-    renderConsultantList();
-    // render location markers
-    let res = findAllStoresAndPlaceOnMap(consultantList);
-    setMarkerList(res);
-  }, [
-    consultantList,
-    selectedInfoWindow,
-    setPrefPartner,
-    props.dict,
-    consultantSelected,
-    setConsultantSelected,
-  ]);
-
-  useEffect(() => {
+    console.log("selected info window: ", selectedInfoWindow);
     const card = document.getElementById(
       `consultant-card-${selectedInfoWindow}`
     );
@@ -208,7 +139,171 @@ export default function Locator(props) {
 
   useEffect(() => {
     setKey("AIzaSyDUDxPArJiIDwhBu0BYMQtZhfLDxvpJII4");
+    console.log("Initializing Radar");
+    Radar.initialize("prj_live_pk_7eb69ecf69b2d4f2345537ba48f984315b7cb5ca");
   }, []);
+
+  useEffect(() => {
+    const viewDetailsHandler = (event, consultant, marker) => {
+      if (windowSize.current[0] >= 1024) {
+        consultantCardClickHandler(event, marker);
+      } else {
+        setSelectedConsultant(consultant);
+      }
+    };
+
+    const consultantCardList = new Array();
+
+    console.log(consultantList);
+    let i = 0;
+    if (mapCenter !== null) {
+      console.log("origin:", [mapCenter.lng, mapCenter.lat]);
+
+      if (mapRef.current) {
+        const radarMap = Radar.ui.map({
+          container: "map",
+          style: "radar-default-v1",
+          center: [mapCenter.lng, mapCenter.lat],
+          zoom: 10,
+        });
+        console.log("radarMap: ", radarMap);
+
+        mapRef.current = radarMap;
+        setMapTest(radarMap);
+      } else {
+        const radarMap = Radar.ui.map({
+          container: "map",
+          style: "radar-default-v1",
+          center: [mapCenter.lng, mapCenter.lat],
+          zoom: 10,
+        });
+
+        mapRef.current = radarMap;
+        setMapTest(radarMap);
+      }
+
+      console.log("mapRef: ", mapRef);
+
+      for (let consultant of consultantList) {
+        console.log("consultant: " + consultant.latitude, consultant.longitude);
+
+        const infoWindow = (
+          // <div className="map-marker grid grid-cols-20-80 py-4 px-2">
+          //   <div>
+          //     <NumberedListIcon height="2em" width="2em" number={i + 1} />
+          //   </div>
+          <div>
+            {/* <Image
+              name={consultant.displayName}
+              className="mb-3 h-12 w-12 rounded object-contain"
+              src={consultant.profileImage ?? AvatarImage}
+              alt="profile image"
+              fill={false}
+            /> */}
+
+            <div className="mb-3">
+              <h2>{consultant.displayName}</h2>
+              <p>
+                {consultant.distance} {props.dict.consultant_card.distance}
+              </p>
+            </div>
+
+            <div className="flex gap-1 items-center mb-2">
+              <WebIcon />{" "}
+              <a
+                href={"https://shoptlcnow.myshopify.com/" + consultant.siteName}
+                target="_parent"
+              >
+                tlc.com/{consultant.siteName}
+              </a>
+            </div>
+
+            {consultant.phone ? (
+              consultant.hidePhone === null ||
+              consultant.hidePhone === false ? (
+                <div className="flex gap-1 items-center mb-2">
+                  <PhoneIcon />{" "}
+                  <a
+                    href={"tel:" + new AsYouType("US").input(consultant.phone)}
+                    target="_parent"
+                  >
+                    {new AsYouType("US").input(consultant.phone)}
+                  </a>
+                </div>
+              ) : null
+            ) : null}
+
+            {consultant.email ? (
+              consultant.hideEmail === null ||
+              consultant.hideEmail === false ? (
+                <div className="flex gap-1 items-center mb-2">
+                  <EmailIcon />{" "}
+                  <a href={"mailto:" + consultant.email} target="_parent">
+                    {consultant.email}
+                  </a>
+                </div>
+              ) : null
+            ) : null}
+
+            {/* 
+              <button
+                className="h-8 bg-mine-shaft text-white hover:bg-black rounded"
+              >
+                Select
+              </button> */}
+          </div>
+          // </div>
+        );
+
+        const marker = Radar.ui
+          .marker({
+            popup: {
+              html: renderToString(infoWindow),
+              maxWidth: 300,
+            },
+          })
+          .setLngLat([consultant.longitude, consultant.latitude])
+          .addTo(mapRef.current);
+
+        marker._element.onclick = () => {
+          setSelectedInfoWindow(consultant.displayName);
+        };
+
+        consultantCardList.push(
+          <ConsultantSelectedContext.Provider
+            value={{ consultantSelected, setConsultantSelected }}
+            key={consultant.email}
+          >
+            <ConsultantCard
+              consultant={consultant}
+              marker={marker._element}
+              number={i + 1}
+              key={consultant.displayName}
+              selectConsultantHandler={() => setPrefPartner(consultant)}
+              viewDetailsHandler={viewDetailsHandler}
+              distance={true}
+              dict={props.dict}
+            />
+          </ConsultantSelectedContext.Provider>
+        );
+
+        i++;
+      }
+
+      // render consultants list
+      if (consultantCardList.length > 0) {
+        setConsultantCards(
+          <div className="flex flex-col gap-2">{consultantCardList}</div>
+        );
+      } else {
+        setConsultantCards(
+          <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
+            <div>{props.dict.match_insider.no_insiders_found}</div>
+          </div>
+        );
+      }
+    }
+  }, [consultantList]);
 
   const getCurrentLocation = () => {
     setGettingCurrentLocation(true);
@@ -223,83 +318,16 @@ export default function Locator(props) {
   const updateOrigin = async (event) => {
     event.preventDefault();
     setLocationsLoaded(false);
+    const mapDiv = document.getElementById("map");
+    if (mapDiv !== null) mapDiv.innerHTML = "";
     let zipCode = event.target.elements.zip.value;
     setCurrentZip(zipCode);
     setSelectedConsultant(null);
     setSelectedInfoWindow("");
-    let res = await fromAddress(zipCode)
-      .then((response) => {
-        return response.results[0];
-      })
-      .catch((error) => {
-        console.error(error);
-        setLocationsLoaded(false);
-        setCurrentZip(null);
-        setShowWarning(true);
-        return null;
-      });
-
-    let newOrigin = res.geometry.location;
-    setCurrentLocation(newOrigin);
   };
-
-  const handleMapLoad = (map) => {
-    mapRef.current = map;
-  };
-
-  useEffect(() => {
-    let containerStyle = {
-      width: "100%",
-      height: "200px",
-      borderRadius: "0px 8px 8px 0px",
-    };
-    const defaultMapOptions = {
-      disableDefaultUI: true,
-      maxZoom: 12,
-      clickableIcons: false,
-    };
-    // if (windowSize.current[0] >= 768) {
-    //   containerStyle = {
-    //     width: "100%",
-    //     height: "578px",
-    //   };
-    // } else if (windowSize.current[0] >= 1300) {
-    //   containerStyle = {
-    //     width: "730px",
-    //     height: "796px",
-    //   };
-    // }
-
-    containerStyle = {
-      width: "100%",
-      height: "100%",
-    };
-    setMap(
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        zoom={10}
-        center={currentLocation}
-        onLoad={handleMapLoad}
-        options={defaultMapOptions}
-      >
-        {markerList}
-      </GoogleMap>
-
-      // <APIProvider apiKey="AIzaSyDuAN1dGgV5iShaAaUkiuN5ksaQm3XlH68">
-      //   <Map
-      //     style={containerStyle}
-      //     defaultCenter={currentLocation}
-      //     defaultZoom={10}
-      //     gestureHandling={'greedy'}
-      //     disableDefaultUI={true}
-      //   >
-      //     {markerList}
-      //   </Map>
-      // </APIProvider>
-    );
-  }, [markerList, currentLocation]);
 
   const renderResultsMessage = useMemo(() => {
+    console.log(consultantList);
     if (currentZip) {
       return (
         <>
@@ -341,7 +369,7 @@ export default function Locator(props) {
     );
   }, [props.dict]);
 
-  return isLoaded && locationsLoaded ? (
+  return locationsLoaded ? (
     selectedConsultant ? (
       <div className="modal-container h-full lg:h-860">
         <div className="modal p-4 w-full flex lg:grid lg:p-8 modal-container-grid">
@@ -397,9 +425,10 @@ export default function Locator(props) {
               )}
             </div>
           </div>
-          <div className="hidden lg:block modal-container__right map-container rounded-r-lg">
-            {map}
-          </div>
+          <div
+            id="map"
+            className="hidden lg:block modal-container__right map-container rounded-r-lg"
+          ></div>
         </div>
       </div>
     )

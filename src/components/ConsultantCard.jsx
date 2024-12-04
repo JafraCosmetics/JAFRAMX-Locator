@@ -37,12 +37,16 @@ const ConsultantCard = (props) => {
   return (
     <div
       className="consultant-card flex gap-4 consultant-card__unselected max-h-860 cursor-default border border-senegence-purple rounded-md	"
-      id={"consultant-card-" + props.consultant.email}
+      id={"consultant-card-" + props.consultant.displayName}
       key={props.consultant.email}
     >
       <div className="flex items-start justify-start lg:block">
         <Avatar
-          src={props.consultant.profileImage ?? AvatarImage.src}
+          src={
+            props.consultant.profileImage !== ""
+              ? props.consultant.profileImage
+              : AvatarImage.src
+          }
           className="w-8 lg:w-14 rounded-full"
         />
       </div>
@@ -74,7 +78,7 @@ const ConsultantCard = (props) => {
           <a
             className="text-xs cursor-pointer"
             onClick={(event) =>
-              props.viewDetailsHandler(event, props.consultant)
+              props.viewDetailsHandler(event, props.consultant, props.marker)
             }
           >
             {props.dict.consultant_card.view_details}
