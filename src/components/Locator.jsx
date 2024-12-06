@@ -1,21 +1,7 @@
-import React, {
-  useContext,
-  useMemo,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-} from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import { fromAddress, setKey } from "react-geocode";
+import React, { useContext, useMemo, useState, useEffect, useRef } from "react";
 import Radar from "radar-sdk-js";
-import "radar-sdk-js/dist/radar.css";
-import ReactDOMServer, {
-  renderToStaticMarkup,
-  renderToString,
-} from "react-dom/server";
+import { renderToString } from "react-dom/server";
 
-import MapMarker from "./MapMarker";
 import ConsultantCard from "./ConsultantCard";
 import ZipForm from "./ZipForm";
 import {
@@ -50,13 +36,8 @@ export default function Locator(props) {
   const [map, setMap] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
   const [mapCenter, setMapCenter] = useState(null);
-  const [mapTest, setMapTest] = useState(null);
-  const {
-    consultantSelected,
-    setConsultantSelected,
-    modalState,
-    setModalState,
-  } = useContext(ConsultantSelectedContext);
+  const { consultantSelected, setConsultantSelected, setModalState } =
+    useContext(ConsultantSelectedContext);
 
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
@@ -72,18 +53,12 @@ export default function Locator(props) {
     setModalState("confirmation");
   };
 
-  const testgn = () => {
-    console.log("test");
-  };
-
   useEffect(() => {
     console.log("getting locations");
     const getLocations = async () => {
       if (currentZip) {
-        // let url = `https://jaf102gd80.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}&zip=${currentZip}`;
         let url = `https://sen-stg.api.sultans.co/locator?query=${currentZip}`;
 
-        // console.log(url);
         let options = { method: "GET" };
 
         fetch(url, options)
@@ -138,7 +113,6 @@ export default function Locator(props) {
   }, [selectedInfoWindow]);
 
   useEffect(() => {
-    setKey("AIzaSyDUDxPArJiIDwhBu0BYMQtZhfLDxvpJII4");
     console.log("Initializing Radar");
     Radar.initialize("prj_live_pk_7eb69ecf69b2d4f2345537ba48f984315b7cb5ca");
   }, []);
@@ -169,7 +143,6 @@ export default function Locator(props) {
         console.log("radarMap: ", radarMap);
 
         mapRef.current = radarMap;
-        setMapTest(radarMap);
       } else {
         const radarMap = Radar.ui.map({
           container: "map",
@@ -179,7 +152,6 @@ export default function Locator(props) {
         });
 
         mapRef.current = radarMap;
-        setMapTest(radarMap);
       }
 
       console.log("mapRef: ", mapRef);
@@ -387,7 +359,8 @@ export default function Locator(props) {
           <div className="modal__left overflow-hidden">
             <>
               <div
-                data-close-modal
+                // data-close-modal
+                data-micromodal-close
                 className="close-modal flex items-center gap-4 mb-9"
                 onClick={props.returnToStartHandler}
               >
