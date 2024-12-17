@@ -1,12 +1,12 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState } from "react";
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-} from '@material-tailwind/react';
-import { AccordionOpenIcon, AccordionCloseIcon } from './Icons';
+} from "@material-tailwind/react";
+import { AccordionOpenIcon, AccordionCloseIcon } from "./Icons";
 
-const MapAccordion = (props) => {
+const MapAccordion = () => {
   const [open, setOpen] = useState();
 
   const handleOpen = (value) => {
@@ -23,7 +23,12 @@ const MapAccordion = (props) => {
               View Map
             </div>
           </AccordionHeader>
-          <AccordionBody>{props.body}</AccordionBody>
+          <AccordionBody>
+            <div
+              id="map-mobile"
+              style={{ height: "100%", width: "100%", minHeight: "300px" }}
+            ></div>
+          </AccordionBody>
         </Accordion>
       </Fragment>
     </div>

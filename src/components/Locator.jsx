@@ -140,6 +140,13 @@ export default function Locator(props) {
           center: [mapCenter.lng, mapCenter.lat],
           zoom: 10,
         });
+
+        Radar.ui.map({
+          container: "map-mobile",
+          style: "radar-default-v1",
+          center: [mapCenter.lng, mapCenter.lat],
+          zoom: 10,
+        });
         console.log("radarMap: ", radarMap);
 
         mapRef.current = radarMap;
@@ -149,6 +156,12 @@ export default function Locator(props) {
           style: "radar-default-v1",
           center: [mapCenter.lng, mapCenter.lat],
           zoom: 10,
+        });
+        Radar.ui.map({
+          container: "map-mobile",
+          style: "radar-default-v1",
+          center: [mapCenter.lng, mapCenter.lat],
+          zoom: 9,
         });
 
         mapRef.current = radarMap;
@@ -386,7 +399,7 @@ export default function Locator(props) {
               </UserContext.Provider>
             </>
             <div className="lg:hidden">
-              <MapAccordion body={map} />
+              <MapAccordion />
             </div>
 
             <div className="mt-3">
