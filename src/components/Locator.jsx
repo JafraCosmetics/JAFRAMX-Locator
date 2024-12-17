@@ -26,6 +26,8 @@ export const UserContext = React.createContext(null);
 
 export default function Locator(props) {
   const mapRef = useRef(null);
+  const mobileMapRef = useRef(null);
+
   const [locationsLoaded, setLocationsLoaded] = useState(false);
   const [markerList, setMarkerList] = useState([]);
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -141,7 +143,7 @@ export default function Locator(props) {
           zoom: 10,
         });
 
-        Radar.ui.map({
+        mobileMapRef.current = Radar.ui.map({
           container: "map-mobile",
           style: "radar-default-v1",
           center: [mapCenter.lng, mapCenter.lat],
@@ -157,7 +159,7 @@ export default function Locator(props) {
           center: [mapCenter.lng, mapCenter.lat],
           zoom: 10,
         });
-        Radar.ui.map({
+        mobileMapRef.current = Radar.ui.map({
           container: "map-mobile",
           style: "radar-default-v1",
           center: [mapCenter.lng, mapCenter.lat],
@@ -251,6 +253,20 @@ export default function Locator(props) {
           .addTo(mapRef.current);
 
         marker._element.onclick = () => {
+          setSelectedInfoWindow(consultant.displayName);
+        };
+
+        const mobileMarker = Radar.ui
+          .marker({
+            popup: {
+              html: renderToString(infoWindow),
+              maxWidth: 300,
+            },
+          })
+          .setLngLat([consultant.longitude, consultant.latitude])
+          .addTo(mobileMapRef.current);
+
+        mobileMarker._element.onclick = () => {
           setSelectedInfoWindow(consultant.displayName);
         };
 
