@@ -20,6 +20,7 @@ import ConsultantViewDetails from "./ConsultantViewDetails";
 import Image from "next/image";
 import MapPlaceholder from "/public/images/mapPlaceholder.png";
 import { AsYouType } from "libphonenumber-js";
+import { Scrollbars } from "react-custom-scrollbars";
 
 export const UserContext = React.createContext(null);
 
@@ -85,14 +86,6 @@ export default function Locator(props) {
 
   const sortAndSetConsultantList = (consultants) => {
     console.log(consultants);
-    // consultants.locations.sort(function (a, b) {
-    //   let aDistance = parseInt(a.distance);
-    //   let bDistance = parseInt(b.distance);
-    //   if (aDistance < bDistance) return -1;
-    //   if (aDistance > bDistance) return 1;
-    //   return 0;
-    // });
-    // consultants.length = Math.min(consultants.length, 250);
     if (consultants.locations !== null) {
       setConsultantList(consultants.locations);
     } else {
@@ -272,7 +265,9 @@ export default function Locator(props) {
       // render consultants list
       if (consultantCardList.length > 0) {
         setConsultantCards(
-          <div className="flex flex-col gap-2">{consultantCardList}</div>
+          <div style={{ width: "95%" }} className="flex flex-col gap-2">
+            {consultantCardList}
+          </div>
         );
       } else {
         setConsultantCards(
@@ -397,9 +392,9 @@ export default function Locator(props) {
             <div className="mt-3">
               <p className="px-6 mb-6">{renderResultsMessage}</p>
               {consultantList.length > 0 ? (
-                <div className="flex flex-col gap-2 overflow-auto max-h-450">
+                <Scrollbars autoHide style={{ width: 370, height: 325 }}>
                   {consultantCards}
-                </div>
+                </Scrollbars>
               ) : (
                 <div>{consultantCards}</div>
               )}
