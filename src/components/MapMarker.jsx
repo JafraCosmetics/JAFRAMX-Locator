@@ -95,7 +95,7 @@ const MapMarker = (props) => {
                 <WebIcon />{" "}
                 <a
                   href={
-                    "https://shoptlcnow.myshopify.com/" +
+                    "https://693176-75.myshopify.com/" +
                     props.consultant.siteName
                   }
                   target="_parent"

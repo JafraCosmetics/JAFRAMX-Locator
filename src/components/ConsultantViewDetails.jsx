@@ -149,7 +149,7 @@ const ConsultantViewDetails = (props) => {
                   <p className="view-details__contact">
                     <a
                       href={
-                        "https://shoptlcnow.myshopify.com/" +
+                        "https://693176-75.myshopify.com/" +
                         props.consultant.siteName
                       }
                       target="_parent"
