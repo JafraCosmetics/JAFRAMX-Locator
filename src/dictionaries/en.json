@@ -1,26 +1,26 @@
 {
   "find_your_insider": {
-    "title": "Find A Life Changer",
-    "body": "Get direct support to meet your needs by connecting with a Life Changer!",
-    "know_btn": "I Know a Life Changer",
-    "match_btn": "Find a Life Changer",
+    "title": "Find A Distributor",
+    "body": "Get direct support to meet your needs by connecting with a Distributor!",
+    "know_btn": "I Know a Distributor",
+    "match_btn": "Find a Distributor",
     "go_back": "Go Back"
   },
   "i_know_an_insider": {
-    "header": "I Know a Life Changer",
-    "body": "Did a Life Changer introduce you to Senegence? Sign up as part of their team!",
-    "help_link": "Help me find a Life Changer in my area",
+    "header": "I Know a Distributor",
+    "body": "Did a Distributor introduce you to Senegence? Sign up as part of their team!",
+    "help_link": "Help me find a Distributor in my area",
     "search_header": "Search by Name or Webalias",
-    "input_placeholder": "Enter Life Changer's Name or Webalias",
-    "loading_insiders": "Loading Life Changers in your area.",
+    "input_placeholder": "Enter Distributor's Name or Webalias",
+    "loading_insiders": "Loading Distributors in your area.",
     "loading": "Loading...",
-    "no_results": "No Life Changers Found",
+    "no_results": "No Distributors Found",
     "results_found": "Results Found"
   },
   "match_insider": {
-    "header": "Find A Life Changer",
-    "body": "Looking for one-on-one guidance as you get started? Find a Life Changer near you!",
-    "help_link": "I already have a Life Changer I want to sign up with.",
+    "header": "Find A Distributor",
+    "body": "Looking for one-on-one guidance as you get started? Find a Distributor near you!",
+    "help_link": "I already have a Distributor I want to sign up with.",
     "search_header": "Please enter your zipcode.",
     "input_placeholder": "Enter your zipcode.",
     "use_location": "Use my current location",
@@ -28,8 +28,8 @@
     "results_found": "Results Found Near You",
     "distance": "Miles Away",
     "view_details": "View Details",
-    "loading_insiders": "Loading Life Changers In Your Area.",
-    "no_insiders_found": "There are no Life Changers in your area.",
+    "loading_insiders": "Loading Distributors In Your Area.",
+    "no_insiders_found": "There are no Distributors in your area.",
     "results_found_within": "Results Found Within 50 Mi of",
     "results_found_near_you": "Results Found Near You",
     "loading": "Loading...",
@@ -38,15 +38,15 @@
   "consultant_card": {
     "distance": "Miles Away",
     "view_details": "View Details",
-    "select_insider": "Select A Life Changer",
+    "select_insider": "Select A Distributor",
     "located_at": "Located in"
   },
   "view_details": {
-    "select_btn": "Select Life Changer",
+    "select_btn": "Select Distributor",
     "located_at": "Located in"
   },
   "selection_confirmation": {
-    "confirm_msg": "Your Life Changer Has Been Selected",
+    "confirm_msg": "Your Distributor Has Been Selected",
     "close_btn": "Close"
   }
 }

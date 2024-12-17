@@ -18,7 +18,7 @@ module.exports = {
       "border-gray": "#eeeeee",
       "border-gray-selected": "#848484",
       "pr-pink": "#fe6e9c",
-      "senegence-purple": "#5A52B9",
+      "senegence-blue": "#3C649B",
     },
   },
   plugins: [],

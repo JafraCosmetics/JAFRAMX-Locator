@@ -9,7 +9,7 @@ import {
 import { UserContext } from "./Locator";
 import { AsYouType } from "libphonenumber-js";
 import Image from "next/image";
-import AvatarImage from "/public/images/avatar.png";
+import AvatarImage from "/public/images/avatar.webp";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const MapMarker = (props) => {
@@ -45,14 +45,14 @@ const MapMarker = (props) => {
       onClick={() => onMarkerClick()}
       icon={{
         path: faLocationDot.icon[4],
-        fillColor: "#5A52B9",
+        fillColor: "#3C649B",
         fillOpacity: 1,
         anchor: new google.maps.Point(
           faLocationDot.icon[0] / 2, // width
           faLocationDot.icon[1] // height
         ),
         strokeWeight: 1,
-        strokeColor: "#5A52B9",
+        strokeColor: "#3C649B",
         scale: 0.075,
       }}
       key={props.consultant.siteName}
@@ -100,7 +100,7 @@ const MapMarker = (props) => {
                   }
                   target="_parent"
                 >
-                  tlc.com/{props.consultant.siteName}
+                  senegence.com/{props.consultant.siteName}
                 </a>
               </div>
 

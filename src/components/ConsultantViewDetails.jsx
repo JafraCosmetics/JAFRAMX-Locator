@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { AsYouType } from "libphonenumber-js";
 import Image from "next/image";
 
-import AvatarImage from "/public/images/avatar.png";
+import AvatarImage from "/public/images/avatar.webp";
 const ConsultantViewDetails = (props) => {
   const [profileImage, setProfileImage] = useState();
 
@@ -154,7 +154,7 @@ const ConsultantViewDetails = (props) => {
                       }
                       target="_parent"
                     >
-                      tlc.com/{props.consultant.siteName}
+                      senegence.com/{props.consultant.siteName}
                     </a>
                   </p>
                 </div>
@@ -163,7 +163,7 @@ const ConsultantViewDetails = (props) => {
                 </div>
               </div>
               <button
-                className="bg-senegence-purple text-white hover:bg-senegence-purple py-5 px-9 rounded uppercase"
+                className="bg-senegence-blue text-white hover:bg-senegence-blue py-5 px-9 rounded uppercase"
                 onClick={props.selectConsultantHandler}
               >
                 {props.dict.view_details.select_btn}

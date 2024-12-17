@@ -1,5 +1,5 @@
 import Image from "next/image";
-import AvatarImage from "/public/images/avatar.png";
+import AvatarImage from "/public/images/avatar.webp";
 import { Avatar } from "@material-tailwind/react";
 
 const renderLocation = (props) => {
@@ -36,7 +36,7 @@ const renderLocation = (props) => {
 const ConsultantCard = (props) => {
   return (
     <div
-      className="consultant-card flex gap-4 consultant-card__unselected max-h-860 cursor-default border border-senegence-purple rounded-md	"
+      className="consultant-card flex gap-4 consultant-card__unselected max-h-860 cursor-default border border-senegence-blue rounded-md	"
       id={"consultant-card-" + props.consultant.displayName}
       key={props.consultant.email}
     >
