@@ -57,9 +57,15 @@ export default function Locator(props) {
   useEffect(() => {
     console.log("getting locations");
     const getLocations = async () => {
+      let url = "";
       if (currentZip) {
-        let url = `https://sen-stg.api.sultans.co/locator?query=${currentZip}`;
+        url = `https://sen-stg.api.sultans.co/locator?zip=${currentZip}`;
+      } else if (currentLocation) {
+        console.log(currentLocation);
+        url = `https://sen-stg.api.sultans.co/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
+      }
 
+      if (url !== "") {
         let options = { method: "GET" };
 
         fetch(url, options)
