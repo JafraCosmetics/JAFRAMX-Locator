@@ -30,7 +30,7 @@ export default function ConsultantSearch(props) {
       setSelectedConsultant(false);
       setLoadingConsultants(true);
 
-      let url = `https://jaf102gd80.execute-api.us-west-2.amazonaws.com/Prod/partners/search?searchType=LOCATOR&locator=${searchQuery.replace(
+      let url = `https://sen-stg.api.sultans.co/locator/search?site=${searchQuery.replace(
         " ",
         "%20"
       )}`;

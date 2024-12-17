@@ -14,7 +14,7 @@ const ConsultantViewDetails = (props) => {
   const [profileImage, setProfileImage] = useState();
 
   const getShopifyConsultant = async (email) => {
-    let url = `https://jaf102gd80.execute-api.us-west-2.amazonaws.com/Prod/partners/search?searchType=EMAIL&email=${email}`;
+    let url = `https://sen-stg.api.sultans.co/search?searchType=EMAIL&email=${email}`;
 
     let options = {
       method: "GET",

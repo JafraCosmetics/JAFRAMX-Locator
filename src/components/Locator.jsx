@@ -1,5 +1,6 @@
 import React, { useContext, useMemo, useState, useEffect, useRef } from "react";
 import Radar from "radar-sdk-js";
+import "radar-sdk-js/dist/radar.css";
 import { renderToString } from "react-dom/server";
 
 import ConsultantCard from "./ConsultantCard";
@@ -46,7 +47,7 @@ export default function Locator(props) {
     console.log(consultant);
     let data = {
       type: "setPrefPartner",
-      data: { ...consultant, siteName: consultant.siteName },
+      data: consultant,
     };
     parent.postMessage(data, "*"); //  `*` on any domain
 

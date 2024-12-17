@@ -42,11 +42,7 @@ export default function ConsultantFinder(props) {
         <div className="modal-container">
           <div className="modal flex flex-col lg:grid lg:modal-container-grid lg:p-8">
             <div className="modal__left order-2 p-4 lg:order-1">
-              <div
-                // data-close-modal="find-your-consultant"
-                data-micromodal-close
-                className="close-button hidden lg:block cursor-pointer absolute top-6 left-6"
-              >
+              <div className="close-button hidden lg:block cursor-pointer absolute top-6 left-6">
                 <CloseIcon className="close-icon" onClick={closeModal} />
               </div>
 
@@ -77,11 +73,7 @@ export default function ConsultantFinder(props) {
               </div>
             </div>
             <div className="order-1 lg:order-2 lg:h-unset">
-              <div
-                // data-close-modal="find-your-consultant"
-                data-micromodal-close
-                className="close-button lg:hidden cursor-pointer absolute top-2 left-2"
-              >
+              <div className="close-button lg:hidden cursor-pointer absolute top-2 left-2">
                 <CloseIcon
                   className="close-icon"
                   onClick={closeModal}
