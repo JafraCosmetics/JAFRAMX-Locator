@@ -45,14 +45,14 @@ const MapMarker = (props) => {
       onClick={() => onMarkerClick()}
       icon={{
         path: faLocationDot.icon[4],
-        fillColor: "#3C649B",
+        fillColor: "#8f4899",
         fillOpacity: 1,
         anchor: new google.maps.Point(
           faLocationDot.icon[0] / 2, // width
           faLocationDot.icon[1] // height
         ),
         strokeWeight: 1,
-        strokeColor: "#3C649B",
+        strokeColor: "#8f4899",
         scale: 0.075,
       }}
       key={props.consultant.siteName}
@@ -100,7 +100,7 @@ const MapMarker = (props) => {
                   }
                   target="_parent"
                 >
-                  senegence.com/{props.consultant.siteName}
+                  jafraqa.myshopify.com/{props.consultant.siteName}
                 </a>
               </div>
 

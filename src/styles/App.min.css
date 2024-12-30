@@ -31,7 +31,7 @@
   font-style: normal;
   font-size: 14px;
   line-height: 20px;
-  color: #3c649b;
+  color: #8f4899;
 }
 .modal-container .close-icon {
   height: 2em;
@@ -144,7 +144,7 @@
   font-weight: 450;
   font-size: 14px;
   line-height: 16px;
-  color: #3c649b;
+  color: #8f4899;
 }
 .modal-container .map-marker p {
   font-family: "brandon-grotesque", sans-serif;
@@ -169,7 +169,7 @@
   line-height: 16px;
 }
 .modal-container .view-details {
-  color: #3c649b;
+  color: #8f4899;
   font-weight: 500;
 }
 @media (min-width: 1024px) {
@@ -228,7 +228,7 @@
   }
 }
 .consultant-card__selected {
-  border-color: #3c649b;
+  border-color: #8f4899;
 }
 .consultant-card__unselected {
   border-color: #eee;
@@ -252,7 +252,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 22px;
-  color: #3c649b;
+  color: #8f4899;
 }
 @media (min-width: 768px) {
   .consultant-card a {
@@ -279,7 +279,7 @@
   padding-bottom: 16px;
 }
 .search-warning {
-  color: #3c649b;
+  color: #8f4899;
   font-size: 14px;
 }
 @media (min-width: 768px) {

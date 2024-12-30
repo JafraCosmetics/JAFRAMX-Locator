@@ -14,7 +14,7 @@ const ConsultantViewDetails = (props) => {
   const [profileImage, setProfileImage] = useState();
 
   const getShopifyConsultant = async (email) => {
-    let url = `https://sen-stg.api.sultans.co/search?searchType=EMAIL&email=${email}`;
+    let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/search?searchType=EMAIL&email=${email}`;
 
     let options = {
       method: "GET",
@@ -154,7 +154,7 @@ const ConsultantViewDetails = (props) => {
                       }
                       target="_parent"
                     >
-                      senegence.com/{props.consultant.siteName}
+                      jafra.com/{props.consultant.siteName}
                     </a>
                   </p>
                 </div>
@@ -163,7 +163,7 @@ const ConsultantViewDetails = (props) => {
                 </div>
               </div>
               <button
-                className="bg-senegence-blue text-white hover:bg-senegence-blue py-5 px-9 rounded uppercase"
+                className="bg-jafra-purple text-white hover:bg-jafra-purple py-5 px-9 rounded uppercase"
                 onClick={props.selectConsultantHandler}
               >
                 {props.dict.view_details.select_btn}
