@@ -1,34 +1,34 @@
 {
   "find_your_insider": {
-    "title": "Encuentra un Cambiador de Vida",
-    "body": "¡Obtén apoyo directo para satisfacer tus necesidades al conectarte con un Cambiador de Vida!",
-    "know_btn": "Conozco a un Cambiador de Vida",
-    "match_btn": "Encuentra un Cambiador de Vida",
+    "title": "Encuentra Una Consultora de Belleza",
+    "body": "Recibe recomendaciones personalizados y apoyo directo al comprar con tu “Insider”. ",
+    "know_btn": "Conozco a  Una Insider",
+    "match_btn": "Conéctame con una\"Insider\"",
     "go_back": "Regresa"
   },
   "i_know_an_insider": {
-    "header": "Conozco a un Cambiador de Vida",
-    "body": "¿Un Cambiador de Vida te presentó a Jafra? ¡Regístrate como parte de su equipo!",
-    "help_link": "Ayúdame a encontrar un Cambiador de Vida en mi área",
-    "search_header": "Buscar por nombre o Sitio Web ",
-    "input_placeholder": "Ingresa el nombre del Cambiador de Vida o Sitio Web ",
-    "loading_insiders": "Cargando Cambiador de Vida en su área.",
+    "header": "Conozco a  Una Insider",
+    "body": "¿Fue en un “Pop Up” o fuiste referida por una “Insider” que reconoces? Encuéntrala aquí para obtener sus recomendaciones y que te conteste todas tus preguntas directamente. ",
+    "help_link": "Ayúdame a ser conectada con una “Insider”",
+    "search_header": "Buscar por Nombre o Por Sitio Web",
+    "input_placeholder": "Entra nombre de la “Insider” o sitio web (URL)",
+    "loading_insiders": "Cargando \"Insider\" en su área.",
     "loading": "Cargando...",
-    "no_results": "No se encontro Cambiador de Vida",
+    "no_results": "No se encontraron “Insider”",
     "results_found": "Resultados encontrados"
   },
   "match_insider": {
-    "header": "Encuentra un Cambiador de Vida",
-    "body": "¿Buscas orientación personalizada para empezar? ¡Encuentra un Distributor cerca de ti!",
-    "help_link": "Ya tengo un Cambiador de Vida con el que quiero registrarme.",
-    "input_placeholder": "Ingrese su código postal.",
-    "use_location": "Utiliza mi ubicación actual",
+    "header": "Conéctame con una \"Insider\"",
+    "body": "Haz tu experiencia de compras más personal con una “JAFRA Insider”. Tus preguntas serán respondidas directamente y recibirás sus recomendaciones al hacer tus compras. ",
+    "help_link": "Ya tengo a una \"Insider\" con quien quiero hacer mis compras",
+    "input_placeholder": "Entra tu Código Postal",
+    "use_location": "Utilizar mi Ubicación o Entrar Código Postal para Encontrar \"Insiders\" ",
     "map_text": "Usar Mi Ubicación Actual",
     "results_found": "Resultados Encontrados Cerca de Ti ",
     "distance": "Kilómetros de distancia",
     "view_details": "Ver detalles",
-    "loading_insiders": "Cargando “Cambiador de Vida” en su área.",
-    "no_insiders_found": "No hay “Cambiador de Vida” en su área.",
+    "loading_insiders": "Cargando “Insider” en su área.",
+    "no_insiders_found": "No hay “Insider” en su área.",
     "results_found_within": "Resultados encontrados dentro de 50 millas de",
     "results_found_near_you": "Resultados encontrados cerca de usted",
     "loading": "Cargando...",
@@ -37,15 +37,15 @@
   "consultant_card": {
     "distance": "Millas de Distancia",
     "view_details": "Ver Detalles",
-    "select_insider": "Seleccionar Como Cambiador de Vida",
+    "select_insider": "Seleccionar Como \"Insider\"",
     "located_at": "Situado en"
   },
   "view_details": {
-    "select_btn": "Seleccionar Cambiador de Vida",
+    "select_btn": "Seleccionar \"Insider\"",
     "located_at": "Situado en"
   },
   "selection_confirmation": {
-    "confirm_msg": "Tu Cambiador de Vida ha sido Seleccionado",
+    "confirm_msg": "Tu \"Insider\" ha sido Seleccionado",
     "close_btn": "Cerrar"
   }
 }
