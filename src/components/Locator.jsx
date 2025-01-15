@@ -116,7 +116,7 @@ export default function Locator(props) {
 
   useEffect(() => {
     console.log("Initializing Radar");
-    Radar.initialize("prj_live_pk_7eb69ecf69b2d4f2345537ba48f984315b7cb5ca");
+    Radar.initialize("prj_live_pk_6a0d55930a995a15e35d0d320e5d4879f086610b");
   }, []);
 
   useEffect(() => {
