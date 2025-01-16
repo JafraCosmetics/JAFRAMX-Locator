@@ -9,7 +9,7 @@ import {
 import { UserContext } from "./Locator";
 import { AsYouType } from "libphonenumber-js";
 import Image from "next/image";
-import AvatarImage from "/public/images/avatar.webp";
+import AvatarImage from "/public/images/avatar.png";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const MapMarker = (props) => {
