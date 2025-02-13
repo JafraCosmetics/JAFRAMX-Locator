@@ -45,16 +45,43 @@ export default function Locator(props) {
 
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
+  const findConsultantByEmail = async (email) => {
+    // validate searchQuery
+
+    let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
+
+    let options = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+
+    return fetch(url, options)
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.partners.length > 0) {
+          return json.partners[0].siteName;
+        }
+        return null;
+      })
+      .catch((err) => console.error("error:" + err));
+  };
+
   const setPrefPartner = (consultant) => {
     console.log("setting pref partner");
     console.log(consultant);
-    let data = {
-      type: "setPrefPartner",
-      data: consultant,
-    };
-    parent.postMessage(data, "*"); //  `*` on any domain
 
-    setModalState("confirmation");
+    // get site name
+    findConsultantByEmail(consultant.email).then((siteName) => {
+      console.log(siteName);
+      consultant.siteName = siteName;
+      let data = {
+        type: "setPrefPartner",
+        data: consultant,
+      };
+      parent.postMessage(data, "*"); //  `*` on any domain
+
+      setModalState("confirmation");
+    });
   };
 
   useEffect(() => {
