@@ -232,7 +232,7 @@ export default function Locator(props) {
               </a>
             </div>
 
-            {consultant.phone ? (
+            {/* {consultant.phone ? (
               consultant.hidePhone === null ||
               consultant.hidePhone === false ? (
                 <div className="flex gap-1 items-center mb-2">
@@ -257,7 +257,7 @@ export default function Locator(props) {
                   </a>
                 </div>
               ) : null
-            ) : null}
+            ) : null} */}
 
             {/* 
               <button
