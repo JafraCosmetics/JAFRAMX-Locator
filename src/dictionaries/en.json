@@ -1,34 +1,34 @@
 {
   "find_your_insider": {
-    "title": "Find Your Insider",
-    "body": "Get personailzed reccomendations & direct support by shopping with our Insider",
-    "know_btn": "I Know an Insider",
-    "match_btn": "Match Me With An Insider",
+    "title": "Find Your Consultant",
+    "body": "Get personalized recommendations & direct support by shopping with a Consultant.",
+    "know_btn": "I Know a Consultant",
+    "match_btn": "Match Me With a Consultant",
     "go_back": "Go Back"
   },
   "i_know_an_insider": {
-    "header": "I Know My Insider",
-    "body": "At a Pop Up or referred by an Insider you recognize? Find them here to get their recommendations and have your questions answered directly by them.",
-    "help_link": "Help Me Get Matched With An Insider",
+    "header": "I Know My Consultant",
+    "body": "At a Pop Up or referred by a Consultant you recognize? Find them here to get their recommendations and have your questions answered directly by them.",
+    "help_link": "Help Me Get Matched With a Consultant",
     "search_header": "Search By Name or Website",
-    "input_placeholder": "Enter Insider name or webiste URL",
-    "loading_insiders": "Loading Insiders In Your Area.",
+    "input_placeholder": "Enter Consultant's name or website address",
+    "loading_insiders": "Loading List of Consultants in Your Area",
     "loading": "Loading...",
-    "no_results": "No Insiders Found",
+    "no_results": "No Consultants Found",
     "results_found": "Results Found"
   },
   "match_insider": {
-    "header": "Match Me With An Insider",
-    "body": "Make your shopping experience more personal with a JAFRA Insider. Have your questions answered directly & shop their recommendations.",
-    "help_link": "I already have an Insider I want to shop with",
+    "header": "Match Me With a Consultant",
+    "body": "Make your shopping experience more personal with a JAFRA Consultant. Have your questions answered directly & shop their recommendations.",
+    "help_link": "I already have a Consultant I want to shop with",
     "input_placeholder": "Enter ZIP Code",
     "use_location": "Use My Current Location",
-    "map_text": "Use Location or Enter Zip To Find Insiders",
+    "map_text": "Use Location or Enter Zip To Find Consultants",
     "results_found": "Results Found Near You",
     "distance": "Miles Away",
     "view_details": "View Details",
-    "loading_insiders": "Loading Insiders In Your Area.",
-    "no_insiders_found": "There are no insiders in your area.",
+    "loading_insiders": "Loading List of Consultants in Your Area.",
+    "no_insiders_found": "There are no Consultants in your area.",
     "results_found_within": "Results Found Within 50 Mi of",
     "results_found_near_you": "Results Found Near You",
     "loading": "Loading...",
@@ -37,15 +37,15 @@
   "consultant_card": {
     "distance": "Miles Away",
     "view_details": "View Details",
-    "select_insider": "Select Insider",
+    "select_insider": "Select Consultant",
     "located_at": "Located in"
   },
   "view_details": {
-    "select_btn": "Select Insider",
+    "select_btn": "Select Consultant",
     "located_at": "Located in"
   },
   "selection_confirmation": {
-    "confirm_msg": "Your Insider Has Been Selected",
+    "confirm_msg": "Your Consultant Has Been Selected",
     "close_btn": "Close"
   }
 }

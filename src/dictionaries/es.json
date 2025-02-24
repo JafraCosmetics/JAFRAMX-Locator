@@ -1,34 +1,34 @@
 {
   "find_your_insider": {
-    "title": "Encuentra Una Consultora de Belleza",
-    "body": "Recibe recomendaciones personalizados y apoyo directo al comprar con tu “Insider”. ",
-    "know_btn": "Conozco a  Una Insider",
-    "match_btn": "Conéctame con una\"Insider\"",
+    "title": "Encuentra Tu Consultora",
+    "body": "Recibe recomendaciones personalizados y apoyo directo al comprar con tu Consultora.",
+    "know_btn": "Yo Conozco Una Consultora",
+    "match_btn": "Conéctame Con Una Consultora",
     "go_back": "Regresa"
   },
   "i_know_an_insider": {
-    "header": "Conozco a  Una Insider",
-    "body": "¿Fue en un “Pop Up” o fuiste referida por una “Insider” que reconoces? Encuéntrala aquí para obtener sus recomendaciones y que te conteste todas tus preguntas directamente. ",
-    "help_link": "Ayúdame a ser conectada con una “Insider”",
+    "header": "Yo Conozco Una Consultora",
+    "body": "¿Fue en un “Pop Up” o fuiste referida por una Consultora que reconoces? Encuéntrala aquí para obtener sus recomendaciones y que te conteste todas tus preguntas directamente. ",
+    "help_link": "Ayúdame a Ser Conectada Con Una Consultora",
     "search_header": "Buscar por Nombre o Por Sitio Web",
-    "input_placeholder": "Entra nombre de la “Insider” o sitio web (URL)",
-    "loading_insiders": "Cargando \"Insider\" en su área.",
+    "input_placeholder": "Entra nombre de la Consultora o dirección de su sitio web",
+    "loading_insiders": "Cargando lista de Consultoras en tu área.",
     "loading": "Cargando...",
-    "no_results": "No se encontraron “Insider”",
+    "no_results": "No se encontraron Consultoras",
     "results_found": "Resultados encontrados"
   },
   "match_insider": {
-    "header": "Conéctame con una \"Insider\"",
-    "body": "Haz tu experiencia de compras más personal con una “JAFRA Insider”. Tus preguntas serán respondidas directamente y recibirás sus recomendaciones al hacer tus compras. ",
-    "help_link": "Ya tengo a una \"Insider\" con quien quiero hacer mis compras",
+    "header": "Conéctame con una Consultora",
+    "body": "Haz tu experiencia de compras más personal con una Consultora de JAFRA. Tus preguntas serán respondidas directamente y recibirás sus recomendaciones al hacer tus compras.",
+    "help_link": "Ya tengo a una Consultora con quien quiero hacer mis compras",
     "input_placeholder": "Entra tu Código Postal",
-    "use_location": "Utilizar mi Ubicación o Entrar Código Postal para Encontrar \"Insiders\" ",
+    "use_location": "Utilizar mi Ubicación o Entrar Código Postal para Encontrar Consultoras ",
     "map_text": "Usar Mi Ubicación Actual",
     "results_found": "Resultados Encontrados Cerca de Ti ",
     "distance": "Kilómetros de distancia",
     "view_details": "Ver detalles",
-    "loading_insiders": "Cargando “Insider” en su área.",
-    "no_insiders_found": "No hay “Insider” en su área.",
+    "loading_insiders": "Cargando Consultoras en su área.",
+    "no_insiders_found": "No hay Consultoras en su área.",
     "results_found_within": "Resultados encontrados dentro de 50 millas de",
     "results_found_near_you": "Resultados encontrados cerca de usted",
     "loading": "Cargando...",
@@ -37,15 +37,15 @@
   "consultant_card": {
     "distance": "Millas de Distancia",
     "view_details": "Ver Detalles",
-    "select_insider": "Seleccionar Como \"Insider\"",
+    "select_insider": "Seleccionar Como Consultora",
     "located_at": "Situado en"
   },
   "view_details": {
-    "select_btn": "Seleccionar \"Insider\"",
+    "select_btn": "Seleccionar Consultora",
     "located_at": "Situado en"
   },
   "selection_confirmation": {
-    "confirm_msg": "Tu \"Insider\" ha sido Seleccionado",
+    "confirm_msg": "Tu Consultora ha sido Seleccionada",
     "close_btn": "Cerrar"
   }
 }
