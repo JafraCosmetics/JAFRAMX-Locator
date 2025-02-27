@@ -26,7 +26,7 @@ const ConsultantViewDetails = (props) => {
       const json = await res.json();
       return json.partners ? json.partners[0] : null;
     } catch (err) {
-      return console.error("error:" + err);
+      return console.error(`error: ${err}`);
     }
   };
   const capitalizeFirstLowercaseRest = (str) => {
@@ -113,10 +113,9 @@ const ConsultantViewDetails = (props) => {
                       <PhoneIcon />
                       <p className="view-details__contact ">
                         <a
-                          href={
-                            "tel:" +
-                            new AsYouType("US").input(props.consultant.phone)
-                          }
+                          href={`tel:${new AsYouType("US").input(
+                            props.consultant.phone
+                          )}`}
                           target="_parent"
                         >
                           {new AsYouType("US").input(props.consultant.phone)}
@@ -133,7 +132,7 @@ const ConsultantViewDetails = (props) => {
                       <EmailIcon />
                       <p className="view-details__contact">
                         <a
-                          href={"mailto:" + props.consultant.email}
+                          href={`mailto:${props.consultant.email}`}
                           target="_parent"
                         >
                           {props.consultant.email}
@@ -149,12 +148,21 @@ const ConsultantViewDetails = (props) => {
                   <p className="view-details__contact">
                     <a
                       href={
-                        "https://693176-75.myshopify.com/" +
-                        props.consultant.siteName
+                        window.location.hostname.includes("jafra.com")
+                          ? `https://www.jafra.com/?pws=${props.consultant.siteName}`
+                          : window.location.hostname.includes("myshopify.com")
+                          ? `https://${window.location.hostname}/?pws=${props.consultant.siteName}`
+                          : `https://www.jafra.com/?pws=${props.consultant.siteName}`
                       }
                       target="_parent"
                     >
-                      jafra.com/{props.consultant.siteName}
+                      {window.location.hostname.includes("jafra.com")
+                        ? `jafra.com/?pws=${props.consultant.siteName}`
+                        : window.location.hostname.includes("myshopify.com")
+                        ? `${window.location.hostname.split(".")[0]}.../?pws=${
+                            props.consultant.siteName
+                          }`
+                        : `jafra.com/?pws=${props.consultant.siteName}`}
                     </a>
                   </p>
                 </div>
