@@ -148,21 +148,27 @@ const ConsultantViewDetails = (props) => {
                   <p className="view-details__contact">
                     <a
                       href={
-                        window.location.hostname.includes("jafra.com")
-                          ? `https://www.jafra.com/?pws=${props.consultant.siteName}`
-                          : window.location.hostname.includes("myshopify.com")
-                          ? `https://${window.location.hostname}/?pws=${props.consultant.siteName}`
-                          : `https://www.jafra.com/?pws=${props.consultant.siteName}`
+                        (() => {
+                          const urlParams = new URLSearchParams(window.location.search);
+                          const domain = urlParams.get('domain');
+                          return domain
+                            ? `https://${domain}/?pws=${props.consultant.siteName}`
+                            : `https://www.jafra.com/?pws=${props.consultant.siteName}`;
+                        })()
                       }
                       target="_parent"
                     >
-                      {window.location.hostname.includes("jafra.com")
-                        ? `jafra.com/?pws=${props.consultant.siteName}`
-                        : window.location.hostname.includes("myshopify.com")
-                        ? `${window.location.hostname.split(".")[0]}.../?pws=${
-                            props.consultant.siteName
-                          }`
-                        : `jafra.com/?pws=${props.consultant.siteName}`}
+                      {(() => {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const domain = urlParams.get('domain');
+
+                        if (domain) {
+                          return domain.includes("myshopify.com")
+                            ? `${domain.split(".")[0]}.../?pws=${props.consultant.siteName}`
+                            : `${domain}/?pws=${props.consultant.siteName}`;
+                        }
+                        return `jafra.com/?pws=${props.consultant.siteName}`;
+                      })()}
                     </a>
                   </p>
                 </div>
