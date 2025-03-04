@@ -252,17 +252,17 @@ export default function ConsultantSearch(props) {
     <>
       <div className="modal-container h-screen lg:h-full">
         <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
-          <div className="modal__left flex flex-col w-full lg:max-w-420">
+          <div className="modal__left flex flex-col w-full lg:max-w-420 lg:max-h-665">
             {/* <div className=""> */}
             <div
-              className="close-modal flex items-center gap-2 mb-10"
+              className="close-modal flex items-center gap-2 mb-6"
               onClick={props.returnToStartHandler}
             >
               <BackIcon color="#272727" />
               <p>{props.dict.find_your_insider.go_back}</p>
             </div>
 
-            <div className="modal-heading mt-6 mb-3">
+            <div className="modal-heading mt-3 mb-3">
               {props.dict.i_know_an_insider.header}
             </div>
 
