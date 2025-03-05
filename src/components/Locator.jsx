@@ -48,7 +48,7 @@ export default function Locator(props) {
   const findConsultantByEmail = async (email) => {
     // validate searchQuery
 
-    let url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
+    let url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
 
     let options = {
       method: "GET",
@@ -89,10 +89,10 @@ export default function Locator(props) {
     const getLocations = async () => {
       let url = "";
       if (currentZip) {
-        url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
+        url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
       } else if (currentLocation) {
         console.log(currentLocation);
-        url = `https://1rhheoj6db.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
+        url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
       }
 
       if (url !== "") {
