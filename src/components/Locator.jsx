@@ -225,7 +225,7 @@ export default function Locator(props) {
             <div className="flex gap-1 items-center mb-2">
               <WebIcon />{" "}
               <a
-                href={"https://693176-75.myshopify.com/" + consultant.siteName}
+                href={"https://jafra.com/" + consultant.siteName}
                 target="_parent"
               >
                 jafra.com/{consultant.siteName}

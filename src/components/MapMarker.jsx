@@ -94,10 +94,7 @@ const MapMarker = (props) => {
               <div className="flex gap-1 items-center mb-2">
                 <WebIcon />{" "}
                 <a
-                  href={
-                    "https://693176-75.myshopify.com/" +
-                    props.consultant.siteName
-                  }
+                  href={"https://jafra.com/" + props.consultant.siteName}
                   target="_parent"
                 >
                   jafra.com/{props.consultant.siteName}
