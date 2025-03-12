@@ -70,6 +70,7 @@ const ConsultantViewDetails = (props) => {
   };
 
   useEffect(() => {
+    console.log(props.consultant.profileImage);
     if (!props.consultant.profileImage) {
       let shopifyConsultant = getShopifyConsultant(props.consultant.email);
       setProfileImage(shopifyConsultant.profileImage);
@@ -97,9 +98,11 @@ const ConsultantViewDetails = (props) => {
               <Image
                 name={props.consultant.displayName}
                 className="h-32 w-32 lg:h-40 lg:w-40 bg-white rounded-full border-8 border-white object-contain"
-                src={profileImage ?? AvatarImage}
+                src={props.consultant.profileImage ?? AvatarImage}
                 alt="profile image"
                 fill={false}
+                height={100}
+                width={100}
               />
               <div className="view-details__name">
                 {props.consultant.displayName}
@@ -147,24 +150,28 @@ const ConsultantViewDetails = (props) => {
 
                   <p className="view-details__contact">
                     <a
-                      href={
-                        (() => {
-                          const urlParams = new URLSearchParams(window.location.search);
-                          const domain = urlParams.get('domain');
-                          return domain
-                            ? `https://${domain}/?pws=${props.consultant.siteName}`
-                            : `https://www.jafra.com/?pws=${props.consultant.siteName}`;
-                        })()
-                      }
+                      href={(() => {
+                        const urlParams = new URLSearchParams(
+                          window.location.search
+                        );
+                        const domain = urlParams.get("domain");
+                        return domain
+                          ? `https://${domain}/?pws=${props.consultant.siteName}`
+                          : `https://www.jafra.com/?pws=${props.consultant.siteName}`;
+                      })()}
                       target="_parent"
                     >
                       {(() => {
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const domain = urlParams.get('domain');
+                        const urlParams = new URLSearchParams(
+                          window.location.search
+                        );
+                        const domain = urlParams.get("domain");
 
                         if (domain) {
                           return domain.includes("myshopify.com")
-                            ? `${domain.split(".")[0]}.../?pws=${props.consultant.siteName}`
+                            ? `${domain.split(".")[0]}.../?pws=${
+                                props.consultant.siteName
+                              }`
                             : `${domain}/?pws=${props.consultant.siteName}`;
                         }
                         return `jafra.com/?pws=${props.consultant.siteName}`;

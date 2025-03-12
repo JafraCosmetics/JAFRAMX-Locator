@@ -13,7 +13,11 @@ const nextConfig = {
         hostname: "avatar.iran.liara.run",
         port: "",
       },
-      
+      {
+        protocol: "https",
+        hostname: "cdn.shopify.com",
+        port: "",
+      },
     ],
   },
 };
