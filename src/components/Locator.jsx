@@ -228,7 +228,7 @@ export default function Locator(props) {
                 href={"https://693176-75.myshopify.com/" + consultant.siteName}
                 target="_parent"
               >
-                jafraqa.myshopify.com/{consultant.siteName}
+                jafra.com/{consultant.siteName}
               </a>
             </div>
 

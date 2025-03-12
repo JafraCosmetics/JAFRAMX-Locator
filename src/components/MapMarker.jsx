@@ -100,7 +100,7 @@ const MapMarker = (props) => {
                   }
                   target="_parent"
                 >
-                  jafraqa.myshopify.com/{props.consultant.siteName}
+                  jafra.com/{props.consultant.siteName}
                 </a>
               </div>
 
