@@ -147,67 +147,68 @@ export default function Locator(props) {
   }, []);
 
   useEffect(() => {
-    const viewDetailsHandler = (event, consultant, marker) => {
-      if (windowSize.current[0] >= 1024) {
-        consultantCardClickHandler(event, marker);
-      } else {
-        setSelectedConsultant(consultant);
-      }
-    };
+    if (selectedConsultant === null) {
+      const viewDetailsHandler = (event, consultant, marker) => {
+        if (windowSize.current[0] >= 1024) {
+          consultantCardClickHandler(event, marker);
+        } else {
+          setSelectedConsultant(consultant);
+        }
+      };
 
-    const consultantCardList = new Array();
+      const consultantCardList = new Array();
 
-    console.log(consultantList);
-    let i = 0;
-    if (mapCenter !== null) {
-      console.log("origin:", [mapCenter.lng, mapCenter.lat]);
+      console.log(consultantList);
+      let i = 0;
+      if (mapCenter !== null) {
+        console.log("origin:", [mapCenter.lng, mapCenter.lat]);
 
-      if (mapRef.current) {
-        const radarMap = Radar.ui.map({
-          container: "map",
-          style: "radar-default-v1",
-          center: [mapCenter.lng, mapCenter.lat],
-          zoom: 10,
-        });
+        if (mapRef.current) {
+          const radarMap = Radar.ui.map({
+            container: "map",
+            style: "radar-default-v1",
+            center: [mapCenter.lng, mapCenter.lat],
+            zoom: 10,
+          });
 
-        mobileMapRef.current = Radar.ui.map({
-          container: "map-mobile",
-          style: "radar-default-v1",
-          center: [mapCenter.lng, mapCenter.lat],
-          zoom: 10,
-        });
-        console.log("radarMap: ", radarMap);
+          mobileMapRef.current = Radar.ui.map({
+            container: "map-mobile",
+            style: "radar-default-v1",
+            center: [mapCenter.lng, mapCenter.lat],
+            zoom: 10,
+          });
+          console.log("radarMap: ", radarMap);
 
-        mapRef.current = radarMap;
-      } else {
-        const radarMap = Radar.ui.map({
-          container: "map",
-          style: "radar-default-v1",
-          center: [mapCenter.lng, mapCenter.lat],
-          zoom: 10,
-        });
-        mobileMapRef.current = Radar.ui.map({
-          container: "map-mobile",
-          style: "radar-default-v1",
-          center: [mapCenter.lng, mapCenter.lat],
-          zoom: 9,
-        });
+          mapRef.current = radarMap;
+        } else {
+          const radarMap = Radar.ui.map({
+            container: "map",
+            style: "radar-default-v1",
+            center: [mapCenter.lng, mapCenter.lat],
+            zoom: 10,
+          });
+          mobileMapRef.current = Radar.ui.map({
+            container: "map-mobile",
+            style: "radar-default-v1",
+            center: [mapCenter.lng, mapCenter.lat],
+            zoom: 9,
+          });
 
-        mapRef.current = radarMap;
-      }
+          mapRef.current = radarMap;
+        }
 
-      console.log("mapRef: ", mapRef);
+        console.log("mapRef: ", mapRef);
 
-      for (let consultant of consultantList) {
-        // console.log("consultant: " + consultant.latitude, consultant.longitude);
+        for (let consultant of consultantList) {
+          // console.log("consultant: " + consultant.latitude, consultant.longitude);
 
-        const infoWindow = (
-          // <div className="map-marker grid grid-cols-20-80 py-4 px-2">
-          //   <div>
-          //     <NumberedListIcon height="2em" width="2em" number={i + 1} />
-          //   </div>
-          <div>
-            {/* <Image
+          const infoWindow = (
+            // <div className="map-marker grid grid-cols-20-80 py-4 px-2">
+            //   <div>
+            //     <NumberedListIcon height="2em" width="2em" number={i + 1} />
+            //   </div>
+            <div>
+              {/* <Image
               name={consultant.displayName}
               className="mb-3 h-12 w-12 rounded object-contain"
               src={consultant.profileImage ?? AvatarImage}
@@ -215,24 +216,24 @@ export default function Locator(props) {
               fill={false}
             /> */}
 
-            <div className="mb-3">
-              <h2>{consultant.displayName}</h2>
-              <p>
-                {consultant.distance} {props.dict.consultant_card.distance}
-              </p>
-            </div>
+              <div className="mb-3">
+                <h2>{consultant.displayName}</h2>
+                <p>
+                  {consultant.distance} {props.dict.consultant_card.distance}
+                </p>
+              </div>
 
-            <div className="flex gap-1 items-center mb-2">
-              <WebIcon />{" "}
-              <a
-                href={"https://jafra.com/" + consultant.siteName}
-                target="_parent"
-              >
-                jafra.com/{consultant.siteName}
-              </a>
-            </div>
+              <div className="flex gap-1 items-center mb-2">
+                <WebIcon />{" "}
+                <a
+                  href={"https://jafra.com/" + consultant.siteName}
+                  target="_parent"
+                >
+                  jafra.com/{consultant.siteName}
+                </a>
+              </div>
 
-            {/* {consultant.phone ? (
+              {/* {consultant.phone ? (
               consultant.hidePhone === null ||
               consultant.hidePhone === false ? (
                 <div className="flex gap-1 items-center mb-2">
@@ -259,81 +260,82 @@ export default function Locator(props) {
               ) : null
             ) : null} */}
 
-            {/* 
+              {/* 
               <button
                 className="h-8 bg-mine-shaft text-white hover:bg-black rounded"
               >
                 Select
               </button> */}
-          </div>
-          // </div>
-        );
+            </div>
+            // </div>
+          );
 
-        const marker = Radar.ui
-          .marker({
-            popup: {
-              html: renderToString(infoWindow),
-              maxWidth: 300,
-            },
-          })
-          .setLngLat([consultant.longitude, consultant.latitude])
-          .addTo(mapRef.current);
+          const marker = Radar.ui
+            .marker({
+              popup: {
+                html: renderToString(infoWindow),
+                maxWidth: 300,
+              },
+            })
+            .setLngLat([consultant.longitude, consultant.latitude])
+            .addTo(mapRef.current);
 
-        marker._element.onclick = () => {
-          setSelectedInfoWindow(consultant.displayName);
-        };
+          marker._element.onclick = () => {
+            setSelectedInfoWindow(consultant.displayName);
+          };
 
-        const mobileMarker = Radar.ui
-          .marker({
-            popup: {
-              html: renderToString(infoWindow),
-              maxWidth: 300,
-            },
-          })
-          .setLngLat([consultant.longitude, consultant.latitude])
-          .addTo(mobileMapRef.current);
+          const mobileMarker = Radar.ui
+            .marker({
+              popup: {
+                html: renderToString(infoWindow),
+                maxWidth: 300,
+              },
+            })
+            .setLngLat([consultant.longitude, consultant.latitude])
+            .addTo(mobileMapRef.current);
 
-        mobileMarker._element.onclick = () => {
-          setSelectedInfoWindow(consultant.displayName);
-        };
+          mobileMarker._element.onclick = () => {
+            setSelectedInfoWindow(consultant.displayName);
+          };
 
-        consultantCardList.push(
-          <ConsultantSelectedContext.Provider
-            value={{ consultantSelected, setConsultantSelected }}
-            key={consultant.email}
-          >
-            <ConsultantCard
-              consultant={consultant}
-              marker={marker._element}
-              number={i + 1}
-              key={consultant.displayName}
-              selectConsultantHandler={() => setPrefPartner(consultant)}
-              viewDetailsHandler={viewDetailsHandler}
-              distance={true}
-              dict={props.dict}
-            />
-          </ConsultantSelectedContext.Provider>
-        );
+          consultantCardList.push(
+            <ConsultantSelectedContext.Provider
+              value={{ consultantSelected, setConsultantSelected }}
+              key={consultant.email}
+            >
+              <ConsultantCard
+                consultant={consultant}
+                marker={marker._element}
+                number={i + 1}
+                key={consultant.displayName}
+                selectConsultantHandler={() => setPrefPartner(consultant)}
+                viewDetailsHandler={viewDetailsHandler}
+                distance={true}
+                dict={props.dict}
+              />
+            </ConsultantSelectedContext.Provider>
+          );
 
-        i++;
-      }
+          i++;
+        }
 
-      // render consultants list
-      if (consultantCardList.length > 0) {
-        setConsultantCards(
-          <div style={{ width: "95%" }} className="flex flex-col gap-2">
-            {consultantCardList}
-          </div>
-        );
-      } else {
-        setConsultantCards(
-          <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
-            <div>{props.dict.match_insider.no_insiders_found}</div>
-          </div>
-        );
+        // render consultants list
+        if (consultantCardList.length > 0) {
+          setConsultantCards(
+            <div style={{ width: "95%" }} className="flex flex-col gap-2">
+              {consultantCardList}
+            </div>
+          );
+        } else {
+          setConsultantCards(
+            <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
+              <div>{props.dict.match_insider.no_insiders_found}</div>
+            </div>
+          );
+        }
       }
     }
-  }, [consultantList]);
+  }, [consultantList, selectedConsultant]);
 
   const getCurrentLocation = () => {
     setGettingCurrentLocation(true);
