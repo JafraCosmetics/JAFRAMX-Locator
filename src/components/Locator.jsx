@@ -478,11 +478,9 @@ export default function Locator(props) {
               <BackIcon color="#272727" />
               <p>{props.dict.find_your_insider.go_back}</p>
             </div>
-
             <div className="modal-heading mt-6 mb-3">
               {props.dict.match_insider.header}
             </div>
-
             <p className="hidden lg:block mb-6">
               {props.dict.match_insider.body}
               <br />
@@ -494,12 +492,13 @@ export default function Locator(props) {
             <UserContext.Provider value={{ showWarning, setShowWarning }}>
               <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
             </UserContext.Provider>
-            <div className="flex items-center gap-2 mt-4">
+            // disable use my location search feature
+            {/* <div className="flex items-center gap-2 mt-4">
               <LocationPinIcon />
               <a className="underline" onClick={getCurrentLocation}>
                 {props.dict.match_insider.use_location}
               </a>
-            </div>
+            </div> */}
             {gettingCurrentLocation == false && currentZip == null ? null : (
               <div className="h-full lg:hidden">
                 <div className="flex flex-col justify-center items-center gap-2 h-full">
