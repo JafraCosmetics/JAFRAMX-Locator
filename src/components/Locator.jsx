@@ -335,6 +335,7 @@ export default function Locator(props) {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [consultantList, selectedConsultant]);
 
   const getCurrentLocation = () => {
@@ -492,7 +493,7 @@ export default function Locator(props) {
             <UserContext.Provider value={{ showWarning, setShowWarning }}>
               <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
             </UserContext.Provider>
-            // disable use my location search feature
+            {/*  disable use my location search feature */}
             {/* <div className="flex items-center gap-2 mt-4">
               <LocationPinIcon />
               <a className="underline" onClick={getCurrentLocation}>
