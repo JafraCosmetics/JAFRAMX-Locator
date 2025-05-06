@@ -25,6 +25,7 @@
     "react-dom": "^18",
     "react-geocode": "^1.0.0-alpha.1",
     "react-i18next": "^15.0.0",
+    "react-icons": "^5.5.0",
     "sharp": "^0.33.4"
   },
   "devDependencies": {

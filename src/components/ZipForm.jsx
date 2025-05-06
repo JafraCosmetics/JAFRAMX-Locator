@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { SubmitIcon } from "../components/Icons";
-import { UserContext } from "./Locator";
+import { UserContext } from "./ConsultantFinder";
 
 const ZipForm = (props) => {
   const [buttonDisabled, setButtonDisabled] = useState(true);

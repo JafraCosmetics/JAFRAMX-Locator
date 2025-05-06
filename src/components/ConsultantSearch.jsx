@@ -195,8 +195,8 @@ export default function ConsultantSearch(props) {
                   <p>{props.dict.find_your_insider.go_back}</p>
                 </div>
 
-                <div className="modal-heading mt-6 mb-3">
-                  {props.dict.i_know_an_insider.header}
+                <div className="modal-heading w-10%">
+                  {props.dict.i_know_an_insider.h1}
                 </div>
 
                 <p className="hidden lg:block mb-6">
@@ -262,8 +262,8 @@ export default function ConsultantSearch(props) {
               <p>{props.dict.find_your_insider.go_back}</p>
             </div>
 
-            <div className="modal-heading mt-3 mb-3">
-              {props.dict.i_know_an_insider.header}
+            <div className="modal-heading ">
+              {props.dict.i_know_an_insider.h1}
             </div>
 
             <p className="hidden lg:block mb-6">

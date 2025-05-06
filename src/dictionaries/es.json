@@ -18,26 +18,27 @@
     "results_found": "Resultados encontrados"
   },
   "match_insider": {
-    "header": "Conéctame con una Consultora",
-    "body": "Haz tu experiencia de compras más personal con una Consultora de JAFRA. Tus preguntas serán respondidas directamente y recibirás sus recomendaciones al hacer tus compras.",
+    "header": "Por favor, ingresa tu código postal o captura el nombre de la Lider JAFRA que conoces",
+    "h1": "Por favor, ingresa tu código postal o captura el nombre de la Lider JAFRA que conoces",
+    "body": "Haz tu experiencia de compras más personal con una Lider de JAFRA. Tus preguntas serán respondidas directamente y recibirás sus recomendaciones al hacer tus compras.",
     "help_link": "Ya tengo a una Consultora con quien quiero hacer mis compras",
-    "input_placeholder": "Entra tu Código Postal",
+    "input_placeholder": "Código Postal, nombre o enlace de su sitio web",
     "use_location": "Utilizar mi Ubicación o Entrar Código Postal para Encontrar Consultoras ",
     "map_text": "Usar Mi Ubicación Actual",
     "results_found": "Resultados Encontrados Cerca de Ti ",
     "distance": "Kilómetros de distancia",
-    "view_details": "Ver detalles",
+    "view_details": "Ver Detalles",
     "loading_insiders": "Cargando Consultoras en su área.",
     "no_insiders_found": "No hay Consultoras en su área.",
-    "results_found_within": "Resultados encontrados dentro de 50 millas de",
+    "results_found_within": "Resultados encontrados dentro de 50 kilometros de",
     "results_found_near_you": "Resultados encontrados cerca de usted",
     "loading": "Cargando...",
     "zip_error_msg": "Por favor ingrese un código postal válido"
   },
   "consultant_card": {
-    "distance": "Millas de Distancia",
-    "view_details": "Ver Detalles",
-    "select_insider": "Seleccionar Como Consultora",
+    "distance": "kilometros de Distancia",
+    "view_details": "Ver mi perfil",
+    "select_insider": "Comprar conmigo",
     "located_at": "Situado en"
   },
   "view_details": {

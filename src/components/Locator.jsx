@@ -2,24 +2,17 @@ import React, { useContext, useMemo, useState, useEffect, useRef } from "react";
 import Radar from "radar-sdk-js";
 import "radar-sdk-js/dist/radar.css";
 import { renderToString } from "react-dom/server";
-
+import AvatarImage from "/public/images/avatar.png";
+import { GrUserExpert } from "react-icons/gr";
+import { IoBagOutline } from "react-icons/io5";
 import ConsultantCard from "./ConsultantCard";
 import ZipForm from "./ZipForm";
-import {
-  BackIcon,
-  EmailIcon,
-  LocationPinIcon,
-  NumberedListIcon,
-  PhoneIcon,
-  WebIcon,
-} from "./Icons";
+import { BackIcon} from "./Icons";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
-import { LocationIcon } from "./Icons";
 import MapAccordion from "./MapAccordion";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import Image from "next/image";
 import MapPlaceholder from "/public/images/mapPlaceholder.png";
-import { AsYouType } from "libphonenumber-js";
 import { Scrollbars } from "react-custom-scrollbars";
 
 export const UserContext = React.createContext(null);
@@ -203,78 +196,54 @@ export default function Locator(props) {
           // console.log("consultant: " + consultant.latitude, consultant.longitude);
 
           const infoWindow = (
-            // <div className="map-marker grid grid-cols-20-80 py-4 px-2">
-            //   <div>
-            //     <NumberedListIcon height="2em" width="2em" number={i + 1} />
-            //   </div>
-            <div>
-              {/* <Image
-              name={consultant.displayName}
-              className="mb-3 h-12 w-12 rounded object-contain"
-              src={consultant.profileImage ?? AvatarImage}
-              alt="profile image"
-              fill={false}
-            /> */}
-
-              <div className="mb-3">
-                <h2>{consultant.displayName}</h2>
-                <p>
-                  {consultant.distance} {props.dict.consultant_card.distance}
-                </p>
+            <div className="map-marker flex flex-col gap-4 py-4 px-4 w-[300px] mx-auto max-w-[300px] mx-4 border border-black rounded-lg">
+              {/* Foto */}
+              <div className="relative w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex-shrink-0 mx-auto">
+                <Image
+                  src={consultant.profileImage ?? AvatarImage}
+                  alt="profile image"
+                  fill
+                  className="object-cover object-center"
+                />
               </div>
-
-              <div className="flex gap-1 items-center mb-2">
-                <WebIcon />{" "}
-                <a
-                  href={"https://jafra.com/" + consultant.siteName}
-                  target="_parent"
-                >
-                  jafra.com/{consultant.siteName}
-                </a>
+          
+              {/* Nombre */}
+              <div className="text-center">
+                <h2 className="text-lg font-bold">{consultant.displayName}</h2>
               </div>
-
-              {/* {consultant.phone ? (
-              consultant.hidePhone === null ||
-              consultant.hidePhone === false ? (
-                <div className="flex gap-1 items-center mb-2">
-                  <PhoneIcon />{" "}
-                  <a
-                    href={"tel:" + new AsYouType("US").input(consultant.phone)}
-                    target="_parent"
+          
+              {/* Comprar conmigo */}
+              {/* Botones */}
+              <div className="flex justify-between">
+                <div className="flex items-center gap-4 w-full">
+                  <button
+                    id="consultant-card-view-profile"
+                    className="text-xs cursor-pointer flex items-center gap-2 bg-gray-200 hover:bg-gray-300 rounded px-4 py-2"
+                    onClick={(event) =>
+                      props.viewDetailsHandler(event, props.consultant, props.marker)
+                    }
                   >
-                    {new AsYouType("US").input(consultant.phone)}
-                  </a>
+                    <GrUserExpert />
+                    {props.dict.consultant_card.view_details}
+                  </button>
+                  <button
+                    id="consultant-card-select-insider"
+                    className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2"
+                    onClick={props.selectConsultantHandler}
+                  >
+                    <IoBagOutline />
+                    {props.dict.consultant_card.select_insider}
+                  </button>
                 </div>
-              ) : null
-            ) : null}
-
-            {consultant.email ? (
-              consultant.hideEmail === null ||
-              consultant.hideEmail === false ? (
-                <div className="flex gap-1 items-center mb-2">
-                  <EmailIcon />{" "}
-                  <a href={"mailto:" + consultant.email} target="_parent">
-                    {consultant.email}
-                  </a>
-                </div>
-              ) : null
-            ) : null} */}
-
-              {/* 
-              <button
-                className="h-8 bg-mine-shaft text-white hover:bg-black rounded"
-              >
-                Select
-              </button> */}
+              </div>
             </div>
-            // </div>
           );
 
           const marker = Radar.ui
             .marker({
               popup: {
                 html: renderToString(infoWindow),
-                maxWidth: 300,
+                maxWidth: 400,
               },
             })
             .setLngLat([consultant.longitude, consultant.latitude])
@@ -288,7 +257,7 @@ export default function Locator(props) {
             .marker({
               popup: {
                 html: renderToString(infoWindow),
-                maxWidth: 300,
+                maxWidth: 400,
               },
             })
             .setLngLat([consultant.longitude, consultant.latitude])
@@ -416,7 +385,7 @@ export default function Locator(props) {
       </div>
     ) : (
       <div className="modal-container ">
-        <div className="modal flex p-4 lg:p-8 justify-between w-full">
+        <div className="modal flex p-4 lg:p-8 w-full">
           <div className="modal__left overflow-hidden">
             <>
               <div
@@ -428,16 +397,22 @@ export default function Locator(props) {
                 <BackIcon color="#272727" />
                 <p>{props.dict.find_your_insider.go_back}</p>
               </div>
+              {/* logo jafra centrada */}
+              <div className="flex justify-center items-center mb-6">
+                <Image
+                  src={AvatarImage}
+                  alt="Default Avatar"
+                  width={100}
+                  height={100}
+                />
+              </div><br/>
               <div className="modal-info-body mb-6">
-                <div className="modal-heading mb-3">
-                  {props.dict.match_insider.header}
+                <div className="modal-heading mb-3"><br/>
+                  {props.dict.match_insider.h1}
                 </div>
                 <p className="hidden lg:block">
                   {props.dict.match_insider.body} <br />
                   <br />
-                  <a className="cursor-pointer" onClick={props.goToKnowHandler}>
-                    {props.dict.match_insider.help_link}
-                  </a>
                 </p>
               </div>
               <UserContext.Provider value={{ showWarning, setShowWarning }}>
@@ -451,11 +426,13 @@ export default function Locator(props) {
             <div className="mt-3">
               <p className="px-6 mb-6">{renderResultsMessage}</p>
               {consultantList.length > 0 ? (
-                <Scrollbars autoHide style={{ width: 370, height: 325 }}>
-                  {consultantCards}
+                <Scrollbars autoHide style={{ width: "100%", maxWidth: "1000px", height: 400 }}>
+                  <div className="flex flex-col gap-4 w-full">
+                    {consultantCards}
+                  </div>
                 </Scrollbars>
               ) : (
-                <div>{consultantCards}</div>
+                <div className="flex flex-col gap-4 w-full">{consultantCards}</div>
               )}
             </div>
           </div>
@@ -470,7 +447,7 @@ export default function Locator(props) {
   ) : (
     <>
       <div className="modal-container">
-        <div className="modal flex flex-col p-4 lg:p-8  w-full justify-between  lg:grid lg:modal-container-grid">
+        <div className="modal flex flex-col p-4 lg:p-8  w-full lg:grid lg:modal-container-grid">
           <div className="modal__left">
             <div
               className="close-modal flex items-center gap-2 mb-10"
@@ -479,16 +456,20 @@ export default function Locator(props) {
               <BackIcon color="#272727" />
               <p>{props.dict.find_your_insider.go_back}</p>
             </div>
-            <div className="modal-heading mt-6 mb-3">
-              {props.dict.match_insider.header}
-            </div>
-            <p className="hidden lg:block mb-6">
+           {/* Logo Jafra centrada */}
+            <div className="flex justify-center items-center mb-6">
+              <Image
+                src={AvatarImage}
+                alt="Default Avatar"
+                width={100}
+                height={100}
+              />
+            </div><br/>
+            <div className="modal-heading jafra-purple font-bold object-contain">
+              {props.dict.match_insider.h1}
+            </div><br/>
+            <p className="hidden lg:block mb-6 ">
               {props.dict.match_insider.body}
-              <br />
-              <br />
-              <a className="cursor-pointer" onClick={props.goToKnowHandler}>
-                {props.dict.match_insider.help_link}
-              </a>
             </p>
             <UserContext.Provider value={{ showWarning, setShowWarning }}>
               <ZipForm updateOrigin={updateOrigin} dict={props.dict} />

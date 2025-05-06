@@ -6,7 +6,7 @@ import {
   EmailIcon,
   WebIcon,
 } from "../components/Icons";
-import { UserContext } from "./Locator";
+import { UserContext } from "./ConsultantFinder";
 import { AsYouType } from "libphonenumber-js";
 import Image from "next/image";
 import AvatarImage from "/public/images/avatar.png";

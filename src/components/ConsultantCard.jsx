@@ -1,6 +1,9 @@
 import Image from "next/image";
 import AvatarImage from "/public/images/avatar.png";
 import { Avatar } from "@material-tailwind/react";
+import { IoBagOutline } from "react-icons/io5";
+import { GrUserExpert } from "react-icons/gr";
+
 
 const renderLocation = (props) => {
   if (props.consultant.defaultAddress) {
@@ -34,63 +37,56 @@ const renderLocation = (props) => {
   }
 };
 const ConsultantCard = (props) => {
-  console.log(props.consultant.profileImage)
   return (
     <div
-      className="consultant-card flex gap-4 consultant-card__unselected max-h-860 cursor-default border border-jafra-purple rounded-md	"
+      className="consultant-card flex flex-row gap-2 consultant-card__unselected cursor-default border border-gray-300 rounded-md p-4 w-full min-h-[200px]"
       id={"consultant-card-" + props.consultant.displayName}
       key={props.consultant.email}
     >
-      <div className="flex items-start justify-start lg:block">
+      {/* Foto */}
+      <div className="flex-shrink-0">
         <Avatar
           src={
             props.consultant.profileImage !== null
               ? props.consultant.profileImage
               : AvatarImage.src
           }
-          className="w-8 lg:w-14 rounded-full object-contain"
-          
+          alt="profile image"
+          className="w-32 h-32 bg-gray-100 rounded-full overflow-hidden object-cover"
         />
       </div>
-      <div className="flex flex-col justify-evenly w-full">
-        {/* <Image
-          name={props.consultant.displayName}
-          className="hidden h-12 w-12 rounded"
-          fill={true}
-          src={
-            props.consultant.profileImage
-              ? props.consultant.profileImage
-              : AvatarImage
-          }
-          alt="profile image"
-        /> */}
-        <div className="flex justify-between">
-          <div className="consultant-box__name">
+
+      {/* Contenido derecho */}
+      <div className="flex flex-col justify-between flex-grow">
+        {/* Nombre y descripción */}
+        <div>
+          <div className="consultant-box__name text-lg font-bold">
             {props.consultant.displayName}
           </div>
-          {props.distance ? (
-            <p className="consultant-box__location">
-              {props.consultant.distance} {props.dict.consultant_card.distance}
-            </p>
-          ) : null}
+          <div className="about-me text-sm text-gray-600 mt-2">
+            Mi pasión es ayudarte a sentirte segura y radiante desde el primer paso de tu rutina
+          </div>
         </div>
-        {/* {props.consultant.defaultAddress ? renderLocation(props) : null} */}
-
-        <div className="flex justify-between">
-          <a
-            className="text-xs cursor-pointer"
+        {/* Botones */}
+        <div className="flex flex-wrap gap-1 mt-6 justify-center md:justify-start">
+          <button
+            id="consultant-card-view-profile"
+            className="text-xs cursor-pointer flex items-center gap-2 bg-gray-200 hover:bg-gray-300 rounded px-4 py-2 w-[125px] flex-shrink-0"
             onClick={(event) =>
               props.viewDetailsHandler(event, props.consultant, props.marker)
             }
           >
+            <GrUserExpert />
             {props.dict.consultant_card.view_details}
-          </a>
-          <a
-            className="text-xs cursor-pointer"
+          </button>
+          <button
+            id="consultant-card-select-insider"
+            className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2 w-[125px] flex-shrink-0"
             onClick={props.selectConsultantHandler}
           >
+            <IoBagOutline />
             {props.dict.consultant_card.select_insider}
-          </a>
+          </button>
         </div>
       </div>
     </div>
