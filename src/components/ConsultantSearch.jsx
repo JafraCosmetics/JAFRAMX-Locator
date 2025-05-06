@@ -140,51 +140,125 @@ export default function ConsultantSearch(props) {
     </div>
   ), [props.dict]);
 
-  return (
-    <div className="modal-container min-h-screen lg:h-full">
-      <div className="modal modal-container-grid w-full flex flex-col lg:flex-row p-4 lg:p-8 gap-6">
-        <div className="modal__left w-full lg:w-1/2 flex flex-col">
-          <div className="close-modal flex items-center gap-2 mb-10 cursor-pointer" onClick={props.returnToStartHandler}>
-            <BackIcon color="#272727" />
-            <p>{props.dict.find_your_insider.go_back}</p>
+  return selectedConsultant ? (
+    <>
+      <div className="modal-container h-full lg:h-860">
+        <div className="modal p-4 w-full flex lg:grid lg:p-8 lg:modal-container-grid">
+          <div className="hidden lg:flex flex-col justify-between w-full">
+            <div>
+              <div className="w-full lg:max-w-420">
+                <div
+                  className="close-modal flex items-center gap-2 mb-10"
+                  onClick={props.returnToStartHandler}
+                >
+                  <BackIcon color="#272727" />
+                  <p>{props.dict.find_your_insider.go_back}</p>
+                </div>
+
+                <div className="modal-heading w-10%">
+                  {props.dict.i_know_an_insider.h1}
+                </div>
+
+                <p className="hidden lg:block mb-6">
+                  {props.dict.i_know_an_insider.body}
+
+                  <br />
+                  <br />
+                  <a className="cursor-pointer" onClick={props.goToFindHandler}>
+                    {props.dict.i_know_an_insider.help_link}
+                  </a>
+                </p>
+
+                <div className="search-heading mb-2">
+                  {props.dict.i_know_an_insider.search_header}
+                </div>
+                {showWarning ? (
+                  <div class="search-warning">
+                    {props.dict.i_know_an_insider.input_placeholder}
+                  </div>
+                ) : null}
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="searchByName"
+                    name="searchByName"
+                    className="name-input py-3 px-4 pr-11 block w-full border border-border-gray shadow-sm rounded-md text-base focus:z-10"
+                    placeholder={props.dict.i_know_an_insider.input_placeholder}
+                    onChange={inputHandler}
+                    onKeyDown={(event) => handleKeyDown(event, "name")}
+                    value={searchQuery}
+                  />
+                  <div
+                    className="absolute inset-y-0 right-0 flex items-center z-20 pr-4"
+                    onClick={findConsultantByWebsite}
+                  >
+                    <SubmitIcon />
+                  </div>
+                </div>
+              </div>
+              <div>{renderConsultantList}</div>
+            </div>
           </div>
-          <div className="flex justify-center items-center mb-6">
-            <Image src="/images/avatar.png" alt="Default Avatar" width={100} height={100} />
-          </div>
-          <div className="modal-heading jafra-purple font-bold">
-            {props.dict.match_insider.h1}
-          </div>
-          <p className="hidden lg:block mb-6">{props.dict.match_insider.body}</p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
+          <ConsultantViewDetails
+            consultant={selectedConsultant}
+            goBackHandler={() => setSelectedConsultant(null)}
+            selectConsultantHandler={setPrefPartner}
+            dict={props.dict}
+          />
+        </div>
+      </div>
+    </>
+  ) : (
+    <>
+      <div className="modal-container h-screen lg:h-full">
+        <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
+          <div className="modal__left flex flex-col w-full lg:max-w-420 lg:max-h-665">
+            {/* <div className=""> */}
+            <div
+              className="close-modal flex items-center gap-2 mb-6"
+              onClick={props.returnToStartHandler}
+            >
+              <BackIcon color="#272727" />
+              <p>{props.dict.find_your_insider.go_back}</p>
+            </div>
 
-              const trimmed = props.searchQuery.trim();
+            <div className="modal-heading ">
+              {props.dict.i_know_an_insider.h1}
+            </div>
 
-              if (trimmed.length === 0) {
-                setShowWarning(true);
-                return;
-              }
+            <p className="hidden lg:block mb-6">
+              {props.dict.i_know_an_insider.body}
 
-              setShowWarning(false);
+              <br />
+              <br />
+              <a className="cursor-pointer" onClick={props.goToFindHandler}>
+                {props.dict.i_know_an_insider.help_link}
+              </a>
+            </p>
 
-              const isZipCode = /^\d{4,6}$/.test(trimmed);
-              props.setSearchType(isZipCode ? "locator" : "consultantSearch");
-
-              findConsultantByWebsite(trimmed);
-            }}
-            className="relative mb-4"
-          >
-            <input
-              type="text"
-              placeholder={props.dict.find_your_insider.input_placeholder}
-              className="py-3 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
-              value={props.searchQuery}
-              onChange={(e) => props.setSearchQuery(e.target.value)} 
-            />
-
-            <div className="absolute inset-y-0 right-0 flex items-center z-20">
-              <button type="submit">
+            <div className="search-heading mb-2">
+              {props.dict.i_know_an_insider.search_header}
+            </div>
+            {showWarning ? (
+              <div class="search-warning text-pink-700">
+                {props.dict.i_know_an_insider.input_placeholder}
+              </div>
+            ) : null}
+            <div className="relative">
+              <input
+                type="text"
+                id="searchByName"
+                name="searchByName"
+                className="name-input py-3 px-4 pr-11 block w-full border border-border-gray shadow-sm rounded-md text-base focus:z-10"
+                placeholder={props.dict.i_know_an_insider.input_placeholder}
+                onChange={inputHandler}
+                onKeyDown={(event) => handleKeyDown(event, "name")}
+                value={searchQuery}
+              />
+              <div
+                className="absolute inset-y-0 right-0 flex items-center z-20 pr-4"
+                onClick={findConsultantByWebsite}
+              >
                 <SubmitIcon />
               </button>
             </div>

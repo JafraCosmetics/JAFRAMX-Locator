@@ -249,7 +249,7 @@ img[src*="Iconos_"] {
   font-size: 14px;
   line-height: 18px;
 }
-#about-you {
+#about-me {
   font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -301,16 +301,11 @@ img[src*="Iconos_"] {
 .consultant-card button {
 cursor: pointer;
 }
-.consultant-view-details #consultant-card-select-insider {
-  font-size: 16px !important;  
-}
-
-#consultant-card-select-insider,
-#view-products {
+#consultant-card-select-insider {
   font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 9px;
+  font-size: 10.5px;
   line-height: 21px;
   color: #fbf8fb;
   padding: 3px 10px;
@@ -318,11 +313,12 @@ cursor: pointer;
   border: none;
   background-color: #8f4899;
 }
+
 #consultant-card-view-profile {
   font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 9px;
+  font-size: 10.5px;
   line-height: 21px;
   color:  #8f4899;
   padding: 3px 10px;

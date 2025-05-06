@@ -1,19 +1,19 @@
-  import React, { useContext, useMemo, useState, useEffect, useRef } from "react";
-  import Radar from "radar-sdk-js";
-  import "radar-sdk-js/dist/radar.css";
-  import { renderToString } from "react-dom/server";
-  import { GrUserExpert } from "react-icons/gr";
-  import { IoBagOutline } from "react-icons/io5";
-  import ConsultantCard from "./ConsultantCard";
-  import ZipForm from "./ZipForm";
-  import { BackIcon} from "./Icons";
-  import { ConsultantSelectedContext } from "./ConsultantFinder";
-  import MapAccordion from "./MapAccordion";
-  import ConsultantViewDetails from "./ConsultantViewDetails";
-  import Image from "next/image";
-
-  import { Scrollbars } from "react-custom-scrollbars"; 
-  import { SubmitIcon } from "./Icons";
+import React, { useContext, useMemo, useState, useEffect, useRef } from "react";
+import Radar from "radar-sdk-js";
+import "radar-sdk-js/dist/radar.css";
+import { renderToString } from "react-dom/server";
+import AvatarImage from "/public/images/avatar.png";
+import { GrUserExpert } from "react-icons/gr";
+import { IoBagOutline } from "react-icons/io5";
+import ConsultantCard from "./ConsultantCard";
+import ZipForm from "./ZipForm";
+import { BackIcon} from "./Icons";
+import { ConsultantSelectedContext } from "./ConsultantFinder";
+import MapAccordion from "./MapAccordion";
+import ConsultantViewDetails from "./ConsultantViewDetails";
+import Image from "next/image";
+import MapPlaceholder from "/public/images/mapPlaceholder.png";
+import { Scrollbars } from "react-custom-scrollbars";
 
   import { UserContext } from "./ConsultantFinder";
   export default function Locator(props) {
@@ -197,66 +197,76 @@
       });
     }
 
-    for (let consultant of consultantList) {
-      const infoWindow = (
-        <div className="map-marker flex flex-col gap-4 py-4 px-4 w-[300px] mx-auto max-w-[300px] mx-4 border border-black rounded-lg">
-          <div className="relative w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex-shrink-0 mx-auto">
-            <Image
-              src={consultant.profileImage ?? "/images/avatar.png"}
-              alt="profile image"
-              fill
-              className="object-cover object-center"
-            />
-          </div>
-          <div className="text-center">
-            <h2 className="text-lg font-bold">{consultant.displayName}</h2>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex items-center gap-4 w-full">
-              <button
-                id="consultant-card-view-profile"
-                className="text-xs cursor-pointer flex items-center gap-2 bg-gray-200 hover:bg-gray-300 rounded px-4 py-2"
-                onClick={(event) => viewDetailsHandler(event, consultant)}
-              >
-                <GrUserExpert />
-                {props.dict.consultant_card.view_details}
-              </button>
-              <button
-                id="consultant-card-select-insider"
-                className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2"
-                onClick={props.selectConsultantHandler}
-              >
-                <IoBagOutline />
-                {props.dict.consultant_card.select_insider}
-              </button>
-            </div>
-          </div>
-        </div>
-      );
+        for (let consultant of consultantList) {
+          // console.log("consultant: " + consultant.latitude, consultant.longitude);
 
-      const marker = Radar.ui
-        .marker({
-          popup: {
-            html: renderToString(infoWindow),
-            maxWidth: 400,
-          },
-        })
-        .setLngLat([consultant.longitude, consultant.latitude])
-        .addTo(mapRef.current);
+          const infoWindow = (
+            <div className="map-marker flex flex-col gap-4 py-4 px-4 w-[300px] mx-auto max-w-[300px] mx-4 border border-black rounded-lg">
+              {/* Foto */}
+              <div className="relative w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex-shrink-0 mx-auto">
+                <Image
+                  src={consultant.profileImage ?? AvatarImage}
+                  alt="profile image"
+                  fill
+                  className="object-cover object-center"
+                />
+              </div>
+          
+              {/* Nombre */}
+              <div className="text-center">
+                <h2 className="text-lg font-bold">{consultant.displayName}</h2>
+              </div>
+          
+              {/* Comprar conmigo */}
+              {/* Botones */}
+              <div className="flex justify-between">
+                <div className="flex items-center gap-4 w-full">
+                  <button
+                    id="consultant-card-view-profile"
+                    className="text-xs cursor-pointer flex items-center gap-2 bg-gray-200 hover:bg-gray-300 rounded px-4 py-2"
+                    onClick={(event) =>
+                      props.viewDetailsHandler(event, props.consultant, props.marker)
+                    }
+                  >
+                    <GrUserExpert />
+                    {props.dict.consultant_card.view_details}
+                  </button>
+                  <button
+                    id="consultant-card-select-insider"
+                    className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2"
+                    onClick={props.selectConsultantHandler}
+                  >
+                    <IoBagOutline />
+                    {props.dict.consultant_card.select_insider}
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+
+          const marker = Radar.ui
+            .marker({
+              popup: {
+                html: renderToString(infoWindow),
+                maxWidth: 400,
+              },
+            })
+            .setLngLat([consultant.longitude, consultant.latitude])
+            .addTo(mapRef.current);
 
       marker._element.onclick = () => {
         setSelectedInfoWindow(consultant.displayName);
       };
 
-      const mobileMarker = Radar.ui
-        .marker({
-          popup: {
-            html: renderToString(infoWindow),
-            maxWidth: 400,
-          },
-        })
-        .setLngLat([consultant.longitude, consultant.latitude])
-        .addTo(mobileMapRef.current);
+          const mobileMarker = Radar.ui
+            .marker({
+              popup: {
+                html: renderToString(infoWindow),
+                maxWidth: 400,
+              },
+            })
+            .setLngLat([consultant.longitude, consultant.latitude])
+            .addTo(mobileMapRef.current);
 
       mobileMarker._element.onclick = () => {
         setSelectedInfoWindow(consultant.displayName);
@@ -413,42 +423,41 @@
         </div>
       </div>
     ) : (
-      <div className="modal-container min-h-screen lg:h-full">
-        <div className="modal modal-container-grid w-full flex flex-col lg:grid p-4 lg:p-8 gap-6">
-          <div className="modal__left w-full flex flex-col">
-            <div
-              className="close-modal flex items-center gap-4 mb-9 cursor-pointer"
-              onClick={props.returnToStartHandler}
-            >
-              <BackIcon color="#272727" />
-              <p>{props.dict.find_your_insider.go_back}</p>
-            </div>
-            <div className="flex justify-center items-center mb-6">
-              <Image
-                src="/images/avatar.png"
-                alt="Default Avatar"
-                width={100}
-                height={100}
-              />
-            </div>
-            <div className="modal-heading jafra-purple font-bold">
-              {props.dict.match_insider.h1}
-            </div>
-            <p className="hidden lg:block mb-6">
-              {props.dict.match_insider.body}
-            </p>
-
-            <UserContext.Provider value={{ showWarning, setShowWarning }}>
-              <ZipForm
-                dict={props.dict}
-                setSearchQuery={props.setSearchQuery}
-                setSearchType={props.setSearchType}
-                updateOrigin={updateOrigin}
-                showWarning={showWarning}
-                setShowWarning={setShowWarning}
-              />
-            </UserContext.Provider>
-
+      <div className="modal-container ">
+        <div className="modal flex p-4 lg:p-8 w-full">
+          <div className="modal__left overflow-hidden">
+            <>
+              <div
+                // data-close-modal
+                data-micromodal-close
+                className="close-modal flex items-center gap-4 mb-9"
+                onClick={props.returnToStartHandler}
+              >
+                <BackIcon color="#272727" />
+                <p>{props.dict.find_your_insider.go_back}</p>
+              </div>
+              {/* logo jafra centrada */}
+              <div className="flex justify-center items-center mb-6">
+                <Image
+                  src={AvatarImage}
+                  alt="Default Avatar"
+                  width={100}
+                  height={100}
+                />
+              </div><br/>
+              <div className="modal-info-body mb-6">
+                <div className="modal-heading mb-3"><br/>
+                  {props.dict.match_insider.h1}
+                </div>
+                <p className="hidden lg:block">
+                  {props.dict.match_insider.body} <br />
+                  <br />
+                </p>
+              </div>
+              <UserContext.Provider value={{ showWarning, setShowWarning }}>
+                <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
+              </UserContext.Provider>
+            </>
             <div className="lg:hidden">
               <MapAccordion />
             </div>
@@ -456,8 +465,10 @@
             <div className="mt-3">
               <p className="px-6 mb-6">{renderResultsMessage}</p>
               {consultantList.length > 0 ? (
-                <Scrollbars autoHide style={{ width: "100%", height: 400 }}>
-                  {consultantCards}
+                <Scrollbars autoHide style={{ width: "100%", maxWidth: "1000px", height: 400 }}>
+                  <div className="flex flex-col gap-4 w-full">
+                    {consultantCards}
+                  </div>
                 </Scrollbars>
               ) : (
                 <div className="flex flex-col gap-4 w-full">{consultantCards}</div>
@@ -474,49 +485,51 @@
       </div>
     )
   ) : (
-    <div className="modal-container min-h-screen">
-      <div className="modal flex flex-col lg:grid lg:modal-container-grid p-4 lg:p-8 w-full">
-        <div className="modal__left w-full">
-          <div
-            className="close-modal flex items-center gap-2 mb-10 cursor-pointer"
-            onClick={props.returnToStartHandler}
-          >
-            <BackIcon color="#272727" />
-            <p>{props.dict.find_your_insider.go_back}</p>
-          </div>
-          <div className="flex justify-center items-center mb-6">
-            <Image
-              src="/images/avatar.png"
-              alt="Default Avatar"
-              width={100}
-              height={100}
-            />
-          </div>
-          <div className="modal-heading jafra-purple font-bold">
-            {props.dict.match_insider.h1}
-          </div>
-          <p className="hidden lg:block mb-6">
-            {props.dict.match_insider.body}
-          </p>
-
-          <UserContext.Provider value={{ showWarning, setShowWarning }}>
-            <ZipForm
-              dict={props.dict}
-              setSearchQuery={props.setSearchQuery}
-              setSearchType={props.setSearchType}
-              updateOrigin={updateOrigin}
-              showWarning={showWarning}
-              setShowWarning={setShowWarning}
-            />
-          </UserContext.Provider>
-
-          {gettingCurrentLocation || currentZip ? (
-            <div className="h-full lg:hidden flex flex-col justify-center items-center gap-2">
-              <p>{props.dict.match_insider.loading_insiders}</p>
-              {renderLoadingMessage}
+    <>
+      <div className="modal-container">
+        <div className="modal flex flex-col p-4 lg:p-8  w-full lg:grid lg:modal-container-grid">
+          <div className="modal__left">
+            <div
+              className="close-modal flex items-center gap-2 mb-10"
+              onClick={props.returnToStartHandler}
+            >
+              <BackIcon color="#272727" />
+              <p>{props.dict.find_your_insider.go_back}</p>
             </div>
-          ) : null}
-        </div>
+           {/* Logo Jafra centrada */}
+            <div className="flex justify-center items-center mb-6">
+              <Image
+                src={AvatarImage}
+                alt="Default Avatar"
+                width={100}
+                height={100}
+              />
+            </div><br/>
+            <div className="modal-heading jafra-purple font-bold object-contain">
+              {props.dict.match_insider.h1}
+            </div><br/>
+            <p className="hidden lg:block mb-6 ">
+              {props.dict.match_insider.body}
+            </p>
+            <UserContext.Provider value={{ showWarning, setShowWarning }}>
+              <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
+            </UserContext.Provider>
+            {/*  disable use my location search feature */}
+            {/* <div className="flex items-center gap-2 mt-4">
+              <LocationPinIcon />
+              <a className="underline" onClick={getCurrentLocation}>
+                {props.dict.match_insider.use_location}
+              </a>
+            </div> */}
+            {gettingCurrentLocation == false && currentZip == null ? null : (
+              <div className="h-full lg:hidden">
+                <div className="flex flex-col justify-center items-center gap-2 h-full">
+                  <p>{props.dict.match_insider.loading_insiders}</p>
+                  {renderLoadingMessage}
+                </div>
+              </div>
+            )}
+          </div>
 
         <div className="hidden lg:block max-w-730">
           <div className="map-loading flex flex-col justify-center items-center h-full relative xl:w-730">
