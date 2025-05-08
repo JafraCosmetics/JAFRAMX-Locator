@@ -15,26 +15,26 @@ import Image from "next/image";
 import MapPlaceholder from "/public/images/mapPlaceholder.png";
 import { Scrollbars } from "react-custom-scrollbars";
 
-  import { UserContext } from "./ConsultantFinder";
-  export default function Locator(props) {
-    const { zipcode, dict, returnToStartHandler } = props;
-    const mapRef = useRef(null);
-    const mobileMapRef = useRef(null);
+import { UserContext } from "./ConsultantFinder";
+export default function Locator(props) {
+  const { zipcode, dict, returnToStartHandler } = props;
+  const mapRef = useRef(null);
+  const mobileMapRef = useRef(null);
 
-    const [locationsLoaded, setLocationsLoaded] = useState(false);
-    const [markerList, setMarkerList] = useState([]);
-    const [currentLocation, setCurrentLocation] = useState(null);
-    const [selectedInfoWindow, setSelectedInfoWindow] = useState("");
-    const [consultantList, setConsultantList] = useState([]);
-    const [consultantCards, setConsultantCards] = useState("");
-    const [currentZip, setCurrentZip] = useState(zipcode);
-    const [gettingCurrentLocation, setGettingCurrentLocation] = useState(false);
-    const [selectedConsultant, setSelectedConsultant] = useState(null);
-    const [map, setMap] = useState(null);
-    const [showWarning, setShowWarning] = useState(false);
-    const [mapCenter, setMapCenter] = useState(null);
-    const { consultantSelected, setConsultantSelected, setModalState } =
-      useContext(ConsultantSelectedContext);
+  const [locationsLoaded, setLocationsLoaded] = useState(false);
+  const [markerList, setMarkerList] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [selectedInfoWindow, setSelectedInfoWindow] = useState("");
+  const [consultantList, setConsultantList] = useState([]);
+  const [consultantCards, setConsultantCards] = useState("");
+  const [currentZip, setCurrentZip] = useState(zipcode);
+  const [gettingCurrentLocation, setGettingCurrentLocation] = useState(false);
+  const [selectedConsultant, setSelectedConsultant] = useState(null);
+  const [map, setMap] = useState(null);
+  const [showWarning, setShowWarning] = useState(false);
+  const [mapCenter, setMapCenter] = useState(null);
+  const { consultantSelected, setConsultantSelected, setModalState } =
+    useContext(ConsultantSelectedContext);
 
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
@@ -86,7 +86,8 @@ import { Scrollbars } from "react-custom-scrollbars";
       if (currentZip) {
         url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
       } else if (currentLocation) {
-        url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
+        console.log("currentLocation", currentLocation);
+        url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
       }
 
       if (url !== "") {
@@ -316,38 +317,42 @@ import { Scrollbars } from "react-custom-scrollbars";
     };
 
 
-    useEffect(() => {
-      if (zipcode) {
-        setCurrentZip(zipcode); // Actualiza el estado si cambia el código postal
-      }
-    }, [zipcode]);
+  useEffect(() => {
+    if (zipcode) {
+      setCurrentZip(zipcode); // Actualiza el estado si cambia el código postal
+    }
+  }, [zipcode]);
 
-      const updateOrigin = (zip) => {
-        setLocationsLoaded(false);
-        const mapDiv = document.getElementById("map");
-        if (mapDiv !== null) mapDiv.innerHTML = "";
-        setCurrentZip(zip); 
-        setSelectedConsultant(null);
-        setSelectedInfoWindow("");
-      };
+  const updateOrigin = () => {
+    setLocationsLoaded(false);
+    const mapDiv = document.getElementById("map");
+    if (mapDiv !== null) mapDiv.innerHTML = ""; // Limpia el contenido del mapa
+    setCurrentZip(zipcode); // Usa el código postal recibido como prop
+    setSelectedConsultant(null); // Limpia el consultor seleccionado
+    setSelectedInfoWindow(""); // Limpia la ventana de información seleccionada
+  };
 
-    const renderResultsMessage = useMemo(() => {;
-      if (currentZip) {
-        return (
-          <>
-            {consultantList.length}{" "}
-            {props.dict.match_insider.results_found_within} {currentZip}
-          </>
-        );
-      } else {
-        return (
-          <>
-            {consultantList.length}{" "}
-            {props.dict.match_insider.results_found_within}
-          </>
-        );
-      }
-    }, [consultantList, currentZip, props.dict]);
+  useEffect(() => {
+    updateOrigin(); // Llama a `updateOrigin` automáticamente cuando cambie el código postal
+  }, [zipcode]);
+
+  const renderResultsMessage = useMemo(() => {;
+    if (currentZip) {
+      return (
+        <>
+          {consultantList.length}{" "}
+          {props.dict.match_insider.results_found_within} {currentZip}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {consultantList.length}{" "}
+          {props.dict.match_insider.results_found_within}
+        </>
+      );
+    }
+  }, [consultantList, currentZip, props.dict]);
 
     const renderLoadingMessage = useMemo(() => {
       return (
@@ -374,52 +379,14 @@ import { Scrollbars } from "react-custom-scrollbars";
     }, [props.dict]);
   return locationsLoaded ? (
     selectedConsultant ? (
-      <div className="modal-container min-h-screen lg:h-full">
-        <div className="modal modal-container-grid w-full flex flex-col lg:grid p-4 lg:p-8 gap-6">
-          <div className="modal__left w-full flex flex-col">
-            <div className="flex flex-col gap-2 overflow-auto max-h-[450px]">
-              <div
-                className="close-modal flex items-center gap-2 mb-10 cursor-pointer"
-                onClick={props.returnToStartHandler}
-              >
-                <BackIcon color="#272727" />
-                <p>{props.dict.find_your_insider.go_back}</p>
-              </div>
-              <div className="flex justify-center items-center mb-6">
-                <Image
-                  src="/images/avatar.png"
-                  alt="Default Avatar"
-                  width={100}
-                  height={100}
-                />
-              </div>
-              <div className="modal-heading jafra-purple font-bold">
-                {props.dict.match_insider.h1}
-              </div>
-              <p className="hidden lg:block mb-6">
-                {props.dict.match_insider.body}
-              </p>
-              <UserContext.Provider value={{ showWarning, setShowWarning }}>
-                  <ZipForm
-                    dict={dict}
-                    setSearchQuery={props.setSearchQuery} 
-                    setSearchType={props.setSearchType}
-                    updateOrigin={updateOrigin}
-                    showWarning={showWarning}
-                    setShowWarning={setShowWarning}
-                  />
-                </UserContext.Provider>
-            </div>
-
-            <div className="flex flex-col gap-4 w-full mt-6">{consultantCards}</div>
-          </div>
-
-          <ConsultantViewDetails
-            consultant={selectedConsultant}
-            goBackHandler={() => setSelectedConsultant(null)}
-            selectConsultantHandler={setPrefPartner}
-            dict={props.dict}
-          />
+      <div className="modal-container h-full lg:h-860">
+        <div className="modal p-4 w-full flex lg:grid lg:p-8 modal-container-grid">
+        <ConsultantViewDetails
+          consultant={selectedConsultant}
+          goBackHandler={() => setSelectedConsultant(null)}
+          selectConsultantHandler={setPrefPartner}
+          dict={props.dict}
+        />
         </div>
       </div>
     ) : (
@@ -445,15 +412,6 @@ import { Scrollbars } from "react-custom-scrollbars";
                   height={100}
                 />
               </div><br/>
-              <div className="modal-info-body mb-6">
-                <div className="modal-heading mb-3"><br/>
-                  {props.dict.match_insider.h1}
-                </div>
-                <p className="hidden lg:block">
-                  {props.dict.match_insider.body} <br />
-                  <br />
-                </p>
-              </div>
               <UserContext.Provider value={{ showWarning, setShowWarning }}>
                 <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
               </UserContext.Provider>
@@ -550,4 +508,4 @@ import { Scrollbars } from "react-custom-scrollbars";
       </div>
     </div>
   );
-  }
+}

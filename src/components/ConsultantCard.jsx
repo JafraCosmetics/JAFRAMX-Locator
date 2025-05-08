@@ -63,9 +63,10 @@ const ConsultantCard = (props) => {
           <div className="consultant-box__name text-lg font-bold">
             {props.consultant.displayName}
           </div>
-          <div className="about-me text-sm text-gray-600 mt-2">
-            Mi pasión es ayudarte a sentirte segura y radiante desde el primer paso de tu rutina
-          </div>
+          <p className="text-md font-montserrat">
+              {props.consultant.aboutMe ??
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
+            </p>
         </div>
         {/* Botones */}
         <div className="flex flex-wrap gap-1 mt-6 justify-center md:justify-start">
@@ -80,14 +81,15 @@ const ConsultantCard = (props) => {
             <GrUserExpert />
             {props.dict.consultant_card.view_details}
           </button>
-          <button
+          <a
             id="consultant-card-select-insider"
             className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2 w-[125px] flex-shrink-0"
-            onClick={props.selectConsultantHandler}
+            href={`https://jafra.com/${props.consultant.siteName}`} //reemplazar la URL para JAFRA MX
+            target="_parent"
           >
             <IoBagOutline />
             {props.dict.consultant_card.select_insider}
-          </button>
+          </a>
         </div>
       </div>
     </div>

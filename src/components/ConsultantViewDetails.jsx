@@ -5,6 +5,8 @@ import {
 } from "./Icons";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+
+import AvatarImage from "/public/images/avatar.png";
 import { FaAward } from "react-icons/fa";
 import { GiGraduateCap } from "react-icons/gi";
 import { TfiCup } from "react-icons/tfi";
@@ -12,8 +14,10 @@ import { RiWhatsappFill } from "react-icons/ri";
 import { IoBagOutline } from "react-icons/io5";
 import { FaFacebookSquare, FaInstagram } from "react-icons/fa";
 
+
+
 const ConsultantViewDetails = (props) => {
-  const [profileImage, setProfileImage] = useState("/images/avatar.png");
+  const [profileImage, setProfileImage] = useState(AvatarImage);
 
   useEffect(() => {
     if (props.consultant.profileImage) {
@@ -63,7 +67,7 @@ const ConsultantViewDetails = (props) => {
   };
 
   return (
-    <div className="consultant-view-details flex flex-col gap-4 py-4 px-4 w-full max-w-md lg:max-w-[600px] mx-auto border border-black rounded-lg overflow-y-auto max-h-[90vh]">
+    <div className="consultant-view-details flex flex-col gap-4 py-4 px-4 w-[500px] mx-auto max-w-[600px] mx-4 border border-black rounded-lg">
       <div className="flex flex-col gap-9 w-full">
         {/* Botón para regresar */}
         <div
@@ -73,20 +77,23 @@ const ConsultantViewDetails = (props) => {
           <BackIcon color="#272727" />
           <p>{props.dict.find_your_insider.go_back}</p>
         </div>
+
         {/* Detalles del consultor */}
+
         <div className="view-details w-full flex justify-center h-full">
-          <div className="flex flex-col gap-2 py-4 px-4 w-full mx-auto rounded-lg">
+          <div className="flex flex-col gap-2 py-4 px-4 w-[500px] mx-auto max-w-[600px] mx-4 rounded-lg">
             {/* Foto */}
             <div className="flex justify-center">
               <Image
                 name={props.consultant.displayName}
                 className="h-22 w-22 lg:h-30 lg:w-30 bg-white rounded-full object-contain"
-                src={props.consultant.profileImage ?? "/images/avatar.png"}
+                src={profileImage}
                 alt="profile image"
                 height={75}
                 width={75}
               />
             </div>
+
             {/* Nombre */}
             <div className="text-center">
               <h1 className="text-lg font-bold">{props.consultant.displayName}</h1>
@@ -96,13 +103,15 @@ const ConsultantViewDetails = (props) => {
                 Líder en productos de belleza
               </h3>
             </div>
+
           {/* Descripción */}
           <div className="text-left p-4 modal-container-grid-purple">
             <p className="text-md font-montserrat">
-              {props.consultant.aboutYou ??
-                "Mi pasión es ayudar a las personas a sentirse y verse bien. Me encanta compartir mis conocimientos sobre el cuidado de la piel y el maquillaje, y estoy aquí para ayudarte a encontrar los productos perfectos para ti."}
+              {props.consultant.aboutMe ??
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip"}
             </p>
           </div>
+
             {/* Contáctame */}
             <div>
               <h2 className="text-md font-semibold mb-2">Contáctame por:</h2>
@@ -125,77 +134,75 @@ const ConsultantViewDetails = (props) => {
                 {/* Facebook */}
                 {props.consultant.facebook && (
                   <a
-                    href={
-                      props.consultant.facebook.startsWith("http")
-                        ? props.consultant.facebook
-                        : `https://www.facebook.com/${props.consultant.facebook}`
-                    }
+                    href={props.consultant.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-1"
                   >
                     <FaFacebookSquare className="text-3xl icon-blue" />
-                    <p className="text-sm">Facebook</p>
+                    <p className="text-sm ">Facebook</p>
                   </a>
                 )}
+
                 {/* Instagram */}
                 {props.consultant.instagram && (
                   <a
-                    href={
-                      props.consultant.instagram.startsWith("http")
-                        ? props.consultant.instagram
-                        : `https://www.instagram.com/${props.consultant.instagram}`
-                    }
+                    href={props.consultant.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-1"
                   >
                     <FaInstagram className="text-3xl" />
-                    <p className="text-sm">Instagram</p>
+                    <p className="text-sm ">Instagram</p>
                   </a>
                 )}
               </div>
             </div>
+
                    {/* Experiencia, certificados y ventas */}
-            <div>
-              <h2 className="text-xs font-semibold mb-2">Sobre mí</h2>
-              <div className="flex flex-col md:flex-row md:flex-wrap md:justify-between items-start gap-3 text-[11px] leading-tight">
+                   <div>
+              <h2 className="text-md font-semibold mb-2">Sobre mí</h2>
+
+              <div className="flex justify-between items-center gap-4">
                 {/* Experiencia */}
-                <div className="flex items-start gap-2 w-full md:w-[30%]">
-                  <img
-                    src="/images/Iconos_anios.svg"
-                    alt="Icono experiencia"
-                    className="icon-small"
-                  />
+                <div className="flex items-center gap-4">
+                  {/* Ícono a la izquierda */}
+                  <FaAward className="text-3xl icon-purple" />
+
+                  {/* Texto a la derecha */}
                   <div className="flex flex-col">
-                    <h4 className="text-[11px] font-bold">Experiencia</h4>
-                    <p>{props.consultant.experience ?? "10 años"}</p>
+                    <h4 className="text-xl font-bold">Certificada en</h4>
+                    <p className="text-sm">
+                      {props.consultant.certificates ?? "Cuidado de la piel"}
+                    </p>
                   </div>
                 </div>
 
                 {/* Certificados */}
-                <div className="flex items-start gap-2 w-full md:w-[30%]">
-                  <img
-                    src="/images/Iconos_rostro.svg"
-                    alt="Icono rostro"
-                    className="icon-small"
-                  />
+                <div className="flex items-center gap-4">
+                  {/* Ícono a la izquierda */}
+                  <GiGraduateCap className="text-4xl icon-purple" />
+
+                  {/* Texto a la derecha */}
                   <div className="flex flex-col">
-                    <h4 className="text-[11px] font-bold">Certificaciones</h4>
-                    <p>{props.consultant.certificates ?? "Cuidado de la piel"}</p>
+                    <h4 className="text-xl font-bold">Certificada en</h4>
+                    <p className="text-sm">
+                      {props.consultant.certificates ?? "Cuidado de la piel"}
+                    </p>
                   </div>
                 </div>
 
                 {/* Ventas */}
-                <div className="flex items-start gap-2 w-full md:w-[30%]">
-                  <img
-                    src="/images/Iconos_ventas.svg"
-                    alt="Icono ventas"
-                    className="icon-small"
-                  />
+                <div className="flex items-center gap-4">
+                  {/* Ícono a la izquierda */}
+                  <TfiCup className="text-3xl icon-purple" />
+
+                  {/* Texto a la derecha */}
                   <div className="flex flex-col">
-                    <h4 className="text-[11px] font-bold">Nivel en ventas</h4>
-                    <p>{props.consultant.salesLevel ?? "Top"}</p>
+                    <h4 className="text-xl font-bold">Top en</h4>
+                    <p className="text-sm">
+                      {props.consultant.certificates ?? "Ventas"}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -206,51 +213,63 @@ const ConsultantViewDetails = (props) => {
               <a
                 id="consultant-card-select-insider"
                 className="h-10 bg-mine-shaft text-white hover:bg-black rounded flex items-center justify-center px-10 gap-x-2 no-underline cursor-pointer"
-                href={`https://jafra-mx.myshopify.com/?pws=${props.consultant.siteName}`}
+                href={`https://jafra.com/${props.consultant.siteName}`}
                 target="_parent"
               >
                 <IoBagOutline className="text-2xl" />
                 Comprar conmigo
               </a>
             </div>
-            {/* Productos estrella */}
-              {props.consultant.pickedProductsFromPartner?.length > 0 && (
-                <div>
-                  <h2 className="text-md font-semibold mb-2">Mis productos estrella</h2>
-                  <div className="flex gap-4 overflow-x-scroll scrollbar-hide pb-2">
-                    {props.consultant.pickedProductsFromPartner.map((product, index) => (
-                      <div
-                        key={index}
-                        className="min-w-[140px] max-w-[160px] bg-white shadow-md rounded-lg p-3 flex flex-col gap-2 h-[270px]"
-                      >
-                        <p className="text-sm font-semibold mt-2 text-center line-clamp-2 font-bold">
-                          {product.title}
-                        </p>
-                        <Image
-                          src={product.featuredImage?.url || "/default-product.jpg"}
-                          alt={product.featuredImage?.altText || product.title}
-                          className="h-24 w-full object-cover"
-                          width={100}
-                          height={90}
-                        />
-                        {product.feedback && (
-                          <p className="text-xs italic text-center mt-1 text-gray-500">
-                            “{product.feedback}”
-                          </p>
-                        )}
-                        <a
-                          href={`https://jafra-mx.myshopify.com/products/${product.handle}?pws=${props.consultant.siteName}`}
-                          id= "view-products"
-                          rel="noopener noreferrer"
-                          className="mt-auto bg-purple-600 text-white py-1 rounded hover:bg-purple-700 text-sm text-center w-full max-w-[130px] self-center"
-                        >
-                          Ver producto
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+
+            <div>
+  <h2 className="text-md font-semibold mb-2">Mis productos estrella</h2>
+  <div className="flex gap-4 overflow-x-scroll scrollbar-hide">
+    {/* Producto 1 */}
+    <div className="min-w-[120px] max-w-[150px] bg-white shadow-md rounded-lg p-3 flex flex-col items-center">
+      <Image
+        src="/path/to/product1.jpg" // Reemplaza con la ruta de la imagen
+        alt="Producto 1"
+        className="h-24 w-full object-cover rounded-md"
+        width={120}
+        height={90}
+      />
+      <p className="text-sm font-semibold mt-2 text-center">Producto 1</p>
+      <button className="mt-3 bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 text-sm">
+        Ver producto
+      </button>
+    </div>
+
+    {/* Producto 2 */}
+    <div className="min-w-[120px] max-w-[150px] bg-white shadow-md rounded-lg p-3 flex flex-col items-center">
+      <Image
+        src="/path/to/product2.jpg" // Reemplaza con la ruta de la imagen
+        alt="Producto 2"
+        className="h-24 w-full object-cover rounded-md"
+        width={120}
+        height={90}
+      />
+      <p className="text-sm font-semibold mt-2 text-center">Producto 2</p>
+      <button className="mt-3 bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 text-sm">
+        Ver producto
+      </button>
+    </div>
+
+    {/* Producto 3 */}
+    <div className="min-w-[120px] max-w-[150px] bg-white shadow-md rounded-lg p-3 flex flex-col items-center">
+      <Image
+        src="/path/to/product3.jpg" // Reemplaza con la ruta de la imagen
+        alt="Producto 3"
+        className="h-24 w-full object-cover rounded-md"
+        width={120}
+        height={90}
+      />
+      <p className="text-sm font-semibold mt-2 text-center">Producto 3</p>
+      <button className="mt-3 bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 text-sm">
+        Ver producto
+      </button>
+    </div>
+  </div>
+</div>{/*fin productos estrella*/}
           </div>
         </div>
       </div>

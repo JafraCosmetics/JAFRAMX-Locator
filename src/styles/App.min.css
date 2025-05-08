@@ -202,9 +202,7 @@
 }
 @media (min-width: 1024px) {
   .modal-container .view-details {
-
     background-image: none;
-
   }
 }
 .modal-container .view-details__name {
@@ -235,7 +233,8 @@
   border-color: #fff;
   width: 150px;
   height: 150px;
-  box-shadow: 0 0 50px #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 50px #ccc;
   background-color: #fff;
 }
 
@@ -301,6 +300,10 @@ img[src*="Iconos_"] {
 .consultant-card button {
 cursor: pointer;
 }
+.consultant-view-details #consultant-card-select-insider {
+  font-size: 16px !important;  
+}
+
 #consultant-card-select-insider {
   font-family: "Montserrat", sans-serif;
   font-style: normal;
@@ -313,7 +316,6 @@ cursor: pointer;
   border: none;
   background-color: #8f4899;
 }
-
 #consultant-card-view-profile {
   font-family: "Montserrat", sans-serif;
   font-style: normal;
