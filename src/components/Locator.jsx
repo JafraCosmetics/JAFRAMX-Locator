@@ -274,12 +274,13 @@ export default function Locator(props) {
             >
               <ConsultantCard
                 consultant={consultant}
-                marker={marker._element}
                 number={i + 1}
-                key={consultant.displayName}
-                selectConsultantHandler={() => setPrefPartner(consultant)}
-                viewDetailsHandler={viewDetailsHandler}
-                distance={true}
+                key={i}
+                selectConsultantHandler={() =>
+                  setSelectedConsultant(consultant)
+                }
+                viewDetailsHandler={() => setSelectedConsultant(consultant)}
+                distance={false}
                 dict={props.dict}
               />
             </ConsultantSelectedContext.Provider>
