@@ -16,27 +16,47 @@
   background-color: #fff;
   border-radius: 8px;
 }
+.modal-container h1 {
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 24px;
+  font-family: "montserrat", sans-serif;
+}
 .modal-container h2 {
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
+  font-family: "montserrat", sans-serif;
 }
+.modal-container h3 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: "montserrat", sans-serif;
+}
+.modal-container h4 {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 10px;
+  font-family: "montserrat", sans-serif;
+}
+
 .modal-container p {
   font-style: normal;
   font-weight: 390;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
 }
 .modal-container a {
   font-style: normal;
   font-size: 14px;
   line-height: 20px;
-  color: #8f4899;
 }
 .modal-container .close-icon {
   height: 2em;
   width: 2em;
 }
+
 .modal-container .modal {
   background-color: #fff;
   width: 100%;
@@ -178,12 +198,11 @@
   line-height: 16px;
 }
 .modal-container .view-details {
-  color: #8f4899;
   font-weight: 500;
 }
 @media (min-width: 1024px) {
   .modal-container .view-details {
-    background-image: url("../../public/images/viewDetailsBackground.png");
+    background-image: none;
   }
 }
 .modal-container .view-details__name {
@@ -212,8 +231,8 @@
 }
 .modal-container .view-details img {
   border-color: #fff;
-  width: 260px;
-  height: 260px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   box-shadow: 0 0 50px #ccc;
   background-color: #fff;
@@ -275,6 +294,10 @@
 .consultant-card button {
 cursor: pointer;
 }
+.consultant-view-details #consultant-card-select-insider {
+  font-size: 16px !important;  
+}
+
 #consultant-card-select-insider {
   font-family: "Montserrat", sans-serif;
   font-style: normal;
@@ -287,7 +310,6 @@ cursor: pointer;
   border: none;
   background-color: #8f4899;
 }
-
 #consultant-card-view-profile {
   font-family: "Montserrat", sans-serif;
   font-style: normal;

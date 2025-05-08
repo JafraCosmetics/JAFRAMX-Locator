@@ -15,9 +15,9 @@ import Image from "next/image";
 import MapPlaceholder from "/public/images/mapPlaceholder.png";
 import { Scrollbars } from "react-custom-scrollbars";
 
-export const UserContext = React.createContext(null);
-
+import { UserContext } from "./ConsultantFinder";
 export default function Locator(props) {
+  const { zipcode, dict, returnToStartHandler } = props;
   const mapRef = useRef(null);
   const mobileMapRef = useRef(null);
 
@@ -27,7 +27,7 @@ export default function Locator(props) {
   const [selectedInfoWindow, setSelectedInfoWindow] = useState("");
   const [consultantList, setConsultantList] = useState([]);
   const [consultantCards, setConsultantCards] = useState("");
-  const [currentZip, setCurrentZip] = useState(null);
+  const [currentZip, setCurrentZip] = useState(zipcode);
   const [gettingCurrentLocation, setGettingCurrentLocation] = useState(false);
   const [selectedConsultant, setSelectedConsultant] = useState(null);
   const [map, setMap] = useState(null);
@@ -84,7 +84,7 @@ export default function Locator(props) {
       if (currentZip) {
         url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
       } else if (currentLocation) {
-        console.log(currentLocation);
+        console.log("currentLocation", currentLocation);
         url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
       }
 
@@ -317,19 +317,27 @@ export default function Locator(props) {
     );
   };
 
-  const updateOrigin = async (event) => {
-    event.preventDefault();
+
+  useEffect(() => {
+    if (zipcode) {
+      setCurrentZip(zipcode); // Actualiza el estado si cambia el código postal
+    }
+  }, [zipcode]);
+
+  const updateOrigin = () => {
     setLocationsLoaded(false);
     const mapDiv = document.getElementById("map");
-    if (mapDiv !== null) mapDiv.innerHTML = "";
-    let zipCode = event.target.elements.zip.value;
-    setCurrentZip(zipCode);
-    setSelectedConsultant(null);
-    setSelectedInfoWindow("");
+    if (mapDiv !== null) mapDiv.innerHTML = ""; // Limpia el contenido del mapa
+    setCurrentZip(zipcode); // Usa el código postal recibido como prop
+    setSelectedConsultant(null); // Limpia el consultor seleccionado
+    setSelectedInfoWindow(""); // Limpia la ventana de información seleccionada
   };
 
-  const renderResultsMessage = useMemo(() => {
-    console.log(consultantList);
+  useEffect(() => {
+    updateOrigin(); // Llama a `updateOrigin` automáticamente cuando cambie el código postal
+  }, [zipcode]);
+
+  const renderResultsMessage = useMemo(() => {;
     if (currentZip) {
       return (
         <>
@@ -375,12 +383,12 @@ export default function Locator(props) {
     selectedConsultant ? (
       <div className="modal-container h-full lg:h-860">
         <div className="modal p-4 w-full flex lg:grid lg:p-8 modal-container-grid">
-          <ConsultantViewDetails
-            consultant={selectedConsultant}
-            goBackHandler={() => setSelectedConsultant(null)}
-            selectConsultantHandler={() => setPrefPartner(selectedConsultant)}
-            dict={props.dict}
-          />
+        <ConsultantViewDetails
+          consultant={selectedConsultant}
+          goBackHandler={() => setSelectedConsultant(null)}
+          selectConsultantHandler={setPrefPartner}
+          dict={props.dict}
+        />
         </div>
       </div>
     ) : (
@@ -406,15 +414,6 @@ export default function Locator(props) {
                   height={100}
                 />
               </div><br/>
-              <div className="modal-info-body mb-6">
-                <div className="modal-heading mb-3"><br/>
-                  {props.dict.match_insider.h1}
-                </div>
-                <p className="hidden lg:block">
-                  {props.dict.match_insider.body} <br />
-                  <br />
-                </p>
-              </div>
               <UserContext.Provider value={{ showWarning, setShowWarning }}>
                 <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
               </UserContext.Provider>

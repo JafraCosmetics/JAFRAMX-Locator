@@ -6,31 +6,33 @@ import ConsultantViewDetails from "./ConsultantViewDetails";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
 import Image from "next/image";
 import KnowConsultantImage from "/public/images/knowConsultant.jpeg";
+import AvatarImage from "/public/images/avatar.png";
 
 export default function ConsultantSearch(props) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState(null);
+  // Estados para manejar los resultados y otros estados
+  const [searchResults, setSearchResults] = useState(null); // Almacena los resultados de la búsqueda
   const {
     consultantSelected,
     setConsultantSelected,
     modalState,
     setModalState,
-  } = useContext(ConsultantSelectedContext);
-  const [selectedConsultant, setSelectedConsultant] = useState(null);
-  const [loadingConsultants, setLoadingConsultants] = useState(false);
-  const [showWarning, setShowWarning] = useState(false);
+  } = useContext(ConsultantSelectedContext); // Contexto para manejar el consultor seleccionado y el estado del modal
+  const [selectedConsultant, setSelectedConsultant] = useState(null); // Consultor seleccionado
+  const [loadingConsultants, setLoadingConsultants] = useState(false); // Estado de carga de consultores
+  const [showWarning, setShowWarning] = useState(false); // Muestra advertencias si el input está vacío
 
-  const findConsultantByWebsite = async () => {
-    // validate searchQuery
-    if (searchQuery.trim().length === 0) {
+  // Función para buscar consultores por sitio web
+  const findConsultantByWebsite = async (query) => {
+    if (query.trim().length === 0) {
+      // Si el input está vacío, muestra una advertencia
       setShowWarning(true);
     } else {
       setShowWarning(false);
-
       setSelectedConsultant(false);
-      setLoadingConsultants(true);
+      setLoadingConsultants(true); // Activa el estado de carga
 
-      let url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=LOCATOR&locator=${searchQuery.replace(
+      // Construye la URL para la búsqueda
+      let url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=LOCATOR&locator=${query.replace(
         " ",
         "%20"
       )}`;
@@ -40,66 +42,76 @@ export default function ConsultantSearch(props) {
         headers: { "Content-Type": "application/json" },
       };
 
+      // Realiza la solicitud a la API
       fetch(url, options)
         .then((res) => res.json())
         .then((json) => {
+          // Si hay resultados, los almacena en el estado
           json.partners
             ? setSearchResults(json.partners)
             : setSearchResults(null);
           console.log(json.partners);
-          setLoadingConsultants(false);
+          setLoadingConsultants(false); // Desactiva el estado de carga
         })
         .catch((err) => console.error("error:" + err));
     }
   };
 
-  const handleKeyDown = (event, searchType) => {
-    if (event.key === "Enter") {
-      findConsultantByWebsite(searchType);
+  // Realiza la búsqueda automáticamente cuando `props.searchQuery` cambie
+  useEffect(() => {
+    if (props.searchQuery) {
+      findConsultantByWebsite(props.searchQuery);
     }
-  };
+  }, [props.searchQuery]);
 
-  const setPrefPartner = () => {
-    let data = {
-      type: "setPrefPartner",
-      data: selectedConsultant,
-    };
-    parent.postMessage(data, "*"); //  `*` on any domain
-
-    setModalState("confirmation");
-  };
-
-  const viewDetails = (event, consultant) => {
-    setSelectedConsultant(consultant);
-  };
-
-  const radioClickHandler = (event, consultant) => {
-    var radioButtons = document.getElementsByClassName("consultant-card");
-
-    for (let i = 0; i < radioButtons.length; i++) {
-      radioButtons[i].classList.remove("consultant-card__selected");
-      radioButtons[i].classList.add("consultant-card__unselected");
-    }
-
-    event.target.classList.remove("consultant-card__unselected");
-    event.target.classList.add("consultant-card__selected");
-
-    setSelectedConsultant(consultant);
-  };
-
-  const selectConsultantHandler = useCallback(
-    (consultant) => {
+    // Función para establecer un consultor preferido
+    const setPrefPartner = () => {
       let data = {
         type: "setPrefPartner",
-        data: consultant,
+        data: selectedConsultant,
       };
-      parent.postMessage(data, "*"); //  `*` on any domain
+      parent.postMessage(data, "*"); // Envía un mensaje al padre (probablemente un iframe)
+  
+      setModalState("confirmation"); // Cambia el estado del modal a "confirmation"
+    };
+  
+    // Muestra los detalles de un consultor seleccionado
+    const viewDetails = (event, consultant) => {
+      setSelectedConsultant(consultant);
+    };
+  
+    // Maneja la selección de un consultor en la lista
+    const radioClickHandler = (event, consultant) => {
+      var radioButtons = document.getElementsByClassName("consultant-card");
+  
+      // Deselecciona todos los botones de radio
+      for (let i = 0; i < radioButtons.length; i++) {
+        radioButtons[i].classList.remove("consultant-card__selected");
+        radioButtons[i].classList.add("consultant-card__unselected");
+      }
+  
+      // Selecciona el botón de radio actual
+      event.target.classList.remove("consultant-card__unselected");
+      event.target.classList.add("consultant-card__selected");
+  
+      setSelectedConsultant(consultant); // Establece el consultor seleccionado
+    };
+  
+    // Función para manejar la selección de un consultor
+    const selectConsultantHandler = useCallback(
+      (consultant) => {
+        let data = {
+          type: "setPrefPartner",
+          data: consultant,
+        };
+        parent.postMessage(data, "*"); // Envía un mensaje al padre
+  
+        setModalState("confirmation"); // Cambia el estado del modal a "confirmation"
+      },
+      [setModalState]
+    );
 
-      setModalState("confirmation");
-    },
-    [setModalState]
-  );
-
+  // Renderiza la lista de consultores
   const renderConsultantList = useMemo(() => {
     if (searchResults !== null) {
       const list = searchResults.map((consultant, i) => {
@@ -112,25 +124,25 @@ export default function ConsultantSearch(props) {
               consultant={consultant}
               number={i + 1}
               key={i}
-              radioClickHandler={radioClickHandler}
               selectConsultantHandler={() =>
-                selectConsultantHandler(consultant)
+                setSelectedConsultant(consultant)
               }
-              viewDetailsHandler={viewDetails}
+              viewDetailsHandler={() => setSelectedConsultant(consultant)}
               distance={false}
               dict={props.dict}
             />
           </ConsultantSelectedContext.Provider>
         );
       });
-      console.log("list", list);
       if (list.length === 0) {
+        // Si no hay resultados, muestra un mensaje
         return (
           <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
             <div>{props.dict.i_know_an_insider.no_results}</div>
           </div>
         );
       } else {
+        // Si hay resultados, los muestra en una lista
         return (
           <>
             <div className=" my-3 results-list__heading">
@@ -144,7 +156,7 @@ export default function ConsultantSearch(props) {
         );
       }
     }
-  }, [
+  },  [
     searchResults,
     consultantSelected,
     props.dict,
@@ -152,10 +164,12 @@ export default function ConsultantSearch(props) {
     selectConsultantHandler,
   ]);
 
-  const inputHandler = (event) => {
-    setSearchQuery(event.target.value);
-  };
+    // Maneja el cambio en el input de búsqueda
+    const inputHandler = (event) => {
+      setSearchQuery(event.target.value);
+    };
 
+  // Renderiza un mensaje de carga
   const renderLoadingMessage = useMemo(() => {
     return (
       <div role="status">
@@ -180,147 +194,117 @@ export default function ConsultantSearch(props) {
     );
   }, [props.dict]);
 
-  return selectedConsultant ? (
-    <>
-      <div className="modal-container h-full lg:h-860">
-        <div className="modal p-4 w-full flex lg:grid lg:p-8 lg:modal-container-grid">
-          <div className="hidden lg:flex flex-col justify-between w-full">
-            <div>
-              <div className="w-full lg:max-w-420">
-                <div
-                  className="close-modal flex items-center gap-2 mb-10"
-                  onClick={props.returnToStartHandler}
-                >
-                  <BackIcon color="#272727" />
-                  <p>{props.dict.find_your_insider.go_back}</p>
-                </div>
-
-                <div className="modal-heading w-10%">
-                  {props.dict.i_know_an_insider.h1}
-                </div>
-
-                <p className="hidden lg:block mb-6">
-                  {props.dict.i_know_an_insider.body}
-
-                  <br />
-                  <br />
-                  <a className="cursor-pointer" onClick={props.goToFindHandler}>
-                    {props.dict.i_know_an_insider.help_link}
-                  </a>
-                </p>
-
-                <div className="search-heading mb-2">
-                  {props.dict.i_know_an_insider.search_header}
-                </div>
-                {showWarning ? (
-                  <div class="search-warning">
-                    {props.dict.i_know_an_insider.input_placeholder}
-                  </div>
-                ) : null}
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="searchByName"
-                    name="searchByName"
-                    className="name-input py-3 px-4 pr-11 block w-full border border-border-gray shadow-sm rounded-md text-base focus:z-10"
-                    placeholder={props.dict.i_know_an_insider.input_placeholder}
-                    onChange={inputHandler}
-                    onKeyDown={(event) => handleKeyDown(event, "name")}
-                    value={searchQuery}
-                  />
-                  <div
-                    className="absolute inset-y-0 right-0 flex items-center z-20 pr-4"
-                    onClick={findConsultantByWebsite}
-                  >
-                    <SubmitIcon />
-                  </div>
-                </div>
+// Renderiza el componente principal
+return selectedConsultant ? (
+  // Si hay un consultor seleccionado, muestra los detalles
+  <>
+    <div className="modal-container h-full lg:h-860">
+      <div className="modal p-4 w-full flex lg:grid lg:p-8 lg:modal-container-grid">
+        <div className="hidden lg:flex flex-col justify-between w-full">
+          <div>
+            <div className="w-full lg:max-w-420">
+              <div
+                className="close-modal flex items-center gap-2 mb-10"
+                onClick={props.returnToStartHandler}
+              >
+                <BackIcon color="#272727" />
+                <p>{props.dict.find_your_insider.go_back}</p>
               </div>
-              <div>{renderConsultantList}</div>
+              <div className="flex justify-center items-center mb-6">
+                <Image
+                  src={AvatarImage}
+                  alt="Default Avatar"
+                  width={100}
+                  height={100}
+                />
+              </div><br/>
+
+              <div className="modal-heading w-10%">
+                {props.dict.i_know_an_insider.h1}
+              </div>
+
+              <p className="hidden lg:block mb-6">
+                {props.dict.i_know_an_insider.body}
+
+                <br />
+                <br />
+                <a className="cursor-pointer" onClick={props.goToFindHandler}>
+                  {props.dict.i_know_an_insider.help_link}
+                </a>
+              </p>
+
+              <div className="search-heading mb-2">
+                {props.dict.i_know_an_insider.search_header}
+              </div>
+              {showWarning ? (
+                <div class="search-warning">
+                  {props.dict.i_know_an_insider.input_placeholder}
+                </div>
+              ) : null}
             </div>
+            <div>{renderConsultantList}</div>
           </div>
-          <ConsultantViewDetails
-            consultant={selectedConsultant}
-            goBackHandler={() => setSelectedConsultant(null)}
-            selectConsultantHandler={setPrefPartner}
-            dict={props.dict}
+        </div>
+        <ConsultantViewDetails
+          consultant={selectedConsultant}
+          goBackHandler={() => setSelectedConsultant(null)}
+          selectConsultantHandler={setPrefPartner}
+          dict={props.dict}
+        />
+      </div>
+    </div>
+  </>
+) : (
+  // Si no hay un consultor seleccionado, muestra el formulario de búsqueda
+  <>
+    <div className="modal-container h-screen lg:h-full">
+      <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
+        <div className="modal__left flex flex-col w-full lg:max-w-420 lg:max-h-665">
+          <div
+            className="close-modal flex items-center gap-2 mb-6"
+            onClick={props.returnToStartHandler}
+          >
+            <BackIcon color="#272727" />
+            <p>{props.dict.find_your_insider.go_back}</p>
+          </div>
+          <div className="flex justify-center items-center mb-6">
+            <Image
+              src={AvatarImage}
+              alt="Default Avatar"
+              width={100}
+              height={100}
+            />
+          </div><br/>
+
+          <p className="hidden lg:block mb-6">
+            <a className="cursor-pointer" onClick={props.returnToStartHandler}>
+              {props.dict.i_know_an_insider.help_link}
+            </a>
+          </p>
+
+          {showWarning ? (
+            <div class="search-warning text-pink-700">
+              {props.dict.i_know_an_insider.input_placeholder}
+            </div>
+          ) : null}
+          {loadingConsultants ? (
+            <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
+              <p> {props.dict.i_know_an_insider.loading_insiders}</p>
+              {renderLoadingMessage}
+            </div>
+          ) : (
+            renderConsultantList
+          )}
+        </div>
+        <div className="hidden lg:block">
+          <Image
+            className="lg:w-full lg:h-full object-cover"
+            src={KnowConsultantImage}
+            alt="Consultant Locator Modal Search"
           />
         </div>
       </div>
-    </>
-  ) : (
-    <>
-      <div className="modal-container h-screen lg:h-full">
-        <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
-          <div className="modal__left flex flex-col w-full lg:max-w-420 lg:max-h-665">
-            {/* <div className=""> */}
-            <div
-              className="close-modal flex items-center gap-2 mb-6"
-              onClick={props.returnToStartHandler}
-            >
-              <BackIcon color="#272727" />
-              <p>{props.dict.find_your_insider.go_back}</p>
-            </div>
-
-            <div className="modal-heading ">
-              {props.dict.i_know_an_insider.h1}
-            </div>
-
-            <p className="hidden lg:block mb-6">
-              {props.dict.i_know_an_insider.body}
-
-              <br />
-              <br />
-              <a className="cursor-pointer" onClick={props.goToFindHandler}>
-                {props.dict.i_know_an_insider.help_link}
-              </a>
-            </p>
-
-            <div className="search-heading mb-2">
-              {props.dict.i_know_an_insider.search_header}
-            </div>
-            {showWarning ? (
-              <div class="search-warning text-pink-700">
-                {props.dict.i_know_an_insider.input_placeholder}
-              </div>
-            ) : null}
-            <div className="relative">
-              <input
-                type="text"
-                id="searchByName"
-                name="searchByName"
-                className="name-input py-3 px-4 pr-11 block w-full border border-border-gray shadow-sm rounded-md text-base focus:z-10"
-                placeholder={props.dict.i_know_an_insider.input_placeholder}
-                onChange={inputHandler}
-                onKeyDown={(event) => handleKeyDown(event, "name")}
-                value={searchQuery}
-              />
-              <div
-                className="absolute inset-y-0 right-0 flex items-center z-20 pr-4"
-                onClick={findConsultantByWebsite}
-              >
-                <SubmitIcon />
-              </div>
-            </div>
-            {/* </div> */}
-            {loadingConsultants ? (
-              <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
-                <p> {props.dict.i_know_an_insider.loading_insiders}</p>
-                {renderLoadingMessage}
-              </div>
-            ) : (
-              renderConsultantList
-            )}
-          </div>
-          <div className="hidden lg:block">
-            <Image
-              className="lg:w-full lg:h-full object-cover"
-              src={KnowConsultantImage}
-              alt="Consultant Locator Modal Search"
-            />
-          </div>
-        </div>
-      </div>
-    </>
-  );
+    </div>
+  </>
+);
 }

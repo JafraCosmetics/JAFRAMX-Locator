@@ -111,4 +111,42 @@
   .text-white {
     color: white;
   }
+  .text-black {
+    color: black;
+  }
+  .text-gray {
+    color: #4B5563;
+  }
+  .text-purple {
+    color: #b176ae;
+  }
+  .modal-container-grid-purple {
+    background: #f5edf7;
+    border-radius: 10px;
+  }
+  .icon-green {
+    color: #25d366;
+  }
+  .icon-blue {
+    color: #3b5998;
+  }
+  .icon-purple {
+    color: #8c4996;
+  }
+
+  .font-montserrat {
+    font-family: "montserrat" sans-serif;
+  }
+  .font-montserrat-bold {
+    font-family: "montserrat-bold" sans-serif;
+  }
+  .font-montserrat-light {
+    font-family: "montserrat-light" sans-serif;
+  }
+  .font-montserrat-regular {
+    font-family: "montserrat-regular" sans-serif;
+  }
+  .font-montserrat-semibold {
+    font-family: "montserrat-semibold" sans-serif;
+  }
 }

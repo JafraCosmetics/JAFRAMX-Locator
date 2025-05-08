@@ -9,7 +9,7 @@ import ConsultantLanding from "/public/images/consultantLanding.jpeg";
 
 // Crear el contexto
 export const ConsultantSelectedContext = createContext(null);
-
+export const UserContext = createContext(null);
 
 export default function ConsultantFinder(props) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -114,11 +114,11 @@ export default function ConsultantFinder(props) {
               setModalState,
             }}
           >
-            <Locator
-              searchQuery={searchQuery}
-              returnToStartHandler={() => setModalState("start")}
-              dict={props.dict}
-            />
+          <Locator
+            zipcode={searchQuery} // Código postal
+            dict={props.dict} // Objeto `dict` que contiene los textos
+            returnToStartHandler={() => setModalState("start")} // Función para manejar el retorno
+          />
           </ConsultantSelectedContext.Provider>
         );
       } else if (searchType === "consultantSearch") {
