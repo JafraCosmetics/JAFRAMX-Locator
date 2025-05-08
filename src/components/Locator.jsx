@@ -273,22 +273,24 @@ export default function Locator(props) {
         setSelectedInfoWindow(consultant.displayName);
       };
 
-      consultantCardList.push(
-        <ConsultantSelectedContext.Provider
-          value={{ consultantSelected, setConsultantSelected }}
-          key={consultant.email}
-        >
-          <ConsultantCard
-            consultant={consultant}
-            number={i + 1}
-            key={i}
-            selectConsultantHandler={() => setSelectedConsultant(consultant)}
-            viewDetailsHandler={(e) => viewDetailsHandler(e, consultant)}
-            distance={false}
-            dict={props.dict}
-          />
-        </ConsultantSelectedContext.Provider>
-      );
+          consultantCardList.push(
+            <ConsultantSelectedContext.Provider
+              value={{ consultantSelected, setConsultantSelected }}
+              key={consultant.email}
+            >
+              <ConsultantCard
+                consultant={consultant}
+                number={i + 1}
+                key={i}
+                selectConsultantHandler={() =>
+                  setSelectedConsultant(consultant)
+                }
+                viewDetailsHandler={() => setSelectedConsultant(consultant)}
+                distance={false}
+                dict={props.dict}
+              />
+            </ConsultantSelectedContext.Provider>
+          );
 
       i++;
     }
