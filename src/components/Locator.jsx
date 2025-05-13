@@ -41,7 +41,8 @@ export default function Locator(props) {
   const findConsultantByEmail = async (email) => {
     // validate searchQuery
 
-    let url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
+    let url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
+    
 
     let options = {
       method: "GET",
@@ -82,7 +83,7 @@ export default function Locator(props) {
     const getLocations = async () => {
       let url = "";
       if (currentZip) {
-        url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
+        url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
       } else if (currentLocation) {
         console.log("currentLocation", currentLocation);
         url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
@@ -136,7 +137,7 @@ export default function Locator(props) {
 
   useEffect(() => {
     console.log("Initializing Radar");
-    Radar.initialize("prj_live_pk_424fcf2b36b2890745d5ab7f55a9ebbf019bea16");
+    Radar.initialize("prj_test_pk_122e9796a1788eae8a3a87106f7815ecf703afdb");
   }, []);
 
   useEffect(() => {
@@ -382,8 +383,53 @@ export default function Locator(props) {
 
   return locationsLoaded ? (
     selectedConsultant ? (
-      <div className="modal-container h-full lg:h-860">
-        <div className="modal p-4 w-full flex lg:grid lg:p-8 modal-container-grid">
+    <div className="modal-container h-full lg:h-860">
+      <div className="modal p-4 w-full flex lg:grid lg:p-8 lg:modal-container-grid">
+        <div className="hidden lg:flex flex-col justify-between w-full">
+          <div>
+            <div className="w-full lg:max-w-420">
+              <div
+                className="close-modal flex items-center gap-2 mb-10"
+                onClick={props.returnToStartHandler}
+              >
+                <BackIcon color="#272727" />
+                <p>{props.dict.find_your_insider.go_back}</p>
+              </div>
+              <div className="flex justify-center items-center mb-6">
+                <Image
+                  src={AvatarImage}
+                  alt="Default Avatar"
+                  width={100}
+                  height={100}
+                />
+              </div><br/>
+
+              <div className="modal-heading w-10%">
+                {props.dict.i_know_an_insider.h1}
+              </div>
+
+              <p className="hidden lg:block mb-6">
+                {props.dict.i_know_an_insider.body}
+
+                <br />
+                <br />
+                <a className="cursor-pointer" onClick={props.goToFindHandler}>
+                  {props.dict.i_know_an_insider.help_link}
+                </a>
+              </p>
+
+              <div className="search-heading mb-2">
+                {props.dict.i_know_an_insider.search_header}
+              </div>
+              {showWarning ? (
+                <div class="search-warning">
+                  {props.dict.i_know_an_insider.input_placeholder}
+                </div>
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-4 w-full">{consultantCards}</div>
+          </div>
+        </div>
         <ConsultantViewDetails
           consultant={selectedConsultant}
           goBackHandler={() => setSelectedConsultant(null)}
