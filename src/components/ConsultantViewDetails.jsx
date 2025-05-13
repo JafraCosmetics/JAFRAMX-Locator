@@ -107,8 +107,8 @@ const ConsultantViewDetails = (props) => {
           {/* Descripción */}
           <div className="text-left p-4 modal-container-grid-purple">
             <p className="text-md font-montserrat">
-              {props.consultant.aboutMe ??
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip"}
+              {props.consultant.aboutYou ??
+                "Mi pasión es ayudar a las personas a sentirse y verse bien. Me encanta compartir mis conocimientos sobre el cuidado de la piel y el maquillaje, y estoy aquí para ayudarte a encontrar los productos perfectos para ti."}
             </p>
           </div>
 
@@ -160,7 +160,7 @@ const ConsultantViewDetails = (props) => {
             </div>
 
                    {/* Experiencia, certificados y ventas */}
-                   <div>
+            <div>
               <h2 className="text-md font-semibold mb-2">Sobre mí</h2>
 
               <div className="flex justify-between items-center gap-4">
@@ -171,9 +171,9 @@ const ConsultantViewDetails = (props) => {
 
                   {/* Texto a la derecha */}
                   <div className="flex flex-col">
-                    <h4 className="text-xl font-bold">Certificada en</h4>
+                    <h4 className="text-xl font-bold">Experiencia</h4>
                     <p className="text-sm">
-                      {props.consultant.certificates ?? "Cuidado de la piel"}
+                      {props.consultant.experience ?? "10 años"}
                     </p>
                   </div>
                 </div>
@@ -201,7 +201,7 @@ const ConsultantViewDetails = (props) => {
                   <div className="flex flex-col">
                     <h4 className="text-xl font-bold">Top en</h4>
                     <p className="text-sm">
-                      {props.consultant.certificates ?? "Ventas"}
+                      {props.consultant.salesLevel ?? "Ventas"}
                     </p>
                   </div>
                 </div>

@@ -32,7 +32,7 @@ export default function ConsultantSearch(props) {
       setLoadingConsultants(true); // Activa el estado de carga
 
       // Construye la URL para la búsqueda
-      let url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=LOCATOR&locator=${query.replace(
+      let url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=LOCATOR&locator=${query.replace(
         " ",
         "%20"
       )}`;

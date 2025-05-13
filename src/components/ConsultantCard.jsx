@@ -66,8 +66,8 @@ const ConsultantCard = (props) => {
             {props.consultant.displayName}
           </div>
           <p className="text-md font-montserrat">
-              {props.consultant.aboutMe ??
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
+            {props.consultant.aboutYou ??
+            "Mi pasión es ayudar a las personas a sentirse y verse bien. Me encanta compartir mis conocimientos sobre el cuidado de la piel y el maquillaje, y estoy aquí para ayudarte a encontrar los productos perfectos para ti."}
             </p>
         </div>
         {/* Botones */}
@@ -86,7 +86,7 @@ const ConsultantCard = (props) => {
           <a
             id="consultant-card-select-insider"
             className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2 w-[125px] flex-shrink-0"
-            href={`https://jafra.com/${props.consultant.siteName}`} //reemplazar la URL para JAFRA MX
+            href={`https://jafra-mx.myshopify.com/${props.consultant.siteName}`} //reemplazar la URL para JAFRA MX
             target="_parent"
           >
             <IoBagOutline />
