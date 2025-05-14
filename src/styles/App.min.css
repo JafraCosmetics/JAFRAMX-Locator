@@ -233,8 +233,7 @@
   border-color: #fff;
   width: 150px;
   height: 150px;
-  border-radius: 50%;
-  box-shadow: 0 0 50px #ccc;
+  box-shadow: 0 0 50px #ffffff;
   background-color: #fff;
 }
 .modal-container .view-details button {
@@ -298,7 +297,8 @@ cursor: pointer;
   font-size: 16px !important;  
 }
 
-#consultant-card-select-insider {
+#consultant-card-select-insider,
+#view-products {
   font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 500;

@@ -76,8 +76,9 @@ const ConsultantCard = (props) => {
             id="consultant-card-view-profile"
             className="text-xs cursor-pointer flex items-center gap-2 bg-gray-200 hover:bg-gray-300 rounded px-4 py-2 w-[125px] flex-shrink-0"
             onClick={(event) =>
-              props.viewDetailsHandler(event, props.consultant, props.marker)
+              props.viewDetailsHandler(event, props.consultant)
             }
+
           >
             <GrUserExpert />
             {props.dict.consultant_card.view_details}
@@ -85,7 +86,7 @@ const ConsultantCard = (props) => {
           <a
             id="consultant-card-select-insider"
             className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2 w-[125px] flex-shrink-0"
-            href={`https://jafra-mx.myshopify.com/${props.consultant.siteName}`} //reemplazar la URL para JAFRA MX
+            href={`https://jafra-mx.myshopify.com/?pws=${props.consultant.siteName}`} //reemplazar la URL para JAFRA MX
             target="_parent"
           >
             <IoBagOutline />
