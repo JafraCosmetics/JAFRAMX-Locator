@@ -13,13 +13,17 @@ import MapAccordion from "./MapAccordion";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import Image from "next/image";
 import MapPlaceholder from "/public/images/mapPlaceholder.png";
-import { Scrollbars } from "react-custom-scrollbars";
+import { Scrollbars } from "react-custom-scrollbars"; 
+import { SubmitIcon } from "./Icons";
 
 import { UserContext } from "./ConsultantFinder";
 export default function Locator(props) {
   const { zipcode, dict, returnToStartHandler } = props;
   const mapRef = useRef(null);
   const mobileMapRef = useRef(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchType, setSearchType] = useState(null);
 
   const [locationsLoaded, setLocationsLoaded] = useState(false);
   const [markerList, setMarkerList] = useState([]);
@@ -38,30 +42,27 @@ export default function Locator(props) {
 
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
-    const findConsultantByEmail = async (email) => {
-    const url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
+  const findConsultantByEmail = async (email) => {
+  const url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
 
-    let url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
-    
-
-    let options = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
-
-    return fetch(url, options)
-      .then((res) => res.json()) // ← ESTA LÍNEA FALTABA
-      .then((json) => {
-        if (json.partners.length > 0) {
-          return json.partners[0]; // regresa el objeto completo
-        }
-        return null;
-      })
-      .catch((err) => {
-        console.error("error:", err);
-        return null;
-      });
+  const options = {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
   };
+
+  return fetch(url, options)
+    .then((res) => res.json()) // ← ESTA LÍNEA FALTABA
+    .then((json) => {
+      if (json.partners.length > 0) {
+        return json.partners[0]; // regresa el objeto completo
+      }
+      return null;
+    })
+    .catch((err) => {
+      console.error("error:", err);
+      return null;
+    });
+};
 
 
     const setPrefPartner = (consultant) => {
@@ -144,172 +145,160 @@ export default function Locator(props) {
     Radar.initialize("prj_test_pk_122e9796a1788eae8a3a87106f7815ecf703afdb");
   }, []);
 
-        const viewDetailsHandler = async (event, consultant) => {
-        event.preventDefault();
+      const viewDetailsHandler = async (event, consultant) => {
+      event.preventDefault();
 
-        try {
-          const response = await fetch(`https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${consultant.email}`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          });
+      try {
+        const response = await fetch(`https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${consultant.email}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
 
-          const data = await response.json();
-          const enrichedData = data?.partners?.[0];
+        const data = await response.json();
+        const enrichedData = data?.partners?.[0];
 
-          if (enrichedData) {
-            setSelectedConsultant({ ...consultant, ...enrichedData });
-          } else {
-            setSelectedConsultant(consultant);
-          }
-        } catch (error) {
-          console.error("Error fetching consultant by email:", error);
-          setSelectedConsultant(consultant); // fallback
+        if (enrichedData) {
+          setSelectedConsultant({ ...consultant, ...enrichedData });
+        } else {
+          setSelectedConsultant(consultant);
         }
-      };
+      } catch (error) {
+        console.error("Error fetching consultant by email:", error);
+        setSelectedConsultant(consultant); // fallback
+      }
+    };
 
 
-  useEffect(() => {
-    const consultantCardList = new Array();
-    console.log(consultantList);
+ useEffect(() => {
+  const consultantCardList = new Array();
+  console.log(consultantList);
 
-    let i = 0;
+  let i = 0;
 
-    // Asegúrate de que el contenedor del mapa ya existe en el DOM
-    const mapContainer = document.getElementById("map");
-    const mobileMapContainer = document.getElementById("map-mobile");
+  // Asegúrate de que el contenedor del mapa ya existe en el DOM
+  const mapContainer = document.getElementById("map");
+  const mobileMapContainer = document.getElementById("map-mobile");
 
-    if (!mapCenter || !mapContainer || !mobileMapContainer) return;
+  if (!mapCenter || !mapContainer || !mobileMapContainer) return;
 
-    console.log("origin:", [mapCenter.lng, mapCenter.lat]);
+  console.log("origin:", [mapCenter.lng, mapCenter.lat]);
 
-    // Solo crear mapas si aún no existen
-    if (!mapRef.current) {
-      mapRef.current = Radar.ui.map({
-        container: "map",
-        style: "radar-default-v1",
-        center: [mapCenter.lng, mapCenter.lat],
-        zoom: 10,
-      });
-    }
+  // Solo crear mapas si aún no existen
+  if (!mapRef.current) {
+    mapRef.current = Radar.ui.map({
+      container: "map",
+      style: "radar-default-v1",
+      center: [mapCenter.lng, mapCenter.lat],
+      zoom: 10,
+    });
+  }
 
-    if (!mobileMapRef.current) {
-      mobileMapRef.current = Radar.ui.map({
-        container: "map-mobile",
-        style: "radar-default-v1",
-        center: [mapCenter.lng, mapCenter.lat],
-        zoom: 9,
-      });
-    }
+  if (!mobileMapRef.current) {
+    mobileMapRef.current = Radar.ui.map({
+      container: "map-mobile",
+      style: "radar-default-v1",
+      center: [mapCenter.lng, mapCenter.lat],
+      zoom: 9,
+    });
+  }
 
-        for (let consultant of consultantList) {
-          // console.log("consultant: " + consultant.latitude, consultant.longitude);
-
-          const infoWindow = (
-            <div className="map-marker flex flex-col gap-4 py-4 px-4 w-[300px] mx-auto max-w-[300px] mx-4 border border-black rounded-lg">
-              {/* Foto */}
-              <div className="relative w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex-shrink-0 mx-auto">
-                <Image
-                  src={consultant.profileImage ?? AvatarImage}
-                  alt="profile image"
-                  fill
-                  className="object-cover object-center"
-                />
-              </div>
-          
-              {/* Nombre */}
-              <div className="text-center">
-                <h2 className="text-lg font-bold">{consultant.displayName}</h2>
-              </div>
-          
-              {/* Comprar conmigo */}
-              {/* Botones */}
-              <div className="flex justify-between">
-                <div className="flex items-center gap-4 w-full">
-                  <button
-                    id="consultant-card-view-profile"
-                    className="text-xs cursor-pointer flex items-center gap-2 bg-gray-200 hover:bg-gray-300 rounded px-4 py-2"
-                    onClick={(event) =>
-                      props.viewDetailsHandler(event, props.consultant, props.marker)
-                    }
-                  >
-                    <GrUserExpert />
-                    {props.dict.consultant_card.view_details}
-                  </button>
-                  <button
-                    id="consultant-card-select-insider"
-                    className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2"
-                    onClick={props.selectConsultantHandler}
-                  >
-                    <IoBagOutline />
-                    {props.dict.consultant_card.select_insider}
-                  </button>
-                </div>
-              </div>
-            </div>
-          );
-
-          const marker = Radar.ui
-            .marker({
-              popup: {
-                html: renderToString(infoWindow),
-                maxWidth: 400,
-              },
-            })
-            .setLngLat([consultant.longitude, consultant.latitude])
-            .addTo(mapRef.current);
-
-      marker._element.onclick = () => {
-        setSelectedInfoWindow(consultant.displayName);
-      };
-
-          const mobileMarker = Radar.ui
-            .marker({
-              popup: {
-                html: renderToString(infoWindow),
-                maxWidth: 400,
-              },
-            })
-            .setLngLat([consultant.longitude, consultant.latitude])
-            .addTo(mobileMapRef.current);
-
-      mobileMarker._element.onclick = () => {
-        setSelectedInfoWindow(consultant.displayName);
-      };
-
-          consultantCardList.push(
-            <ConsultantSelectedContext.Provider
-              value={{ consultantSelected, setConsultantSelected }}
-              key={consultant.email}
+  for (let consultant of consultantList) {
+    const infoWindow = (
+      <div className="map-marker flex flex-col gap-4 py-4 px-4 w-[300px] mx-auto max-w-[300px] mx-4 border border-black rounded-lg">
+        <div className="relative w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex-shrink-0 mx-auto">
+          <Image
+            src={consultant.profileImage ?? AvatarImage}
+            alt="profile image"
+            fill
+            className="object-cover object-center"
+          />
+        </div>
+        <div className="text-center">
+          <h2 className="text-lg font-bold">{consultant.displayName}</h2>
+        </div>
+        <div className="flex justify-between">
+          <div className="flex items-center gap-4 w-full">
+            <button
+              id="consultant-card-view-profile"
+              className="text-xs cursor-pointer flex items-center gap-2 bg-gray-200 hover:bg-gray-300 rounded px-4 py-2"
+              onClick={(event) => viewDetailsHandler(event, consultant)}
             >
-              <ConsultantCard
-                consultant={consultant}
-                number={i + 1}
-                key={i}
-                selectConsultantHandler={() =>
-                  setSelectedConsultant(consultant)
-                }
-                viewDetailsHandler={() => setSelectedConsultant(consultant)}
-                distance={false}
-                dict={props.dict}
-              />
-            </ConsultantSelectedContext.Provider>
-          );
-
-      i++;
-    }
-
-    setConsultantCards(
-      consultantCardList.length > 0 ? (
-        <div style={{ width: "100%" }} className="flex flex-col gap-2">
-          {consultantCardList}
+              <GrUserExpert />
+              {props.dict.consultant_card.view_details}
+            </button>
+            <button
+              id="consultant-card-select-insider"
+              className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2"
+              onClick={props.selectConsultantHandler}
+            >
+              <IoBagOutline />
+              {props.dict.consultant_card.select_insider}
+            </button>
+          </div>
         </div>
-      ) : (
-        <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
-          <div>{props.dict.match_insider.no_insiders_found}</div>
-        </div>
-      )
+      </div>
     );
-  }, [consultantList]);
+
+    const marker = Radar.ui
+      .marker({
+        popup: {
+          html: renderToString(infoWindow),
+          maxWidth: 400,
+        },
+      })
+      .setLngLat([consultant.longitude, consultant.latitude])
+      .addTo(mapRef.current);
+
+    marker._element.onclick = () => {
+      setSelectedInfoWindow(consultant.displayName);
+    };
+
+    const mobileMarker = Radar.ui
+      .marker({
+        popup: {
+          html: renderToString(infoWindow),
+          maxWidth: 400,
+        },
+      })
+      .setLngLat([consultant.longitude, consultant.latitude])
+      .addTo(mobileMapRef.current);
+
+    mobileMarker._element.onclick = () => {
+      setSelectedInfoWindow(consultant.displayName);
+    };
+
+    consultantCardList.push(
+      <ConsultantSelectedContext.Provider
+        value={{ consultantSelected, setConsultantSelected }}
+        key={consultant.email}
+      >
+        <ConsultantCard
+          consultant={consultant}
+          number={i + 1}
+          key={i}
+          selectConsultantHandler={() => setSelectedConsultant(consultant)}
+          viewDetailsHandler={(e) => viewDetailsHandler(e, consultant)}
+          distance={false}
+          dict={props.dict}
+        />
+      </ConsultantSelectedContext.Provider>
+    );
+
+    i++;
+  }
+
+  setConsultantCards(
+    consultantCardList.length > 0 ? (
+      <div style={{ width: "95%" }} className="flex flex-col gap-2">
+        {consultantCardList}
+      </div>
+    ) : (
+      <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
+        <div>{props.dict.match_insider.no_insiders_found}</div>
+      </div>
+    )
+  );
+}, [consultantList]);
 
     const getCurrentLocation = () => {
       setGettingCurrentLocation(true);
@@ -337,9 +326,17 @@ export default function Locator(props) {
     setSelectedInfoWindow(""); // Limpia la ventana de información seleccionada
   };
 
-  useEffect(() => {
-    updateOrigin(); // Llama a `updateOrigin` automáticamente cuando cambie el código postal
-  }, [zipcode]);
+    useEffect(() => {
+      if (searchType === "locator" && searchQuery) {
+        setCurrentZip(searchQuery); // esto disparará el useEffect que llama a getLocations
+        setSelectedConsultant(null); 
+        setSelectedInfoWindow("");
+        setLocationsLoaded(false);
+        const mapDiv = document.getElementById("map");
+        if (mapDiv) mapDiv.innerHTML = "";
+      }
+    }, [searchQuery, searchType]);
+
 
   const renderResultsMessage = useMemo(() => {;
     if (currentZip) {
@@ -405,28 +402,40 @@ export default function Locator(props) {
                 />
               </div><br/>
 
-              <div className="modal-heading w-10%">
-                {props.dict.i_know_an_insider.h1}
+              <div className="modal-heading jafra-purple font-bold object-contain">
+                {props.dict.match_insider.h1}
               </div>
+              <br />
+              <p className="hidden lg:block mb-6 ">{props.dict.match_insider.body}</p>
 
-              <p className="hidden lg:block mb-6">
-                {props.dict.i_know_an_insider.body}
-
-                <br />
-                <br />
-                <a className="cursor-pointer" onClick={props.goToFindHandler}>
-                  {props.dict.i_know_an_insider.help_link}
-                </a>
-              </p>
-
-              <div className="search-heading mb-2">
-                {props.dict.i_know_an_insider.search_header}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const isZipCode = /^\d+$/.test(props.searchQuery);
+                props.setSearchType(isZipCode ? "locator" : "consultantSearch");
+              }}
+              className="relative mb-4"
+            >
+              <input
+                type="text"
+                placeholder={props.dict.find_your_insider.input_placeholder}
+                className="py-2 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
+                value={props.searchQuery}
+                onChange={(e) => props.setSearchQuery(e.target.value)}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center z-20 rounded-lg pr-2">
+                <button type="submit">
+                  <SubmitIcon />
+                </button>
               </div>
-              {showWarning ? (
-                <div class="search-warning">
-                  {props.dict.i_know_an_insider.input_placeholder}
-                </div>
-              ) : null}
+            </form>
+
+            {showWarning ? (
+              <div className="search-warning text-pink-700">
+                {props.dict.i_know_an_insider.input_placeholder}
+              </div>
+            ) : null}
+
             </div>
             <div className="flex flex-col gap-4 w-full">{consultantCards}</div>
           </div>
@@ -462,8 +471,22 @@ export default function Locator(props) {
                   height={100}
                 />
               </div><br/>
+            <div className="modal-heading jafra-purple font-bold object-contain">
+              {props.dict.match_insider.h1}
+            </div><br/>
+            <p className="hidden lg:block mb-6 ">
+              {props.dict.match_insider.body}
+            </p>
               <UserContext.Provider value={{ showWarning, setShowWarning }}>
-                <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
+              <ZipForm
+                updateOrigin={updateOrigin}
+                dict={props.dict}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                setSearchType={setSearchType}
+              />
+
+
               </UserContext.Provider>
             </>
             <div className="lg:hidden">
@@ -520,7 +543,13 @@ export default function Locator(props) {
               {props.dict.match_insider.body}
             </p>
             <UserContext.Provider value={{ showWarning, setShowWarning }}>
-              <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
+              <ZipForm
+                updateOrigin={updateOrigin}
+                dict={props.dict}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                setSearchType={setSearchType}
+              />
             </UserContext.Provider>
             {/*  disable use my location search feature */}
             {/* <div className="flex items-center gap-2 mt-4">

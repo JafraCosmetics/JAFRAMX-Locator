@@ -76,9 +76,36 @@ export default function ConsultantSearch(props) {
     };
   
     // Muestra los detalles de un consultor seleccionado
-    const viewDetails = (event, consultant) => {
+const viewDetails = async (event, consultant) => {
+  event.preventDefault();
+  setLoadingDetails(true);
+
+  try {
+    const response = await fetch(
+      `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${consultant.email}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const data = await response.json();
+    const enriched = data?.partners?.[0];
+
+    if (enriched) {
+      setSelectedConsultant({ ...consultant, ...enriched });
+    } else {
       setSelectedConsultant(consultant);
-    };
+    }
+  } catch (error) {
+    console.error("Error fetching consultant details:", error);
+    setSelectedConsultant(consultant);
+  } finally {
+    setLoadingDetails(false);
+  }
+};
+
+
   
     // Maneja la selección de un consultor en la lista
     const radioClickHandler = (event, consultant) => {
@@ -110,6 +137,8 @@ export default function ConsultantSearch(props) {
       },
       [setModalState]
     );
+  
+  const [loadingDetails, setLoadingDetails] = useState(false);
 
   // Renderiza la lista de consultores
   const renderConsultantList = useMemo(() => {
@@ -127,7 +156,7 @@ export default function ConsultantSearch(props) {
               selectConsultantHandler={() =>
                 setSelectedConsultant(consultant)
               }
-              viewDetailsHandler={() => setSelectedConsultant(consultant)}
+              viewDetailsHandler={(e) => viewDetails(e, consultant)}
               distance={false}
               dict={props.dict}
             />
@@ -144,11 +173,17 @@ export default function ConsultantSearch(props) {
       } else {
         // Si hay resultados, los muestra en una lista
         return (
-          <>
+          <>   
             <div className=" my-3 results-list__heading">
               {searchResults.length}{" "}
               {props.dict.i_know_an_insider.results_found}
             </div>
+            
+            {showWarning ? (
+                <div class="search-warning">
+                  {props.dict.match_insider.input_placeholder}
+                </div>
+              ) : null}
             <div className="flex flex-col gap-2 overflow-auto max-h-450">
               {list}
             </div>
@@ -220,25 +255,36 @@ return selectedConsultant ? (
               </div><br/>
 
               <div className="modal-heading w-10%">
-                {props.dict.i_know_an_insider.h1}
+                {props.dict.match_insider.h1}
               </div>
-
+              <br />
               <p className="hidden lg:block mb-6">
-                {props.dict.i_know_an_insider.body}
-
-                <br />
-                <br />
-                <a className="cursor-pointer" onClick={props.goToFindHandler}>
-                  {props.dict.i_know_an_insider.help_link}
-                </a>
+                {props.dict.match_insider.body}
               </p>
-
-              <div className="search-heading mb-2">
-                {props.dict.i_know_an_insider.search_header}
+               <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const isZipCode = /^\d+$/.test(props.searchQuery);
+                props.setSearchType(isZipCode ? "locator" : "consultantSearch");
+              }}
+              className="relative mb-4"
+            >
+              <input
+                type="text"
+                placeholder={props.dict.find_your_insider.input_placeholder}
+                className="py-2 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
+                value={props.searchQuery}
+                onChange={(e) => props.setSearchQuery(e.target.value)}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center z-20 rounded-lg pr-2">
+                <button type="submit">
+                  <SubmitIcon />
+                </button>
               </div>
+            </form>
               {showWarning ? (
                 <div class="search-warning">
-                  {props.dict.i_know_an_insider.input_placeholder}
+                  {props.dict.match_insider.input_placeholder}
                 </div>
               ) : null}
             </div>
@@ -275,21 +321,43 @@ return selectedConsultant ? (
               height={100}
             />
           </div><br/>
-
+            <div className="modal-heading w-10%">
+            {props.dict.match_insider.h1}
+          </div>
+          <br/>
           <p className="hidden lg:block mb-6">
-            <a className="cursor-pointer" onClick={props.returnToStartHandler}>
-              {props.dict.i_know_an_insider.help_link}
-            </a>
+            {props.dict.match_insider.body}
           </p>
+           <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const isZipCode = /^\d+$/.test(props.searchQuery);
+                props.setSearchType(isZipCode ? "locator" : "consultantSearch");
+              }}
+              className="relative mb-4"
+            >
+              <input
+                type="text"
+                placeholder={props.dict.find_your_insider.input_placeholder}
+                className="py-2 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
+                value={props.searchQuery}
+                onChange={(e) => props.setSearchQuery(e.target.value)}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center z-20 rounded-lg pr-2">
+                <button type="submit">
+                  <SubmitIcon />
+                </button>
+              </div>
+            </form>
 
           {showWarning ? (
             <div class="search-warning text-pink-700">
-              {props.dict.i_know_an_insider.input_placeholder}
+              {props.dict.match_insider.input_placeholder}
             </div>
           ) : null}
           {loadingConsultants ? (
             <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
-              <p> {props.dict.i_know_an_insider.loading_insiders}</p>
+              <p> {props.dict.match_insider.loading_insiders}</p>
               {renderLoadingMessage}
             </div>
           ) : (
