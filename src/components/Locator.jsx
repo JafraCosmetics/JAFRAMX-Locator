@@ -18,7 +18,6 @@ import { LocationIcon } from "./Icons";
 import MapAccordion from "./MapAccordion";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import Image from "next/image";
-import MapPlaceholder from "/public/images/mapPlaceholder.png";
 import { AsYouType } from "libphonenumber-js";
 import { Scrollbars } from "react-custom-scrollbars";
 
@@ -514,7 +513,7 @@ export default function Locator(props) {
             <div className="map-loading flex flex-col gap-5 justify-center items-center h-full relative xl:w-730">
               <Image
                 className="lg:w-full lg:h-full object-cover	"
-                src={MapPlaceholder}
+                src="/images/mapPlaceholder.png"
                 alt="map loading image"
                 fill={true}
               />

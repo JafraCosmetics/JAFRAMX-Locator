@@ -5,7 +5,6 @@ import ConsultantCard from "./ConsultantCard";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
 import Image from "next/image";
-import KnowConsultantImage from "/public/images/knowConsultant.jpeg";
 
 export default function ConsultantSearch(props) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -315,7 +314,7 @@ export default function ConsultantSearch(props) {
           <div className="hidden lg:block">
             <Image
               className="lg:w-full lg:h-full object-cover"
-              src={KnowConsultantImage}
+              src="/images/knowConsultant.jpeg"
               alt="Consultant Locator Modal Search"
             />
           </div>

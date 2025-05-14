@@ -174,7 +174,7 @@
 }
 @media (min-width: 1024px) {
   .modal-container .view-details {
-    background-image: url("../../public/images/viewDetailsBackground.png");
+    background-image: url("/images/viewDetailsBackground.png");
   }
 }
 .modal-container .view-details__name {

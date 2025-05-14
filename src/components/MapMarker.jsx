@@ -9,7 +9,6 @@ import {
 import { UserContext } from "./Locator";
 import { AsYouType } from "libphonenumber-js";
 import Image from "next/image";
-import AvatarImage from "/public/images/avatar.png";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const MapMarker = (props) => {
@@ -78,7 +77,7 @@ const MapMarker = (props) => {
               <Image
                 name={props.consultant.displayName}
                 className="mb-3 h-12 w-12 rounded object-contain"
-                src={props.consultant.profileImage ?? AvatarImage}
+                src={props.consultant.profileImage ?? "/images/avatar.png"}
                 alt="profile image"
                 fill={false}
               />

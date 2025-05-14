@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { AsYouType } from "libphonenumber-js";
 import Image from "next/image";
 
-import AvatarImage from "/public/images/avatar.png";
 const ConsultantViewDetails = (props) => {
   const [profileImage, setProfileImage] = useState();
 
@@ -98,7 +97,7 @@ const ConsultantViewDetails = (props) => {
               <Image
                 name={props.consultant.displayName}
                 className="h-32 w-32 lg:h-40 lg:w-40 bg-white rounded-full border-8 border-white object-contain"
-                src={props.consultant.profileImage ?? AvatarImage}
+                src={props.consultant.profileImage ?? "/images/avatar.png"}
                 alt="profile image"
                 fill={false}
                 height={100}

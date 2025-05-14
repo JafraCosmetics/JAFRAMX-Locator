@@ -6,8 +6,6 @@ import Locator from "./Locator";
 import ConsultantSearch from "./ConsultantSearch";
 import Image from "next/image";
 
-import ConsultantLanding from "/public/images/consultantLanding.jpeg";
-
 export const ConsultantSelectedContext = React.createContext(null);
 
 export default function ConsultantFinder(props) {
@@ -83,7 +81,7 @@ export default function ConsultantFinder(props) {
               </div>
               <Image
                 className="lg:w-full lg:h-full object-cover"
-                src={ConsultantLanding}
+                src="/images/consultantLanding.jpeg"
                 alt="Consultant Locator Modal"
               />
             </div>
