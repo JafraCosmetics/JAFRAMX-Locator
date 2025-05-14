@@ -202,7 +202,9 @@
 }
 @media (min-width: 1024px) {
   .modal-container .view-details {
+
     background-image: none;
+
   }
 }
 .modal-container .view-details__name {

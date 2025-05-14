@@ -1,5 +1,4 @@
 import Image from "next/image";
-import AvatarImage from "/public/images/avatar.png";
 import { Avatar } from "@material-tailwind/react";
 import { IoBagOutline } from "react-icons/io5";
 import { GrUserExpert } from "react-icons/gr";
@@ -51,7 +50,7 @@ const ConsultantCard = (props) => {
           src={
             props.consultant.profileImage !== null
               ? props.consultant.profileImage
-              : AvatarImage.src
+              : "/images/avatar.png"
           }
           alt="profile image"
           className="w-32 h-32 bg-gray-100 rounded-full overflow-hidden object-cover"

@@ -5,6 +5,7 @@ import ConsultantCard from "./ConsultantCard";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
 import Image from "next/image";
+
 import KnowConsultantImage from "/public/images/knowConsultant.jpeg";
 import AvatarImage from "/public/images/avatar.png";
 
@@ -315,10 +316,9 @@ return selectedConsultant ? (
           </div>
           <div className="flex justify-center items-center mb-6">
             <Image
-              src={AvatarImage}
-              alt="Default Avatar"
-              width={100}
-              height={100}
+              className="lg:w-full lg:h-full object-cover"
+              src="/images/knowConsultant.jpeg"
+              alt="Consultant Locator Modal Search"
             />
           </div><br/>
             <div className="modal-heading w-10%">
