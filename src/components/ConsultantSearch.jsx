@@ -288,7 +288,7 @@ return selectedConsultant ? (
                 </div>
               ) : null}
             </div>
-            <div className="flex flex-col gap-4 w-full">{consultantCards}</div>
+            <div>{renderConsultantList}</div>
           </div>
         </div>
         <ConsultantViewDetails
