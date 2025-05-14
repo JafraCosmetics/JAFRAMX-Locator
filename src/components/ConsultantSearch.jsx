@@ -314,7 +314,7 @@ return selectedConsultant ? (
           <div className="flex justify-center items-center mb-6">
             <Image
               className="lg:w-full lg:h-full object-cover"
-              src="/images/knowConsultant.jpeg"
+              src="/images/avatar.png"
               alt="Consultant Locator Modal Search"
               width={800}
               height={600} 
