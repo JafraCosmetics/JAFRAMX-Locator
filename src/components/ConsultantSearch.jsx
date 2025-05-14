@@ -6,9 +6,6 @@ import ConsultantViewDetails from "./ConsultantViewDetails";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
 import Image from "next/image";
 
-import KnowConsultantImage from "/public/images/knowConsultant.jpeg";
-import AvatarImage from "/public/images/avatar.png";
-
 export default function ConsultantSearch(props) {
   // Estados para manejar los resultados y otros estados
   const [searchResults, setSearchResults] = useState(null); // Almacena los resultados de la búsqueda
@@ -248,7 +245,7 @@ return selectedConsultant ? (
               </div>
               <div className="flex justify-center items-center mb-6">
                 <Image
-                  src={AvatarImage}
+                  src="/images/avatar.png"
                   alt="Default Avatar"
                   width={100}
                   height={100}
@@ -319,6 +316,8 @@ return selectedConsultant ? (
               className="lg:w-full lg:h-full object-cover"
               src="/images/knowConsultant.jpeg"
               alt="Consultant Locator Modal Search"
+              width={800}
+              height={600} 
             />
           </div><br/>
             <div className="modal-heading w-10%">
@@ -367,8 +366,10 @@ return selectedConsultant ? (
         <div className="hidden lg:block">
           <Image
             className="lg:w-full lg:h-full object-cover"
-            src={KnowConsultantImage}
+            src="/images/knowConsultant.jpeg"
             alt="Consultant Locator Modal Search"
+            width={800}
+            height={600}
           />
         </div>
       </div>

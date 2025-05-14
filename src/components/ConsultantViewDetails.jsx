@@ -4,7 +4,6 @@ import {
 } from "./Icons";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import AvatarImage from "/public/images/avatar.png";
 import { FaAward } from "react-icons/fa";
 import { GiGraduateCap } from "react-icons/gi";
 import { TfiCup } from "react-icons/tfi";
@@ -13,7 +12,7 @@ import { IoBagOutline } from "react-icons/io5";
 import { FaFacebookSquare, FaInstagram } from "react-icons/fa";
 
 const ConsultantViewDetails = (props) => {
-  const [profileImage, setProfileImage] = useState(AvatarImage);
+  const [profileImage, setProfileImage] = useState("/images/avatar.png");
 
   useEffect(() => {
     if (props.consultant.profileImage) {

@@ -4,8 +4,6 @@ import { IoBagOutline } from "react-icons/io5";
 import { GrUserExpert } from "react-icons/gr";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 
-
-
 const renderLocation = (props) => {
   if (props.consultant.defaultAddress) {
     if (

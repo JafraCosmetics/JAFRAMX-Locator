@@ -2,7 +2,6 @@ import React, { useContext, useMemo, useState, useEffect, useRef } from "react";
 import Radar from "radar-sdk-js";
 import "radar-sdk-js/dist/radar.css";
 import { renderToString } from "react-dom/server";
-import AvatarImage from "/public/images/avatar.png";
 import { GrUserExpert } from "react-icons/gr";
 import { IoBagOutline } from "react-icons/io5";
 import ConsultantCard from "./ConsultantCard";
@@ -13,7 +12,6 @@ import MapAccordion from "./MapAccordion";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import Image from "next/image";
 
-import MapPlaceholder from "/public/images/mapPlaceholder.png";
 import { Scrollbars } from "react-custom-scrollbars"; 
 import { SubmitIcon } from "./Icons";
 
@@ -92,7 +90,7 @@ export default function Locator(props) {
         url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
       } else if (currentLocation) {
         console.log("currentLocation", currentLocation);
-        url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
+        url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
       }
 
       if (url !== "") {
@@ -208,7 +206,7 @@ export default function Locator(props) {
       <div className="map-marker flex flex-col gap-4 py-4 px-4 w-[300px] mx-auto max-w-[300px] mx-4 border border-black rounded-lg">
         <div className="relative w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex-shrink-0 mx-auto">
           <Image
-            src={consultant.profileImage ?? AvatarImage}
+            src={consultant.profileImage ?? "/images/avatar.png"}
             alt="profile image"
             fill
             className="object-cover object-center"
@@ -397,7 +395,7 @@ export default function Locator(props) {
               </div>
               <div className="flex justify-center items-center mb-6">
                 <Image
-                  src={AvatarImage}
+                  src="/images/avatar.png"
                   alt="Default Avatar"
                   width={100}
                   height={100}
@@ -468,7 +466,7 @@ export default function Locator(props) {
                 {/* logo jafra centrada */}
                 <div className="flex justify-center items-center mb-6">
                   <Image
-                    src={AvatarImage}
+                    src="/images/avatar.png"
                     alt="Default Avatar"
                     width={100}
                     height={100}
@@ -530,7 +528,7 @@ export default function Locator(props) {
            {/* Logo Jafra centrada */}
             <div className="flex justify-center items-center mb-6">
               <Image
-                src={AvatarImage}
+                src="/images/avatar.png"
                 alt="Default Avatar"
                 width={100}
                 height={100}
