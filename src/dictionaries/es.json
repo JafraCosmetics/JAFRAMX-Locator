@@ -18,8 +18,8 @@
     "results_found": "Resultados encontrados"
   },
   "match_insider": {
-    "header": "Por favor, ingresa tu código postal o captura el nombre de la Lider JAFRA que conoces",
-    "h1": "Por favor, ingresa tu código postal o captura el nombre de la Lider JAFRA que conoces",
+    "header": "Por favor, ingresa tu código postal, nombre o sitename de la Lider JAFRA que conoces",
+    "h1": "Por favor, ingresa tu código postal, nombre o sitename de la Lider JAFRA que conoces",
     "body": "Haz tu experiencia de compras más personal con una Lider de JAFRA. Tus preguntas serán respondidas directamente y recibirás sus recomendaciones al hacer tus compras.",
     "help_link": "Ya tengo a una Consultora con quien quiero hacer mis compras",
     "input_placeholder": "Código Postal, nombre o enlace de su sitio web",

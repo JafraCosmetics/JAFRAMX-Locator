@@ -37,12 +37,11 @@ const ZipForm = (props) => {
       <div className="relative">
         <input
           type="text"
-          className="name-input py-3 px-4 pr-11 block w-full border border-border-gray shadow-sm rounded-md text-base focus:z-10"
-          placeholder={props.dict.match_insider.input_placeholder}
+          class="py-3 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"          placeholder={props.dict.match_insider.input_placeholder}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <div className="absolute inset-y-0 right-0 flex items-center z-20 pr-4">
+        <div className="absolute inset-y-0 right-0 flex items-center z-20 rounded-lg">
           <button type="submit">
             <SubmitIcon />
           </button>
