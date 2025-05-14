@@ -233,11 +233,11 @@ const viewDetails = async (event, consultant) => {
 return selectedConsultant ? (
   // Si hay un consultor seleccionado, muestra los detalles
   <>
-    <div className="modal-container h-full lg:h-860">
-      <div className="modal p-4 w-full flex lg:grid lg:p-8 lg:modal-container-grid">
-        <div className="hidden lg:flex flex-col justify-between w-full">
+      <div className="modal-container h-screen lg:h-full ">
+        <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
+        <div className="modal__left flex flex-col w-full">
           <div>
-            <div className="w-full lg:max-w-420">
+            <div className="flex flex-col gap-2 overflow-auto max-h-450">
               <div
                 className="close-modal flex items-center gap-2 mb-10"
                 onClick={props.returnToStartHandler}
@@ -267,16 +267,16 @@ return selectedConsultant ? (
                 const isZipCode = /^\d+$/.test(props.searchQuery);
                 props.setSearchType(isZipCode ? "locator" : "consultantSearch");
               }}
-              className="relative mb-4"
+              className="relative"
             >
               <input
                 type="text"
                 placeholder={props.dict.find_your_insider.input_placeholder}
-                className="py-2 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
+                className="py-3 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
                 value={props.searchQuery}
                 onChange={(e) => props.setSearchQuery(e.target.value)}
               />
-              <div className="absolute inset-y-0 right-0 flex items-center z-20 rounded-lg pr-2">
+              <div className="absolute inset-y-0 right-0 flex items-center z-20 rounded-lg">
                 <button type="submit">
                   <SubmitIcon />
                 </button>
@@ -288,7 +288,7 @@ return selectedConsultant ? (
                 </div>
               ) : null}
             </div>
-            <div>{renderConsultantList}</div>
+            <div className="flex flex-col gap-4 w-full">{consultantCards}</div>
           </div>
         </div>
         <ConsultantViewDetails
@@ -305,9 +305,9 @@ return selectedConsultant ? (
   <>
     <div className="modal-container h-screen lg:h-full">
       <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
-        <div className="modal__left flex flex-col w-full lg:max-w-420 lg:max-h-665">
+        <div className="modal__left flex flex-col w-full">
           <div
-            className="close-modal flex items-center gap-2 mb-6"
+            className="close-modal flex items-center gap-4 mb-9"
             onClick={props.returnToStartHandler}
           >
             <BackIcon color="#272727" />
@@ -334,16 +334,16 @@ return selectedConsultant ? (
                 const isZipCode = /^\d+$/.test(props.searchQuery);
                 props.setSearchType(isZipCode ? "locator" : "consultantSearch");
               }}
-              className="relative mb-4"
+              className="relative"
             >
               <input
                 type="text"
                 placeholder={props.dict.find_your_insider.input_placeholder}
-                className="py-2 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
+                className="py-3 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
                 value={props.searchQuery}
                 onChange={(e) => props.setSearchQuery(e.target.value)}
               />
-              <div className="absolute inset-y-0 right-0 flex items-center z-20 rounded-lg pr-2">
+              <div className="absolute inset-y-0 right-0 flex items-center z-20 rounded-lg">
                 <button type="submit">
                   <SubmitIcon />
                 </button>

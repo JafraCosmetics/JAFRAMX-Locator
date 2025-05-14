@@ -289,7 +289,7 @@ export default function Locator(props) {
 
   setConsultantCards(
     consultantCardList.length > 0 ? (
-      <div style={{ width: "95%" }} className="flex flex-col gap-2">
+      <div style={{ width: "100%" }} className="flex flex-col gap-2">
         {consultantCardList}
       </div>
     ) : (
@@ -381,11 +381,11 @@ export default function Locator(props) {
     }, [props.dict]);
   return locationsLoaded ? (
     selectedConsultant ? (
-    <div className="modal-container h-full lg:h-860">
-      <div className="modal p-4 w-full flex lg:grid lg:p-8 lg:modal-container-grid">
-        <div className="hidden lg:flex flex-col justify-between w-full">
+   <div className="modal-container h-screen lg:h-full">
+      <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
+        <div className="modal__left flex flex-col w-full">
           <div>
-            <div className="w-full lg:max-w-420">
+            <div className="flex flex-col gap-2 overflow-auto max-h-450">
               <div
                 className="close-modal flex items-center gap-2 mb-10"
                 onClick={props.returnToStartHandler}
@@ -449,9 +449,9 @@ export default function Locator(props) {
         </div>
       </div>
     ) : (
-      <div className="modal-container ">
-        <div className="modal flex p-4 lg:p-8 w-full">
-          <div className="modal__left overflow-hidden">
+    <div className="modal-container h-screen lg:h-full">
+      <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
+        <div className="modal__left flex flex-col w-full">
             <>
               <div
                 // data-close-modal
@@ -462,32 +462,33 @@ export default function Locator(props) {
                 <BackIcon color="#272727" />
                 <p>{props.dict.find_your_insider.go_back}</p>
               </div>
-              {/* logo jafra centrada */}
-              <div className="flex justify-center items-center mb-6">
-                <Image
-                  src={AvatarImage}
-                  alt="Default Avatar"
-                  width={100}
-                  height={100}
-                />
+              <div className="flex flex-col gap-2 overflow-auto max-h-450">
+                {/* logo jafra centrada */}
+                <div className="flex justify-center items-center mb-6">
+                  <Image
+                    src={AvatarImage}
+                    alt="Default Avatar"
+                    width={100}
+                    height={100}
+                  />
+                </div><br/>
+              <div className="modal-heading jafra-purple font-bold object-contain">
+                {props.dict.match_insider.h1}
               </div><br/>
-            <div className="modal-heading jafra-purple font-bold object-contain">
-              {props.dict.match_insider.h1}
-            </div><br/>
-            <p className="hidden lg:block mb-6 ">
-              {props.dict.match_insider.body}
-            </p>
-              <UserContext.Provider value={{ showWarning, setShowWarning }}>
-              <ZipForm
-                updateOrigin={updateOrigin}
-                dict={props.dict}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                setSearchType={setSearchType}
-              />
+              <p className="hidden lg:block mb-6 ">
+                {props.dict.match_insider.body}
+              </p>
+                <UserContext.Provider value={{ showWarning, setShowWarning }}>
+                <ZipForm
+                  updateOrigin={updateOrigin}
+                  dict={props.dict}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  setSearchType={setSearchType}
+                />
 
-
-              </UserContext.Provider>
+                </UserContext.Provider>
+            </div>
             </>
             <div className="lg:hidden">
               <MapAccordion />
@@ -497,9 +498,7 @@ export default function Locator(props) {
               <p className="px-6 mb-6">{renderResultsMessage}</p>
               {consultantList.length > 0 ? (
                 <Scrollbars autoHide style={{ width: "100%", maxWidth: "1000px", height: 400 }}>
-                  <div className="flex flex-col gap-4 w-full">
                     {consultantCards}
-                  </div>
                 </Scrollbars>
               ) : (
                 <div className="flex flex-col gap-4 w-full">{consultantCards}</div>
