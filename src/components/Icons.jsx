@@ -1,22 +1,25 @@
 export const SubmitIcon = (props) => (
-  <div viewBox="0 0 24 24">
+  <div
+    className="flex justify-center items-center w-12 h-12 bg-jafra-purple rounded-r-lg"
+    viewBox="0 0 24 24"
+  >
     <svg
-      width="18"
-      height="17"
+      width="20"
+      height="20"
       viewBox="0 0 18 17"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M8.07492 14.563C11.7568 14.563 14.7416 11.5783 14.7416 7.89633C14.7416 4.2144 11.7568 1.22961 8.07492 1.22961C4.39299 1.22961 1.4082 4.2144 1.4082 7.89633C1.4082 11.5783 4.39299 14.563 8.07492 14.563Z"
-        stroke="#29243E"
+        stroke="#FFFFFF"
         strokeWidth="1.50001"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M16.4082 16.2296L12.7832 12.6046"
-        stroke="#29243E"
+        stroke="#FFFFFF"
         strokeWidth="1.50001"
         strokeLinecap="round"
         strokeLinejoin="round"

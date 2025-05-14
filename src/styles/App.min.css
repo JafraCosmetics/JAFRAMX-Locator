@@ -16,27 +16,47 @@
   background-color: #fff;
   border-radius: 8px;
 }
+.modal-container h1 {
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 24px;
+  font-family: "montserrat", sans-serif;
+}
 .modal-container h2 {
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
+  font-family: "montserrat", sans-serif;
 }
+.modal-container h3 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: "montserrat", sans-serif;
+}
+.modal-container h4 {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 10px;
+  font-family: "montserrat", sans-serif;
+}
+
 .modal-container p {
   font-style: normal;
   font-weight: 390;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
 }
 .modal-container a {
   font-style: normal;
   font-size: 14px;
   line-height: 20px;
-  color: #8f4899;
 }
 .modal-container .close-icon {
   height: 2em;
   width: 2em;
 }
+
 .modal-container .modal {
   background-color: #fff;
   width: 100%;
@@ -57,24 +77,26 @@
 }
 @media (min-width: 1024px) {
   .modal-container .modal__left {
-    max-width: 420px;
+    max-width: 450px;
   }
 }
 @media (min-width: 1024px) {
   .modal-container .modal__left {
-    max-width: 370px;
+    max-width: 450px;
   }
 }
 .modal-container .modal-heading {
-  font-weight: 700;
-  font-style: normal;
-  font-size: 20px;
-  line-height: 28px;
-}
+  font-weight: 500;
+  font-style: bold;
+  font-size: 18px;
+  color:purple;
+  font-family: "Montserrat", sans-serif;
+  line-height: 30px;
+ }
+
 @media (min-width: 768px) {
   .modal-container .modal-heading {
-    font-size: 30px;
-    line-height: 52px;
+    font-size: 18px;
   }
 }
 .modal-container .modal-text {
@@ -141,10 +163,17 @@
 .modal-container .map-marker h2 {
   font-family: "brandon-grotesque", sans-serif;
   font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  color: #000000;
+}
+.modal-container .map-marker h3 {
+  font-family: "Montserrat", sans-serif;
   font-weight: 450;
   font-size: 14px;
-  line-height: 16px;
-  color: #8f4899;
+  line-height: 14px;
+  color: #000000;
 }
 .modal-container .map-marker p {
   font-family: "brandon-grotesque", sans-serif;
@@ -169,12 +198,13 @@
   line-height: 16px;
 }
 .modal-container .view-details {
-  color: #8f4899;
   font-weight: 500;
 }
 @media (min-width: 1024px) {
   .modal-container .view-details {
-    background-image: url("/images/viewDetailsBackground.png");
+
+    background-image: none;
+
   }
 }
 .modal-container .view-details__name {
@@ -203,10 +233,9 @@
 }
 .modal-container .view-details img {
   border-color: #fff;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  box-shadow: 0 0 50px #ccc;
+  width: 150px;
+  height: 150px;
+  box-shadow: 0 0 50px #ffffff;
   background-color: #fff;
 }
 .modal-container .view-details button {
@@ -214,17 +243,33 @@
   font-size: 14px;
   line-height: 18px;
 }
+#about-you {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+}
+
 .numbered-text {
   font-family: "brandon-grotesque", sans-serif;
   font-weight: 450;
   font-size: 16px;
 }
 .consultant-card {
-  padding: 12px 16px;
+  padding: 16px 16px;
+  border-radius: 8px;
+  border: 1px solid #000000 !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  background-color: #fff;
 }
 @media (min-width: 1024px) {
   .consultant-card {
-    max-width: 420px;
+    max-width: 650px;
   }
 }
 .consultant-card__selected {
@@ -235,9 +280,10 @@
 }
 .consultant-card .consultant-box__name {
   font-family: "Inter", sans-serif;
-  font-weight: 700;
-  font-size: 16px;
+  font-weight: bold;
+  font-size: 20px;
   line-height: 22px;
+  margin-top: 5px;
   color: #29243e;
 }
 .consultant-card .consultant-box__location {
@@ -246,14 +292,40 @@
   line-height: 16px;
   color: #727272;
 }
-.consultant-card a {
-  font-family: "Inter", sans-serif;
+.consultant-card button {
+cursor: pointer;
+}
+.consultant-view-details #consultant-card-select-insider {
+  font-size: 16px !important;  
+}
+
+#consultant-card-select-insider,
+#view-products {
+  font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
-  line-height: 22px;
-  color: #8f4899;
+  font-size: 10.5px;
+  line-height: 21px;
+  color: #fbf8fb;
+  padding: 3px 10px;
+  border-radius: 16px;
+  border: none;
+  background-color: #8f4899;
 }
+#consultant-card-view-profile {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10.5px;
+  line-height: 21px;
+  color:  #8f4899;
+  padding: 3px 10px;
+  border-radius: 16px;
+  border: 1px solid #8f4899;
+  background-color:#fbf8fb ;
+}
+
+
 @media (min-width: 768px) {
   .consultant-card a {
     font-size: 14px;
@@ -302,3 +374,13 @@
     stroke: #29243e;
   }
 } /*# sourceMappingURL=App.min.css.map */
+.map-marker a {
+  color: #25d366; 
+  text-decoration: none;
+
+}
+
+.map-marker .text-green-500 .text-gray-600, text-blue-500 {
+  font-size: 2rem; 
+}
+

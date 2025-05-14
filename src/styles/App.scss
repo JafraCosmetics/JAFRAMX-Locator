@@ -110,7 +110,7 @@
 
   .results-list {
     &__heading {
-      font-weight: 420;
+      font-weight: 600;
       font-size: 14px;
       line-height: 20px;
       color: #686868;
@@ -154,12 +154,12 @@
     // width: 200px;
     // height: 225px;
     h2 {
-      font-family: "brandon-grotesque", sans-serif;
+      font-family: "Montserrat", sans-serif;
       font-style: normal;
       font-weight: 450;
-      font-size: 14px;
+      font-size: 16px;
       line-height: 16px;
-      color: #8f4899;
+      color: #000000;
     }
 
     p {
@@ -193,7 +193,9 @@
     font-weight: 500;
 
     @media (min-width: 1024px) {
-      background-image: url("../images/viewDetailsBackground.png");
+
+      background-image: none;
+
     }
 
     &__name {
@@ -228,8 +230,8 @@
 
     img {
       border-color: #fff;
-      width: 260px;
-      height: 260px;
+      width: 300px;
+      height: 300px;
       border-radius: 50%;
       box-shadow: 0 0 50px #ccc;
       background-color: #fff;
@@ -298,12 +300,17 @@
 
 // map marker infowindow
 .gm-style-iw-c {
-  height: 250px !important;
-  width: 275px;
+  max-width: 80%;
+  max-height: 80%;
+  height: auto; 
+  width: auto; 
+  overflow: auto;
+  margin: 10px;
 }
 
 .gm-style .gm-style-iw-c {
-  padding: 0;
+  padding: 16px; 
+  box-sizing: border-box; 
 }
 
 .test {
@@ -322,7 +329,7 @@
 }
 
 .search-warning {
-  color: #8f4899;
+  color: #0a050a;
   font-size: 14px;
 }
 
@@ -345,3 +352,4 @@
     stroke: #29243e;
   }
 }
+

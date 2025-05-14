@@ -1,0 +1,13 @@
+# Query: props.dict.i_know_an_insider.header
+# ContextLines: 1
+
+2 resultados - 1 archivo
+
+src/components/ConsultantSearch.jsx:
+  198                  <div className="modal-heading mt-6 mb-3">
+  199:                   {props.dict.i_know_an_insider.h2}
+  200                  </div>
+
+  265              <div className="modal-heading mt-3 mb-3">
+  266:               {props.dict.i_know_an_insider.h2}
+  267              </div>

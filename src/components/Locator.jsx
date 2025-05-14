@@ -2,30 +2,29 @@ import React, { useContext, useMemo, useState, useEffect, useRef } from "react";
 import Radar from "radar-sdk-js";
 import "radar-sdk-js/dist/radar.css";
 import { renderToString } from "react-dom/server";
-
+import AvatarImage from "/public/images/avatar.png";
+import { GrUserExpert } from "react-icons/gr";
+import { IoBagOutline } from "react-icons/io5";
 import ConsultantCard from "./ConsultantCard";
 import ZipForm from "./ZipForm";
-import {
-  BackIcon,
-  EmailIcon,
-  LocationPinIcon,
-  NumberedListIcon,
-  PhoneIcon,
-  WebIcon,
-} from "./Icons";
+import { BackIcon} from "./Icons";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
-import { LocationIcon } from "./Icons";
 import MapAccordion from "./MapAccordion";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import Image from "next/image";
-import { AsYouType } from "libphonenumber-js";
-import { Scrollbars } from "react-custom-scrollbars";
 
-export const UserContext = React.createContext(null);
+import MapPlaceholder from "/public/images/mapPlaceholder.png";
+import { Scrollbars } from "react-custom-scrollbars"; 
+import { SubmitIcon } from "./Icons";
 
+import { UserContext } from "./ConsultantFinder";
 export default function Locator(props) {
+  const { zipcode, dict, returnToStartHandler } = props;
   const mapRef = useRef(null);
   const mobileMapRef = useRef(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchType, setSearchType] = useState(null);
 
   const [locationsLoaded, setLocationsLoaded] = useState(false);
   const [markerList, setMarkerList] = useState([]);
@@ -33,7 +32,7 @@ export default function Locator(props) {
   const [selectedInfoWindow, setSelectedInfoWindow] = useState("");
   const [consultantList, setConsultantList] = useState([]);
   const [consultantCards, setConsultantCards] = useState("");
-  const [currentZip, setCurrentZip] = useState(null);
+  const [currentZip, setCurrentZip] = useState(zipcode);
   const [gettingCurrentLocation, setGettingCurrentLocation] = useState(false);
   const [selectedConsultant, setSelectedConsultant] = useState(null);
   const [map, setMap] = useState(null);
@@ -45,25 +44,27 @@ export default function Locator(props) {
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
   const findConsultantByEmail = async (email) => {
-    // validate searchQuery
+  const url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
 
-    let url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
-
-    let options = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
-
-    return fetch(url, options)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.partners.length > 0) {
-          return json.partners[0].siteName;
-        }
-        return null;
-      })
-      .catch((err) => console.error("error:" + err));
+  const options = {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
   };
+
+  return fetch(url, options)
+    .then((res) => res.json()) // ← ESTA LÍNEA FALTABA
+    .then((json) => {
+      if (json.partners.length > 0) {
+        return json.partners[0]; // regresa el objeto completo
+      }
+      return null;
+    })
+    .catch((err) => {
+      console.error("error:", err);
+      return null;
+    });
+};
+
 
   const setPrefPartner = (consultant) => {
     console.log("setting pref partner");
@@ -88,9 +89,9 @@ export default function Locator(props) {
     const getLocations = async () => {
       let url = "";
       if (currentZip) {
-        url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
+        url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
       } else if (currentLocation) {
-        console.log(currentLocation);
+        console.log("currentLocation", currentLocation);
         url = `https://qaysz0xhkj.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
       }
 
@@ -142,200 +143,163 @@ export default function Locator(props) {
 
   useEffect(() => {
     console.log("Initializing Radar");
-    Radar.initialize("prj_live_pk_424fcf2b36b2890745d5ab7f55a9ebbf019bea16");
+    Radar.initialize("prj_test_pk_122e9796a1788eae8a3a87106f7815ecf703afdb");
   }, []);
 
-  useEffect(() => {
-    if (selectedConsultant === null) {
-      const viewDetailsHandler = (event, consultant, marker) => {
-        if (windowSize.current[0] >= 1024) {
-          consultantCardClickHandler(event, marker);
+      const viewDetailsHandler = async (event, consultant) => {
+      event.preventDefault();
+
+      try {
+        const response = await fetch(`https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${consultant.email}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await response.json();
+        const enrichedData = data?.partners?.[0];
+
+        if (enrichedData) {
+          setSelectedConsultant({ ...consultant, ...enrichedData });
         } else {
           setSelectedConsultant(consultant);
         }
-      };
-
-      const consultantCardList = new Array();
-
-      console.log(consultantList);
-      let i = 0;
-      if (mapCenter !== null) {
-        console.log("origin:", [mapCenter.lng, mapCenter.lat]);
-
-        if (mapRef.current) {
-          const radarMap = Radar.ui.map({
-            container: "map",
-            style: "radar-default-v1",
-            center: [mapCenter.lng, mapCenter.lat],
-            zoom: 10,
-          });
-
-          mobileMapRef.current = Radar.ui.map({
-            container: "map-mobile",
-            style: "radar-default-v1",
-            center: [mapCenter.lng, mapCenter.lat],
-            zoom: 10,
-          });
-          console.log("radarMap: ", radarMap);
-
-          mapRef.current = radarMap;
-        } else {
-          const radarMap = Radar.ui.map({
-            container: "map",
-            style: "radar-default-v1",
-            center: [mapCenter.lng, mapCenter.lat],
-            zoom: 10,
-          });
-          mobileMapRef.current = Radar.ui.map({
-            container: "map-mobile",
-            style: "radar-default-v1",
-            center: [mapCenter.lng, mapCenter.lat],
-            zoom: 9,
-          });
-
-          mapRef.current = radarMap;
-        }
-
-        console.log("mapRef: ", mapRef);
-
-        for (let consultant of consultantList) {
-          // console.log("consultant: " + consultant.latitude, consultant.longitude);
-
-          const infoWindow = (
-            // <div className="map-marker grid grid-cols-20-80 py-4 px-2">
-            //   <div>
-            //     <NumberedListIcon height="2em" width="2em" number={i + 1} />
-            //   </div>
-            <div>
-              {/* <Image
-              name={consultant.displayName}
-              className="mb-3 h-12 w-12 rounded object-contain"
-              src={consultant.profileImage ?? AvatarImage}
-              alt="profile image"
-              fill={false}
-            /> */}
-
-              <div className="mb-3">
-                <h2>{consultant.displayName}</h2>
-                <p>
-                  {consultant.distance} {props.dict.consultant_card.distance}
-                </p>
-              </div>
-
-              <div className="flex gap-1 items-center mb-2">
-                <WebIcon />{" "}
-                <a
-                  href={"https://jafra.com/" + consultant.siteName}
-                  target="_parent"
-                >
-                  jafra.com/{consultant.siteName}
-                </a>
-              </div>
-
-              {/* {consultant.phone ? (
-              consultant.hidePhone === null ||
-              consultant.hidePhone === false ? (
-                <div className="flex gap-1 items-center mb-2">
-                  <PhoneIcon />{" "}
-                  <a
-                    href={"tel:" + new AsYouType("US").input(consultant.phone)}
-                    target="_parent"
-                  >
-                    {new AsYouType("US").input(consultant.phone)}
-                  </a>
-                </div>
-              ) : null
-            ) : null}
-
-            {consultant.email ? (
-              consultant.hideEmail === null ||
-              consultant.hideEmail === false ? (
-                <div className="flex gap-1 items-center mb-2">
-                  <EmailIcon />{" "}
-                  <a href={"mailto:" + consultant.email} target="_parent">
-                    {consultant.email}
-                  </a>
-                </div>
-              ) : null
-            ) : null} */}
-
-              {/* 
-              <button
-                className="h-8 bg-mine-shaft text-white hover:bg-black rounded"
-              >
-                Select
-              </button> */}
-            </div>
-            // </div>
-          );
-
-          const marker = Radar.ui
-            .marker({
-              popup: {
-                html: renderToString(infoWindow),
-                maxWidth: 300,
-              },
-            })
-            .setLngLat([consultant.longitude, consultant.latitude])
-            .addTo(mapRef.current);
-
-          marker._element.onclick = () => {
-            setSelectedInfoWindow(consultant.displayName);
-          };
-
-          const mobileMarker = Radar.ui
-            .marker({
-              popup: {
-                html: renderToString(infoWindow),
-                maxWidth: 300,
-              },
-            })
-            .setLngLat([consultant.longitude, consultant.latitude])
-            .addTo(mobileMapRef.current);
-
-          mobileMarker._element.onclick = () => {
-            setSelectedInfoWindow(consultant.displayName);
-          };
-
-          consultantCardList.push(
-            <ConsultantSelectedContext.Provider
-              value={{ consultantSelected, setConsultantSelected }}
-              key={consultant.email}
-            >
-              <ConsultantCard
-                consultant={consultant}
-                marker={marker._element}
-                number={i + 1}
-                key={consultant.displayName}
-                selectConsultantHandler={() => setPrefPartner(consultant)}
-                viewDetailsHandler={viewDetailsHandler}
-                distance={true}
-                dict={props.dict}
-              />
-            </ConsultantSelectedContext.Provider>
-          );
-
-          i++;
-        }
-
-        // render consultants list
-        if (consultantCardList.length > 0) {
-          setConsultantCards(
-            <div style={{ width: "95%" }} className="flex flex-col gap-2">
-              {consultantCardList}
-            </div>
-          );
-        } else {
-          setConsultantCards(
-            <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
-              <div>{props.dict.match_insider.no_insiders_found}</div>
-            </div>
-          );
-        }
+      } catch (error) {
+        console.error("Error fetching consultant by email:", error);
+        setSelectedConsultant(consultant); // fallback
       }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [consultantList, selectedConsultant]);
+    };
+
+
+ useEffect(() => {
+  const consultantCardList = new Array();
+  console.log(consultantList);
+
+  let i = 0;
+
+  // Asegúrate de que el contenedor del mapa ya existe en el DOM
+  const mapContainer = document.getElementById("map");
+  const mobileMapContainer = document.getElementById("map-mobile");
+
+  if (!mapCenter || !mapContainer || !mobileMapContainer) return;
+
+  console.log("origin:", [mapCenter.lng, mapCenter.lat]);
+
+  // Solo crear mapas si aún no existen
+  if (!mapRef.current) {
+    mapRef.current = Radar.ui.map({
+      container: "map",
+      style: "radar-default-v1",
+      center: [mapCenter.lng, mapCenter.lat],
+      zoom: 10,
+    });
+  }
+
+  if (!mobileMapRef.current) {
+    mobileMapRef.current = Radar.ui.map({
+      container: "map-mobile",
+      style: "radar-default-v1",
+      center: [mapCenter.lng, mapCenter.lat],
+      zoom: 9,
+    });
+  }
+
+  for (let consultant of consultantList) {
+    const infoWindow = (
+      <div className="map-marker flex flex-col gap-4 py-4 px-4 w-[300px] mx-auto max-w-[300px] mx-4 border border-black rounded-lg">
+        <div className="relative w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex-shrink-0 mx-auto">
+          <Image
+            src={consultant.profileImage ?? AvatarImage}
+            alt="profile image"
+            fill
+            className="object-cover object-center"
+          />
+        </div>
+        <div className="text-center">
+          <h2 className="text-lg font-bold">{consultant.displayName}</h2>
+        </div>
+        <div className="flex justify-between">
+          <div className="flex items-center gap-4 w-full">
+            <button
+              id="consultant-card-view-profile"
+              className="text-xs cursor-pointer flex items-center gap-2 bg-gray-200 hover:bg-gray-300 rounded px-4 py-2"
+              onClick={(event) => viewDetailsHandler(event, consultant)}
+            >
+              <GrUserExpert />
+              {props.dict.consultant_card.view_details}
+            </button>
+            <button
+              id="consultant-card-select-insider"
+              className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2"
+              onClick={props.selectConsultantHandler}
+            >
+              <IoBagOutline />
+              {props.dict.consultant_card.select_insider}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+
+    const marker = Radar.ui
+      .marker({
+        popup: {
+          html: renderToString(infoWindow),
+          maxWidth: 400,
+        },
+      })
+      .setLngLat([consultant.longitude, consultant.latitude])
+      .addTo(mapRef.current);
+
+    marker._element.onclick = () => {
+      setSelectedInfoWindow(consultant.displayName);
+    };
+
+    const mobileMarker = Radar.ui
+      .marker({
+        popup: {
+          html: renderToString(infoWindow),
+          maxWidth: 400,
+        },
+      })
+      .setLngLat([consultant.longitude, consultant.latitude])
+      .addTo(mobileMapRef.current);
+
+    mobileMarker._element.onclick = () => {
+      setSelectedInfoWindow(consultant.displayName);
+    };
+
+    consultantCardList.push(
+      <ConsultantSelectedContext.Provider
+        value={{ consultantSelected, setConsultantSelected }}
+        key={consultant.email}
+      >
+        <ConsultantCard
+          consultant={consultant}
+          number={i + 1}
+          key={i}
+          selectConsultantHandler={() => setSelectedConsultant(consultant)}
+          viewDetailsHandler={(e) => viewDetailsHandler(e, consultant)}
+          distance={false}
+          dict={props.dict}
+        />
+      </ConsultantSelectedContext.Provider>
+    );
+
+    i++;
+  }
+
+  setConsultantCards(
+    consultantCardList.length > 0 ? (
+      <div style={{ width: "100%" }} className="flex flex-col gap-2">
+        {consultantCardList}
+      </div>
+    ) : (
+      <div className="flex flex-col justify-center items-center gap-2 h-full mt-16">
+        <div>{props.dict.match_insider.no_insiders_found}</div>
+      </div>
+    )
+  );
+}, [consultantList]);
 
   const getCurrentLocation = () => {
     setGettingCurrentLocation(true);
@@ -347,19 +311,35 @@ export default function Locator(props) {
     );
   };
 
-  const updateOrigin = async (event) => {
-    event.preventDefault();
+
+  useEffect(() => {
+    if (zipcode) {
+      setCurrentZip(zipcode); // Actualiza el estado si cambia el código postal
+    }
+  }, [zipcode]);
+
+  const updateOrigin = () => {
     setLocationsLoaded(false);
     const mapDiv = document.getElementById("map");
-    if (mapDiv !== null) mapDiv.innerHTML = "";
-    let zipCode = event.target.elements.zip.value;
-    setCurrentZip(zipCode);
-    setSelectedConsultant(null);
-    setSelectedInfoWindow("");
+    if (mapDiv !== null) mapDiv.innerHTML = ""; // Limpia el contenido del mapa
+    setCurrentZip(zipcode); // Usa el código postal recibido como prop
+    setSelectedConsultant(null); // Limpia el consultor seleccionado
+    setSelectedInfoWindow(""); // Limpia la ventana de información seleccionada
   };
 
-  const renderResultsMessage = useMemo(() => {
-    console.log(consultantList);
+    useEffect(() => {
+      if (searchType === "locator" && searchQuery) {
+        setCurrentZip(searchQuery); // esto disparará el useEffect que llama a getLocations
+        setSelectedConsultant(null); 
+        setSelectedInfoWindow("");
+        setLocationsLoaded(false);
+        const mapDiv = document.getElementById("map");
+        if (mapDiv) mapDiv.innerHTML = "";
+      }
+    }, [searchQuery, searchType]);
+
+
+  const renderResultsMessage = useMemo(() => {;
     if (currentZip) {
       return (
         <>
@@ -403,20 +383,77 @@ export default function Locator(props) {
 
   return locationsLoaded ? (
     selectedConsultant ? (
-      <div className="modal-container h-full lg:h-860">
-        <div className="modal p-4 w-full flex lg:grid lg:p-8 modal-container-grid">
-          <ConsultantViewDetails
-            consultant={selectedConsultant}
-            goBackHandler={() => setSelectedConsultant(null)}
-            selectConsultantHandler={() => setPrefPartner(selectedConsultant)}
-            dict={props.dict}
-          />
+   <div className="modal-container h-screen lg:h-full">
+      <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
+        <div className="modal__left flex flex-col w-full">
+          <div>
+            <div className="flex flex-col gap-2 overflow-auto max-h-450">
+              <div
+                className="close-modal flex items-center gap-2 mb-10"
+                onClick={props.returnToStartHandler}
+              >
+                <BackIcon color="#272727" />
+                <p>{props.dict.find_your_insider.go_back}</p>
+              </div>
+              <div className="flex justify-center items-center mb-6">
+                <Image
+                  src={AvatarImage}
+                  alt="Default Avatar"
+                  width={100}
+                  height={100}
+                />
+              </div><br/>
+
+              <div className="modal-heading jafra-purple font-bold object-contain">
+                {props.dict.match_insider.h1}
+              </div>
+              <br />
+              <p className="hidden lg:block mb-6 ">{props.dict.match_insider.body}</p>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const isZipCode = /^\d+$/.test(props.searchQuery);
+                props.setSearchType(isZipCode ? "locator" : "consultantSearch");
+              }}
+              className="relative mb-4"
+            >
+              <input
+                type="text"
+                placeholder={props.dict.find_your_insider.input_placeholder}
+                className="py-2 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
+                value={props.searchQuery}
+                onChange={(e) => props.setSearchQuery(e.target.value)}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center z-20 rounded-lg pr-2">
+                <button type="submit">
+                  <SubmitIcon />
+                </button>
+              </div>
+            </form>
+
+            {showWarning ? (
+              <div className="search-warning text-pink-700">
+                {props.dict.i_know_an_insider.input_placeholder}
+              </div>
+            ) : null}
+
+            </div>
+            <div className="flex flex-col gap-4 w-full">{consultantCards}</div>
+          </div>
+        </div>
+        <ConsultantViewDetails
+          consultant={selectedConsultant}
+          goBackHandler={() => setSelectedConsultant(null)}
+          selectConsultantHandler={setPrefPartner}
+          dict={props.dict}
+        />
         </div>
       </div>
     ) : (
-      <div className="modal-container ">
-        <div className="modal flex p-4 lg:p-8 justify-between w-full">
-          <div className="modal__left overflow-hidden">
+    <div className="modal-container h-screen lg:h-full">
+      <div className="modal flex lg:grid modal-container-grid w-full p-4 lg:p-8">
+        <div className="modal__left flex flex-col w-full">
             <>
               <div
                 // data-close-modal
@@ -427,21 +464,33 @@ export default function Locator(props) {
                 <BackIcon color="#272727" />
                 <p>{props.dict.find_your_insider.go_back}</p>
               </div>
-              <div className="modal-info-body mb-6">
-                <div className="modal-heading mb-3">
-                  {props.dict.match_insider.header}
-                </div>
-                <p className="hidden lg:block">
-                  {props.dict.match_insider.body} <br />
-                  <br />
-                  <a className="cursor-pointer" onClick={props.goToKnowHandler}>
-                    {props.dict.match_insider.help_link}
-                  </a>
-                </p>
-              </div>
-              <UserContext.Provider value={{ showWarning, setShowWarning }}>
-                <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
-              </UserContext.Provider>
+              <div className="flex flex-col gap-2 overflow-auto max-h-450">
+                {/* logo jafra centrada */}
+                <div className="flex justify-center items-center mb-6">
+                  <Image
+                    src={AvatarImage}
+                    alt="Default Avatar"
+                    width={100}
+                    height={100}
+                  />
+                </div><br/>
+              <div className="modal-heading jafra-purple font-bold object-contain">
+                {props.dict.match_insider.h1}
+              </div><br/>
+              <p className="hidden lg:block mb-6 ">
+                {props.dict.match_insider.body}
+              </p>
+                <UserContext.Provider value={{ showWarning, setShowWarning }}>
+                <ZipForm
+                  updateOrigin={updateOrigin}
+                  dict={props.dict}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  setSearchType={setSearchType}
+                />
+
+                </UserContext.Provider>
+            </div>
             </>
             <div className="lg:hidden">
               <MapAccordion />
@@ -450,11 +499,11 @@ export default function Locator(props) {
             <div className="mt-3">
               <p className="px-6 mb-6">{renderResultsMessage}</p>
               {consultantList.length > 0 ? (
-                <Scrollbars autoHide style={{ width: 370, height: 325 }}>
-                  {consultantCards}
+                <Scrollbars autoHide style={{ width: "100%", maxWidth: "1000px", height: 400 }}>
+                    {consultantCards}
                 </Scrollbars>
               ) : (
-                <div>{consultantCards}</div>
+                <div className="flex flex-col gap-4 w-full">{consultantCards}</div>
               )}
             </div>
           </div>
@@ -469,7 +518,7 @@ export default function Locator(props) {
   ) : (
     <>
       <div className="modal-container">
-        <div className="modal flex flex-col p-4 lg:p-8  w-full justify-between  lg:grid lg:modal-container-grid">
+        <div className="modal flex flex-col p-4 lg:p-8  w-full lg:grid lg:modal-container-grid">
           <div className="modal__left">
             <div
               className="close-modal flex items-center gap-2 mb-10"
@@ -478,19 +527,29 @@ export default function Locator(props) {
               <BackIcon color="#272727" />
               <p>{props.dict.find_your_insider.go_back}</p>
             </div>
-            <div className="modal-heading mt-6 mb-3">
-              {props.dict.match_insider.header}
-            </div>
-            <p className="hidden lg:block mb-6">
+           {/* Logo Jafra centrada */}
+            <div className="flex justify-center items-center mb-6">
+              <Image
+                src={AvatarImage}
+                alt="Default Avatar"
+                width={100}
+                height={100}
+              />
+            </div><br/>
+            <div className="modal-heading jafra-purple font-bold object-contain">
+              {props.dict.match_insider.h1}
+            </div><br/>
+            <p className="hidden lg:block mb-6 ">
               {props.dict.match_insider.body}
-              <br />
-              <br />
-              <a className="cursor-pointer" onClick={props.goToKnowHandler}>
-                {props.dict.match_insider.help_link}
-              </a>
             </p>
             <UserContext.Provider value={{ showWarning, setShowWarning }}>
-              <ZipForm updateOrigin={updateOrigin} dict={props.dict} />
+              <ZipForm
+                updateOrigin={updateOrigin}
+                dict={props.dict}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                setSearchType={setSearchType}
+              />
             </UserContext.Provider>
             {/*  disable use my location search feature */}
             {/* <div className="flex items-center gap-2 mt-4">
