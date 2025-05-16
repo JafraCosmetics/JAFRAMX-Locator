@@ -161,59 +161,50 @@ const ConsultantViewDetails = (props) => {
               </div>
             </div>
                    {/* Experiencia, certificados y ventas */}
-              <div>
-                <h2 className="text-md font-semibold mb-2">Sobre mí</h2>
-                <div className="flex flex-col md:flex-row md:justify-between items-start gap-4">
+            <div>
+              <h2 className="text-xs font-semibold mb-2">Sobre mí</h2>
+              <div className="flex flex-col md:flex-row md:flex-wrap md:justify-between items-start gap-3 text-[11px] leading-tight">
                 {/* Experiencia */}
-                <div className="flex items-center gap-4">
-                  {/* Ícono a la izquierda */}
-                    <img
-                      src="/images/Iconos_anios.svg"
-                      alt="Icono rostro"
-                      className="icon-small"
-                    />
-                  {/* Texto a la derecha */}
-                  <div className="flex flex-col">
-                    <h4 className="text-xl font-bold">Experiencia</h4>
-                    <p className="text-sm">
-                      {props.consultant.experience ?? "10 años"}
-                    </p>
-                  </div>
-                </div>
-                {/* Certificados */}
-                <div className="flex items-center gap-4">
-                  {/* Ícono a la izquierda */}
+                <div className="flex items-start gap-2 w-full md:w-[30%]">
                   <img
-                      src="/images/Iconos_rostro.svg"
-                      alt="Icono rostro"
-                      className="icon-small"
-                    />
-                  {/* Texto a la derecha */}
+                    src="/images/Iconos_anios.svg"
+                    alt="Icono experiencia"
+                    className="icon-small"
+                  />
                   <div className="flex flex-col">
-                    <h4 className="text-xl font-bold">Certificaciones</h4>
-                    <p className="text-sm">
-                      {props.consultant.certificates ?? "Cuidado de la piel"}
-                    </p>
+                    <h4 className="text-[11px] font-bold">Experiencia</h4>
+                    <p>{props.consultant.experience ?? "10 años"}</p>
                   </div>
                 </div>
-                {/* Ventas */}
-                <div className="flex items-center gap-4">
-                  {/* Ícono a la izquierda */}
-                    <img
-                      src="/images/Iconos_ventas.svg"
-                      alt="Icono rostro"
-                      className="icon-small"
-                    />
-                  {/* Texto a la derecha */}
+
+                {/* Certificados */}
+                <div className="flex items-start gap-2 w-full md:w-[30%]">
+                  <img
+                    src="/images/Iconos_rostro.svg"
+                    alt="Icono rostro"
+                    className="icon-small"
+                  />
                   <div className="flex flex-col">
-                    <h4 className="text-xl font-bold">Nivel en ventas</h4>
-                    <p className="text-sm">
-                      {props.consultant.salesLevel ?? "Top"}
-                    </p>
+                    <h4 className="text-[11px] font-bold">Certificaciones</h4>
+                    <p>{props.consultant.certificates ?? "Cuidado de la piel"}</p>
+                  </div>
+                </div>
+
+                {/* Ventas */}
+                <div className="flex items-start gap-2 w-full md:w-[30%]">
+                  <img
+                    src="/images/Iconos_ventas.svg"
+                    alt="Icono ventas"
+                    className="icon-small"
+                  />
+                  <div className="flex flex-col">
+                    <h4 className="text-[11px] font-bold">Nivel en ventas</h4>
+                    <p>{props.consultant.salesLevel ?? "Top"}</p>
                   </div>
                 </div>
               </div>
             </div>
+
             {/* Comprar conmigo */}
             <div className="text-center mt-4">
               <a
