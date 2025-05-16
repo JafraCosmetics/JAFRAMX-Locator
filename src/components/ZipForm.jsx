@@ -1,3 +1,4 @@
+//zipform
 import React, { useContext, useState } from "react";
 import { SubmitIcon } from "../components/Icons";
 import { UserContext } from "./ConsultantFinder";
@@ -6,26 +7,24 @@ const ZipForm = (props) => {
   const [inputValue, setInputValue] = useState("");
   const { showWarning, setShowWarning } = useContext(UserContext);
 
-  const submitHandler = (event) => {
-    event.preventDefault();
+ const submitHandler = (event) => {
+  event.preventDefault();
 
-    if (inputValue.trim().length === 0) {
-      setShowWarning(true);
-      return;
-    }
+  if (inputValue.trim().length === 0) {
+    setShowWarning(true);
+    return;
+  }
 
-    setShowWarning(false);
+  setShowWarning(false);
+
+  if (/^\d{4,6}$/.test(inputValue)) {
+    props.setSearchQuery(inputValue); // Esto se envía al padre (Finder)
+    props.setSearchType("locator");
+  } else {
     props.setSearchQuery(inputValue);
-
-    if (/^\d+$/.test(inputValue)) {
-      // Es código postal
-      props.setSearchType("locator");
-      props.updateOrigin(inputValue); // puedes ajustar si updateOrigin espera evento o zip
-    } else {
-      // Es texto (nombre, email, etc.)
-      props.setSearchType("consultantSearch");
-    }
-  };
+    props.setSearchType("consultantSearch");
+  }
+};
 
   return (
     <form onSubmit={submitHandler}>
@@ -37,7 +36,8 @@ const ZipForm = (props) => {
       <div className="relative">
         <input
           type="text"
-          class="py-3 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"          placeholder={props.dict.match_insider.input_placeholder}
+          class="py-3 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"         
+          placeholder={props.dict.match_insider.input_placeholder}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />

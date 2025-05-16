@@ -5,8 +5,6 @@ import Locator from "./Locator";
 import ConsultantSearch from "./ConsultantSearch";
 import { CloseIcon, SubmitIcon } from "../components/Icons";
 import Image from "next/image";
-import AvatarImage from "/public/images/avatar.png";
-import ConsultantLanding from "/public/images/consultantLanding.jpeg";
 
 export const ConsultantSelectedContext = createContext(null);
 export const UserContext = createContext(null);
@@ -95,6 +93,8 @@ export default function ConsultantFinder(props) {
           {searchType === "locator" ? (
             <Locator
               zipcode={searchQuery}
+              setSearchQuery={setSearchQuery}   
+              setSearchType={setSearchType} 
               dict={props.dict}
               returnToStartHandler={() => setModalState("start")}
               showIntro={true}
@@ -102,10 +102,11 @@ export default function ConsultantFinder(props) {
           ) : (
           <ConsultantSearch
             searchQuery={searchQuery}
-            setSearchType={setSearchType} 
-            returnToStartHandler={() => setModalState("start")}
+            setSearchQuery={setSearchQuery}
+            setSearchType={setSearchType}
             dict={props.dict}
-            showIntro={true}
+            returnToStartHandler={() => setModalState("start")}
+            autoSearch={true} 
           />
           )}
         </ConsultantSelectedContext.Provider>
