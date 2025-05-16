@@ -33,20 +33,20 @@ const ZipForm = (props) => {
           {props.dict.match_insider.zip_error_msg}
         </div>
       )}
-      <div className="relative">
-        <input
-          type="text"
-          class="py-3 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"         
-          placeholder={props.dict.match_insider.input_placeholder}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-        <div className="absolute inset-y-0 right-0 flex items-center z-20 rounded-lg">
-          <button type="submit">
-            <SubmitIcon />
-          </button>
-        </div>
+     <div className="relative max-w-[430px] w-full">
+      <input
+        type="text"
+        className="py-3 px-4 pr-12 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
+        placeholder={props.dict.match_insider.input_placeholder}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <div className="absolute inset-y-0 right-1 flex items-center">
+        <button type="submit">
+          <SubmitIcon />
+        </button>
       </div>
+    </div>
     </form>
   );
 };

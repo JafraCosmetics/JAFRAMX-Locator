@@ -180,7 +180,7 @@ export default function ConsultantSearch(props) {
               placeholder={props.dict.find_your_insider.input_placeholder}
               className="py-3 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
               value={props.searchQuery}
-              onChange={(e) => props.setSearchQuery(e.target.value)} // solo actualiza, no busca
+              onChange={(e) => props.setSearchQuery(e.target.value)} 
             />
 
             <div className="absolute inset-y-0 right-0 flex items-center z-20">
@@ -204,7 +204,7 @@ export default function ConsultantSearch(props) {
           )}
         </div>
 
-        <div className="modal__right w-full lg:w-1/2">
+        <div className="modal__right w-full lg:w-1/2 flex justify-center items-center">
           {loadingDetails ? (
             <div className="flex flex-col justify-center items-center h-full">
               <p className="text-lg font-semibold text-gray-600">
@@ -212,15 +212,21 @@ export default function ConsultantSearch(props) {
               </p>
               {renderLoadingMessage}
             </div>
+          ) : selectedConsultant ? (
+            <ConsultantViewDetails
+              consultant={selectedConsultant}
+              goBackHandler={() => setSelectedConsultant(null)}
+              selectConsultantHandler={setPrefPartner}
+              dict={props.dict}
+            />
           ) : (
-            selectedConsultant && (
-              <ConsultantViewDetails
-                consultant={selectedConsultant}
-                goBackHandler={() => setSelectedConsultant(null)}
-                selectConsultantHandler={setPrefPartner}
-                dict={props.dict}
-              />
-            )
+            <Image
+              src="/images/knowConsultant.jpeg"
+              alt="Know your consultant"
+              width={500}
+              height={500}
+              className="hidden lg:block object-contain rounded-xl"
+            />
           )}
         </div>
       </div>

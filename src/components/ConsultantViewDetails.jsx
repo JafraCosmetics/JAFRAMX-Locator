@@ -167,7 +167,11 @@ const ConsultantViewDetails = (props) => {
                 {/* Experiencia */}
                 <div className="flex items-center gap-4">
                   {/* Ícono a la izquierda */}
-                  <FaAward className="text-3xl icon-purple" />
+                    <img
+                      src="/images/Iconos_anios.svg"
+                      alt="Icono rostro"
+                      className="icon-small"
+                    />
                   {/* Texto a la derecha */}
                   <div className="flex flex-col">
                     <h4 className="text-xl font-bold">Experiencia</h4>
@@ -179,7 +183,11 @@ const ConsultantViewDetails = (props) => {
                 {/* Certificados */}
                 <div className="flex items-center gap-4">
                   {/* Ícono a la izquierda */}
-                  <GiGraduateCap className="text-4xl icon-purple" />
+                  <img
+                      src="/images/Iconos_rostro.svg"
+                      alt="Icono rostro"
+                      className="icon-small"
+                    />
                   {/* Texto a la derecha */}
                   <div className="flex flex-col">
                     <h4 className="text-xl font-bold">Certificaciones</h4>
@@ -191,7 +199,11 @@ const ConsultantViewDetails = (props) => {
                 {/* Ventas */}
                 <div className="flex items-center gap-4">
                   {/* Ícono a la izquierda */}
-                  <TfiCup className="text-3xl icon-purple" />
+                    <img
+                      src="/images/Iconos_ventas.svg"
+                      alt="Icono rostro"
+                      className="icon-small"
+                    />
                   {/* Texto a la derecha */}
                   <div className="flex flex-col">
                     <h4 className="text-xl font-bold">Nivel en ventas</h4>
@@ -222,7 +234,7 @@ const ConsultantViewDetails = (props) => {
                     {props.consultant.pickedProductsFromPartner.map((product, index) => (
                       <div
                         key={index}
-                        className="min-w-[140px] max-w-[160px] bg-white shadow-md rounded-lg p-3 flex flex-col justify-between h-[270px]"
+                        className="min-w-[140px] max-w-[160px] bg-white shadow-md rounded-lg p-3 flex flex-col gap-2 h-[270px]"
                       >
                         <p className="text-sm font-semibold mt-2 text-center line-clamp-2 font-bold">
                           {product.title}
@@ -231,7 +243,7 @@ const ConsultantViewDetails = (props) => {
                           src={product.featuredImage?.url || "/default-product.jpg"}
                           alt={product.featuredImage?.altText || product.title}
                           className="h-24 w-full object-cover"
-                          width={120}
+                          width={100}
                           height={90}
                         />
                         {product.feedback && (

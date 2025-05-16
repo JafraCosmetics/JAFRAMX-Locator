@@ -41,7 +41,7 @@ const renderLocation = (props) => {
 const ConsultantCard = (props) => {
   return (
     <div
-      className="consultant-card flex flex-row gap-2 consultant-card__unselected cursor-default border border-border-gray rounded-xl p-4 w-full min-h-[200px]"
+      className="consultant-card flex flex-row gap-2 consultant-card__unselected cursor-default border border-border-gray rounded-xl p-4 w-full max-w-[500px] min-w-[250px] min-h-[150px] max-h-[350px] "
       id={"consultant-card-" + props.consultant.displayName}
       key={props.consultant.email}
     >
@@ -59,13 +59,13 @@ const ConsultantCard = (props) => {
       </div>
 
       {/* Contenido derecho */}
-      <div className="flex flex-col justify-between flex-grow">
+    <div className="flex flex-col justify-between flex-grow overflow-hidden max-h-[250px]">
         {/* Nombre y descripción */}
         <div>
-          <div className="consultant-box__name text-lg font-bold">
+          <div className="consultant-box__name font-bold text-[clamp(0.75rem,2.5vw,1rem)] truncate max-w-full">
             {props.consultant.displayName}
           </div>
-          <p className="text-md font-montserrat">
+          <p className="text-sm font-montserrat line-clamp-3 overflow-hidden">
             {props.consultant.aboutYou ??
             "Mi pasión es ayudar a las personas a sentirse y verse bien. Me encanta compartir mis conocimientos sobre el cuidado de la piel y el maquillaje, y estoy aquí para ayudarte a encontrar los productos perfectos para ti."}
             </p>
