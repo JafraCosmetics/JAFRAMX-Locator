@@ -74,7 +74,11 @@ export default function ConsultantFinder(props) {
               <div className="close-button lg:hidden cursor-pointer absolute top-2 left-2">
                 <CloseIcon className="close-icon" onClick={closeModal} pathFill="#eeeeee" />
               </div>
-              <Image className="lg:w-full lg:h-full object-cover" src={ConsultantLanding} alt="Consultant Locator Modal" />
+              <Image
+                className="lg:w-full lg:h-full object-cover"
+                src="/images/consultantLanding.jpeg"
+                alt="Consultant Locator Modal"
+              />
             </div>
           </div>
         </div>

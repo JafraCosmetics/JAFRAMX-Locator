@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build": "rm -rf out && next build",
+    "deploy": "yarn build && aws s3 sync out/ s3://jafra-mx-locator --delete --cache-control no-store --profile bwmx"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.6.0",

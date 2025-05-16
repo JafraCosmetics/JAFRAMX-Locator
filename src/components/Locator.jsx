@@ -12,6 +12,7 @@ import { ConsultantSelectedContext } from "./ConsultantFinder";
 import MapAccordion from "./MapAccordion";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import Image from "next/image";
+
 import MapPlaceholder from "/public/images/mapPlaceholder.png";
 import { Scrollbars } from "react-custom-scrollbars"; 
 import { SubmitIcon } from "./Icons";
