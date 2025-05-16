@@ -238,6 +238,12 @@
   box-shadow: 0 0 50px #ffffff;
   background-color: #fff;
 }
+
+img[src*="Iconos_"] {
+  width: 50px !important;
+  height: 50px !important;
+}
+
 .modal-container .view-details button {
   font-weight: 700;
   font-size: 14px;

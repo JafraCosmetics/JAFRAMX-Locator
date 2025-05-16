@@ -73,10 +73,10 @@ export default function ConsultantFinder(props) {
                 <CloseIcon className="close-icon" onClick={closeModal} pathFill="#eeeeee" />
               </div>
               <Image
-                className="lg:w-full lg:h-full object-cover"
+                className="w-full max-h-[200px] lg:max-h-full object-cover"
                 src="/images/consultantLanding.jpeg"
                 alt="Consultant Locator Modal"
-                width={800} 
+                width={800}
                 height={600}
               />
             </div>
