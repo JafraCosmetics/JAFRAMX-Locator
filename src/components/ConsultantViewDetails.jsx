@@ -67,8 +67,7 @@ const ConsultantViewDetails = (props) => {
   };
 
   return (
-<div className="consultant-view-details flex flex-col gap-4 py-4 px-4 w-full max-w-[600px] mx-auto border border-black rounded-lg overflow-y-auto max-h-[90vh]">
-
+    <div className="consultant-view-details flex flex-col gap-4 py-4 px-4 w-full max-w-md lg:max-w-[600px] mx-auto border border-black rounded-lg overflow-y-auto max-h-[90vh]">
       <div className="flex flex-col gap-9 w-full">
         {/* Botón para regresar */}
         <div
@@ -78,11 +77,9 @@ const ConsultantViewDetails = (props) => {
           <BackIcon color="#272727" />
           <p>{props.dict.find_your_insider.go_back}</p>
         </div>
-
         {/* Detalles del consultor */}
-
         <div className="view-details w-full flex justify-center h-full">
-          <div className="flex flex-col gap-2 py-4 px-4 w-[500px] mx-auto max-w-[600px] mx-4 rounded-lg">
+          <div className="flex flex-col gap-2 py-4 px-4 w-full mx-auto rounded-lg">
             {/* Foto */}
             <div className="flex justify-center">
               <Image
@@ -94,7 +91,6 @@ const ConsultantViewDetails = (props) => {
                 width={75}
               />
             </div>
-
             {/* Nombre */}
             <div className="text-center">
               <h1 className="text-lg font-bold">{props.consultant.displayName}</h1>
@@ -104,7 +100,6 @@ const ConsultantViewDetails = (props) => {
                 Líder en productos de belleza
               </h3>
             </div>
-
           {/* Descripción */}
           <div className="text-left p-4 modal-container-grid-purple">
             <p className="text-md font-montserrat">
@@ -112,7 +107,6 @@ const ConsultantViewDetails = (props) => {
                 "Mi pasión es ayudar a las personas a sentirse y verse bien. Me encanta compartir mis conocimientos sobre el cuidado de la piel y el maquillaje, y estoy aquí para ayudarte a encontrar los productos perfectos para ti."}
             </p>
           </div>
-
             {/* Contáctame */}
             <div>
               <h2 className="text-md font-semibold mb-2">Contáctame por:</h2>
@@ -148,7 +142,6 @@ const ConsultantViewDetails = (props) => {
                     <p className="text-sm">Facebook</p>
                   </a>
                 )}
-
                 {/* Instagram */}
                 {props.consultant.instagram && (
                   <a
@@ -165,20 +158,16 @@ const ConsultantViewDetails = (props) => {
                     <p className="text-sm">Instagram</p>
                   </a>
                 )}
-
               </div>
             </div>
-
                    {/* Experiencia, certificados y ventas */}
-            <div>
-              <h2 className="text-md font-semibold mb-2">Sobre mí</h2>
-
-              <div className="flex justify-between items-center gap-1">
+              <div>
+                <h2 className="text-md font-semibold mb-2">Sobre mí</h2>
+                <div className="flex flex-col md:flex-row md:justify-between items-start gap-4">
                 {/* Experiencia */}
                 <div className="flex items-center gap-4">
                   {/* Ícono a la izquierda */}
                   <FaAward className="text-3xl icon-purple" />
-
                   {/* Texto a la derecha */}
                   <div className="flex flex-col">
                     <h4 className="text-xl font-bold">Experiencia</h4>
@@ -187,12 +176,10 @@ const ConsultantViewDetails = (props) => {
                     </p>
                   </div>
                 </div>
-
                 {/* Certificados */}
                 <div className="flex items-center gap-4">
                   {/* Ícono a la izquierda */}
                   <GiGraduateCap className="text-4xl icon-purple" />
-
                   {/* Texto a la derecha */}
                   <div className="flex flex-col">
                     <h4 className="text-xl font-bold">Certificaciones</h4>
@@ -201,12 +188,10 @@ const ConsultantViewDetails = (props) => {
                     </p>
                   </div>
                 </div>
-
                 {/* Ventas */}
                 <div className="flex items-center gap-4">
                   {/* Ícono a la izquierda */}
                   <TfiCup className="text-3xl icon-purple" />
-
                   {/* Texto a la derecha */}
                   <div className="flex flex-col">
                     <h4 className="text-xl font-bold">Nivel en ventas</h4>
@@ -217,7 +202,6 @@ const ConsultantViewDetails = (props) => {
                 </div>
               </div>
             </div>
-
             {/* Comprar conmigo */}
             <div className="text-center mt-4">
               <a
@@ -231,7 +215,6 @@ const ConsultantViewDetails = (props) => {
               </a>
             </div>
             {/* Productos estrella */}
-            
               {props.consultant.pickedProductsFromPartner?.length > 0 && (
                 <div>
                   <h2 className="text-md font-semibold mb-2">Mis productos estrella</h2>
@@ -265,12 +248,10 @@ const ConsultantViewDetails = (props) => {
                           Ver producto
                         </a>
                       </div>
-
                     ))}
                   </div>
                 </div>
               )}
-
           </div>
         </div>
       </div>
