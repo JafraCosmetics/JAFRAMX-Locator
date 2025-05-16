@@ -4,8 +4,6 @@ import { IoBagOutline } from "react-icons/io5";
 import { GrUserExpert } from "react-icons/gr";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 
-
-
 const renderLocation = (props) => {
   if (props.consultant.defaultAddress) {
     if (
@@ -40,7 +38,7 @@ const renderLocation = (props) => {
 const ConsultantCard = (props) => {
   return (
     <div
-      className="consultant-card flex flex-row gap-2 consultant-card__unselected cursor-default border border-border-gray rounded-xl p-4 w-full min-h-[200px]"
+      className="consultant-card flex flex-row gap-2 consultant-card__unselected cursor-default border border-gray-300 rounded-md p-4 w-full min-h-[200px]"
       id={"consultant-card-" + props.consultant.displayName}
       key={props.consultant.email}
     >
@@ -53,7 +51,7 @@ const ConsultantCard = (props) => {
               : "/images/avatar.png"
           }
           alt="profile image"
-          className="w-32 h-32 border-border-gray rounded-full overflow-hidden object-cover"
+          className="w-32 h-32 bg-gray-100 rounded-full overflow-hidden object-cover"
         />
       </div>
 
@@ -73,7 +71,7 @@ const ConsultantCard = (props) => {
         <div className="flex flex-wrap gap-1 mt-6 justify-center md:justify-start">
           <button
             id="consultant-card-view-profile"
-            className="text-xs cursor-pointer flex items-center gap-2 border-border-gray hover:bg-gray-300 rounded px-4 py-2 w-[125px] flex-shrink-0"
+            className="text-xs cursor-pointer flex items-center gap-2 bg-gray-200 hover:bg-gray-300 rounded px-4 py-2 w-[125px] flex-shrink-0"
             onClick={(event) =>
               props.viewDetailsHandler(event, props.consultant)
             }

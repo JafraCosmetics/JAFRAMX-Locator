@@ -47,7 +47,7 @@ export default function ConsultantFinder(props) {
                 <CloseIcon className="close-icon" onClick={closeModal} />
               </div>
               <div className="flex justify-center items-center mb-6">
-                <Image src={AvatarImage} alt="Default Avatar" width={100} height={100} />
+                <Image src="/images/avatar.png" alt="Default Avatar" width={100} height={100} />
               </div>
               <br />
               <div className="modal-heading jafra-purple font-bold object-contain">
@@ -78,6 +78,8 @@ export default function ConsultantFinder(props) {
                 className="lg:w-full lg:h-full object-cover"
                 src="/images/consultantLanding.jpeg"
                 alt="Consultant Locator Modal"
+                width={800} 
+                height={600}
               />
             </div>
           </div>
@@ -93,14 +95,10 @@ export default function ConsultantFinder(props) {
           {searchType === "locator" ? (
             <Locator
               zipcode={searchQuery}
-              setSearchQuery={setSearchQuery}   
-              setSearchType={setSearchType} 
               dict={props.dict}
               returnToStartHandler={() => setModalState("start")}
               showIntro={true}
             />
-
-
           ) : (
           <ConsultantSearch
             searchQuery={searchQuery}
