@@ -73,10 +73,10 @@ export default function ConsultantFinder(props) {
                 <CloseIcon className="close-icon" onClick={closeModal} pathFill="#eeeeee" />
               </div>
               <Image
-                className="lg:w-full lg:h-full object-cover"
+                className="w-full max-h-[200px] lg:max-h-full object-cover"
                 src="/images/consultantLanding.jpeg"
                 alt="Consultant Locator Modal"
-                width={800} 
+                width={800}
                 height={600}
               />
             </div>
@@ -93,6 +93,8 @@ export default function ConsultantFinder(props) {
           {searchType === "locator" ? (
             <Locator
               zipcode={searchQuery}
+              setSearchQuery={setSearchQuery}   
+              setSearchType={setSearchType} 
               dict={props.dict}
               returnToStartHandler={() => setModalState("start")}
               showIntro={true}
@@ -100,10 +102,11 @@ export default function ConsultantFinder(props) {
           ) : (
           <ConsultantSearch
             searchQuery={searchQuery}
-            setSearchType={setSearchType} 
-            returnToStartHandler={() => setModalState("start")}
+            setSearchQuery={setSearchQuery}
+            setSearchType={setSearchType}
             dict={props.dict}
-            showIntro={true}
+            returnToStartHandler={() => setModalState("start")}
+            autoSearch={true} 
           />
           )}
         </ConsultantSelectedContext.Provider>

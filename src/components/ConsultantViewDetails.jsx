@@ -1,3 +1,4 @@
+//viewdetails
 import {
   BackIcon,
   LocationPinIcon,
@@ -62,8 +63,7 @@ const ConsultantViewDetails = (props) => {
   };
 
   return (
-<div className="consultant-view-details flex flex-col gap-4 py-4 px-4 w-full max-w-[600px] mx-auto border border-black rounded-lg overflow-y-auto max-h-[90vh]">
-
+    <div className="consultant-view-details flex flex-col gap-4 py-4 px-4 w-full max-w-md lg:max-w-[600px] mx-auto border border-black rounded-lg overflow-y-auto max-h-[90vh]">
       <div className="flex flex-col gap-9 w-full">
         {/* Botón para regresar */}
         <div
@@ -73,11 +73,9 @@ const ConsultantViewDetails = (props) => {
           <BackIcon color="#272727" />
           <p>{props.dict.find_your_insider.go_back}</p>
         </div>
-
         {/* Detalles del consultor */}
-
         <div className="view-details w-full flex justify-center h-full">
-          <div className="flex flex-col gap-2 py-4 px-4 w-[500px] mx-auto max-w-[600px] mx-4 rounded-lg">
+          <div className="flex flex-col gap-2 py-4 px-4 w-full mx-auto rounded-lg">
             {/* Foto */}
             <div className="flex justify-center">
               <Image
@@ -89,7 +87,6 @@ const ConsultantViewDetails = (props) => {
                 width={75}
               />
             </div>
-
             {/* Nombre */}
             <div className="text-center">
               <h1 className="text-lg font-bold">{props.consultant.displayName}</h1>
@@ -99,7 +96,6 @@ const ConsultantViewDetails = (props) => {
                 Líder en productos de belleza
               </h3>
             </div>
-
           {/* Descripción */}
           <div className="text-left p-4 modal-container-grid-purple">
             <p className="text-md font-montserrat">
@@ -107,7 +103,6 @@ const ConsultantViewDetails = (props) => {
                 "Mi pasión es ayudar a las personas a sentirse y verse bien. Me encanta compartir mis conocimientos sobre el cuidado de la piel y el maquillaje, y estoy aquí para ayudarte a encontrar los productos perfectos para ti."}
             </p>
           </div>
-
             {/* Contáctame */}
             <div>
               <h2 className="text-md font-semibold mb-2">Contáctame por:</h2>
@@ -143,7 +138,6 @@ const ConsultantViewDetails = (props) => {
                     <p className="text-sm">Facebook</p>
                   </a>
                 )}
-
                 {/* Instagram */}
                 {props.consultant.instagram && (
                   <a
@@ -160,54 +154,48 @@ const ConsultantViewDetails = (props) => {
                     <p className="text-sm">Instagram</p>
                   </a>
                 )}
-
               </div>
             </div>
-
                    {/* Experiencia, certificados y ventas */}
             <div>
-              <h2 className="text-md font-semibold mb-2">Sobre mí</h2>
-
-              <div className="flex justify-between items-center gap-1">
+              <h2 className="text-xs font-semibold mb-2">Sobre mí</h2>
+              <div className="flex flex-col md:flex-row md:flex-wrap md:justify-between items-start gap-3 text-[11px] leading-tight">
                 {/* Experiencia */}
-                <div className="flex items-center gap-4">
-                  {/* Ícono a la izquierda */}
-                  <FaAward className="text-3xl icon-purple" />
-
-                  {/* Texto a la derecha */}
+                <div className="flex items-start gap-2 w-full md:w-[30%]">
+                  <img
+                    src="/images/Iconos_anios.svg"
+                    alt="Icono experiencia"
+                    className="icon-small"
+                  />
                   <div className="flex flex-col">
-                    <h4 className="text-xl font-bold">Experiencia</h4>
-                    <p className="text-sm">
-                      {props.consultant.experience ?? "10 años"}
-                    </p>
+                    <h4 className="text-[11px] font-bold">Experiencia</h4>
+                    <p>{props.consultant.experience ?? "10 años"}</p>
                   </div>
                 </div>
 
                 {/* Certificados */}
-                <div className="flex items-center gap-4">
-                  {/* Ícono a la izquierda */}
-                  <GiGraduateCap className="text-4xl icon-purple" />
-
-                  {/* Texto a la derecha */}
+                <div className="flex items-start gap-2 w-full md:w-[30%]">
+                  <img
+                    src="/images/Iconos_rostro.svg"
+                    alt="Icono rostro"
+                    className="icon-small"
+                  />
                   <div className="flex flex-col">
-                    <h4 className="text-xl font-bold">Certificaciones</h4>
-                    <p className="text-sm">
-                      {props.consultant.certificates ?? "Cuidado de la piel"}
-                    </p>
+                    <h4 className="text-[11px] font-bold">Certificaciones</h4>
+                    <p>{props.consultant.certificates ?? "Cuidado de la piel"}</p>
                   </div>
                 </div>
 
                 {/* Ventas */}
-                <div className="flex items-center gap-4">
-                  {/* Ícono a la izquierda */}
-                  <TfiCup className="text-3xl icon-purple" />
-
-                  {/* Texto a la derecha */}
+                <div className="flex items-start gap-2 w-full md:w-[30%]">
+                  <img
+                    src="/images/Iconos_ventas.svg"
+                    alt="Icono ventas"
+                    className="icon-small"
+                  />
                   <div className="flex flex-col">
-                    <h4 className="text-xl font-bold">Nivel en ventas</h4>
-                    <p className="text-sm">
-                      {props.consultant.salesLevel ?? "Top"}
-                    </p>
+                    <h4 className="text-[11px] font-bold">Nivel en ventas</h4>
+                    <p>{props.consultant.salesLevel ?? "Top"}</p>
                   </div>
                 </div>
               </div>
@@ -226,7 +214,6 @@ const ConsultantViewDetails = (props) => {
               </a>
             </div>
             {/* Productos estrella */}
-            
               {props.consultant.pickedProductsFromPartner?.length > 0 && (
                 <div>
                   <h2 className="text-md font-semibold mb-2">Mis productos estrella</h2>
@@ -234,7 +221,7 @@ const ConsultantViewDetails = (props) => {
                     {props.consultant.pickedProductsFromPartner.map((product, index) => (
                       <div
                         key={index}
-                        className="min-w-[140px] max-w-[160px] bg-white shadow-md rounded-lg p-3 flex flex-col justify-between h-[270px]"
+                        className="min-w-[140px] max-w-[160px] bg-white shadow-md rounded-lg p-3 flex flex-col gap-2 h-[270px]"
                       >
                         <p className="text-sm font-semibold mt-2 text-center line-clamp-2 font-bold">
                           {product.title}
@@ -243,7 +230,7 @@ const ConsultantViewDetails = (props) => {
                           src={product.featuredImage?.url || "/default-product.jpg"}
                           alt={product.featuredImage?.altText || product.title}
                           className="h-24 w-full object-cover"
-                          width={120}
+                          width={100}
                           height={90}
                         />
                         {product.feedback && (
@@ -260,12 +247,10 @@ const ConsultantViewDetails = (props) => {
                           Ver producto
                         </a>
                       </div>
-
                     ))}
                   </div>
                 </div>
               )}
-
           </div>
         </div>
       </div>
