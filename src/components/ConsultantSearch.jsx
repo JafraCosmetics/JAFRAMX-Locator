@@ -5,8 +5,6 @@ import ConsultantCard from "./ConsultantCard";
 import ConsultantViewDetails from "./ConsultantViewDetails";
 import { ConsultantSelectedContext } from "./ConsultantFinder";
 import Image from "next/image";
-import KnowConsultantImage from "/public/images/knowConsultant.jpeg";
-import AvatarImage from "/public/images/avatar.png";
 
 export default function ConsultantSearch(props) {
   const [searchResults, setSearchResults] = useState(null);
@@ -46,11 +44,13 @@ export default function ConsultantSearch(props) {
     }
   };
 
-  useEffect(() => {
-    if (props.searchQuery) {
-      findConsultantByWebsite(props.searchQuery);
-    }
-  }, [props.searchQuery]);
+    useEffect(() => {
+      if (props.autoSearch && props.searchQuery) {
+        findConsultantByWebsite(props.searchQuery);
+      }
+
+    }, []);
+
 
   const setPrefPartner = () => {
     parent.postMessage({ type: "setPrefPartner", data: selectedConsultant }, "*");
@@ -158,8 +158,20 @@ export default function ConsultantSearch(props) {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              const isZipCode = /^\d+$/.test(props.searchQuery);
+
+              const trimmed = props.searchQuery.trim();
+
+              if (trimmed.length === 0) {
+                setShowWarning(true);
+                return;
+              }
+
+              setShowWarning(false);
+
+              const isZipCode = /^\d{4,6}$/.test(trimmed);
               props.setSearchType(isZipCode ? "locator" : "consultantSearch");
+
+              findConsultantByWebsite(trimmed);
             }}
             className="relative mb-4"
           >
@@ -168,8 +180,9 @@ export default function ConsultantSearch(props) {
               placeholder={props.dict.find_your_insider.input_placeholder}
               className="py-3 px-4 block w-full border border-border-gray rounded-lg shadow-sm text-base focus:z-10"
               value={props.searchQuery}
-              onChange={(e) => props.setSearchQuery(e.target.value)}
+              onChange={(e) => props.setSearchQuery(e.target.value)} // solo actualiza, no busca
             />
+
             <div className="absolute inset-y-0 right-0 flex items-center z-20">
               <button type="submit">
                 <SubmitIcon />
