@@ -89,10 +89,14 @@ export default function ConsultantFinder(props) {
           {searchType === "locator" ? (
             <Locator
               zipcode={searchQuery}
+              setSearchQuery={setSearchQuery}   
+              setSearchType={setSearchType} 
               dict={props.dict}
               returnToStartHandler={() => setModalState("start")}
               showIntro={true}
             />
+
+
           ) : (
           <ConsultantSearch
             searchQuery={searchQuery}
