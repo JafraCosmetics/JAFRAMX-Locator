@@ -199,7 +199,7 @@
 
     for (let consultant of consultantList) {
       const infoWindow = (
-        <div className="map-marker flex flex-col gap-4 py-4 px-4 w-[300px] mx-auto max-w-[300px] mx-4 border border-black rounded-lg">
+        <div className="map-marker flex flex-col gap-4 py-4 px-4 w-[250px] mx-auto max-w-[250px] mx-4 border border-black rounded-lg">
           <div className="relative w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex-shrink-0 mx-auto">
             <Image
               src={consultant.profileImage ?? "/images/avatar.png"}
@@ -211,24 +211,20 @@
           <div className="text-center">
             <h2 className="text-lg font-bold">{consultant.displayName}</h2>
           </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-sm">{consultant.aboutYou}</p>
+          </div>
           <div className="flex justify-between">
             <div className="flex items-center gap-4 w-full">
-              <button
-                id="consultant-card-view-profile"
-                className="text-xs cursor-pointer flex items-center gap-2 bg-gray-200 hover:bg-gray-300 rounded px-4 py-2"
-                onClick={(event) => viewDetailsHandler(event, consultant)}
-              >
-                <GrUserExpert />
-                {props.dict.consultant_card.view_details}
-              </button>
-              <button
+              <a
                 id="consultant-card-select-insider"
-                className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2"
-                onClick={props.selectConsultantHandler}
+                className="mx-auto flex justify-center items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2 w-[90%] max-w-[350px] text-base font-semibold"
+                href={`https://jafra-mx.myshopify.com/?pws=${consultant.siteName}`}
+                target="_parent"
               >
                 <IoBagOutline />
                 {props.dict.consultant_card.select_insider}
-              </button>
+              </a>
             </div>
           </div>
         </div>
