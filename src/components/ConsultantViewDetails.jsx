@@ -168,8 +168,8 @@ const ConsultantViewDetails = (props) => {
                     className="icon-small"
                   />
                   <div className="flex flex-col">
-                    <h4 className="text-[11px] font-bold">Experiencia</h4>
-                    <p>{props.consultant.experience ?? "10 años"}</p>
+                    <h4 className="text-[11px] font-bold">Años de experiencia</h4>
+                    <p>{props.consultant.experience}</p>
                   </div>
                 </div>
 
@@ -181,8 +181,8 @@ const ConsultantViewDetails = (props) => {
                     className="icon-small"
                   />
                   <div className="flex flex-col">
-                    <h4 className="text-[11px] font-bold">Certificaciones</h4>
-                    <p>{props.consultant.certificates ?? "Cuidado de la piel"}</p>
+                    <h4 className="text-[11px] font-bold">Formación en</h4>
+                    <p>{props.consultant.certifications}</p>
                   </div>
                 </div>
 
@@ -194,8 +194,8 @@ const ConsultantViewDetails = (props) => {
                     className="icon-small"
                   />
                   <div className="flex flex-col">
-                    <h4 className="text-[11px] font-bold">Nivel en ventas</h4>
-                    <p>{props.consultant.salesLevel ?? "Top"}</p>
+                    <h4 className="text-[11px] font-bold">Top en ventas de</h4>
+                    <p>{props.consultant.salesLevel}</p>
                   </div>
                 </div>
               </div>
@@ -223,7 +223,7 @@ const ConsultantViewDetails = (props) => {
                         key={index}
                         className="min-w-[140px] max-w-[160px] bg-white shadow-md rounded-lg p-3 flex flex-col gap-2 h-[270px]"
                       >
-                        <p className="text-sm font-semibold mt-2 text-center line-clamp-2 font-bold">
+                        <p className="text-sm font-semibold mt-2 text-center line-clamp-2 font-bold" id= "product-title">
                           {product.title}
                         </p>
                         <Image
@@ -234,7 +234,7 @@ const ConsultantViewDetails = (props) => {
                           height={90}
                         />
                         {product.feedback && (
-                          <p className="text-xs italic text-center mt-1 text-gray-500">
+                          <p className="text-xs italic text-center mt-1 text-gray-500" id="product-feedback">
                             “{product.feedback}”
                           </p>
                         )}

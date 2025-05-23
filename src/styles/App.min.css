@@ -47,6 +47,13 @@
   font-size: 12px;
   line-height: 20px;
 }
+#product-title{
+  font-size: 9px !important;
+}
+#product-feedback{
+  font-size: 10px !important;
+}
+
 .modal-container a {
   font-style: normal;
   font-size: 14px;
@@ -233,8 +240,8 @@
 }
 .modal-container .view-details img {
   border-color: #fff;
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   box-shadow: 0 0 50px #ffffff;
   background-color: #fff;
 }
