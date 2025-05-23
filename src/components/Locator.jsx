@@ -80,7 +80,9 @@
     };
 
   useEffect(() => {
+    setSelectedConsultant(null); 
     console.log("getting locations");
+
     const getLocations = async () => {
       let url = "";
       if (currentZip) {
@@ -90,22 +92,66 @@
       }
 
       if (url !== "") {
-          let options = { method: "GET" };
+        let options = { method: "GET" };
 
-          fetch(url, options)
-            .then((res) => res.json())
-            .then((data) => {
-              // console.log(json);
-              sortAndSetConsultantList(data);
-              setMapCenter(data.origin);
-              setLocationsLoaded(true);
-            })
-            .catch((err) => console.error("error:" + err));
-          // console.log(data);
-        }
-      };
-      getLocations();
-    }, [currentLocation, currentZip]);
+        fetch(url, options)
+          .then((res) => res.json())
+          .then((data) => {
+            sortAndSetConsultantList(data);
+            setMapCenter(data.origin);
+            setLocationsLoaded(true);
+
+            if (mapRef.current) {
+              mapRef.current.remove();
+              mapRef.current = null;
+            }
+            if (mobileMapRef.current) {
+              mobileMapRef.current.remove();
+              mobileMapRef.current = null;
+            }
+
+            const mapContainer = document.getElementById("map");
+            const mobileMapContainer = document.getElementById("map-mobile");
+            if (!mapContainer || !mobileMapContainer) return;
+
+            mapRef.current = Radar.ui.map({
+              container: "map",
+              style: "radar-default-v1",
+              center: [data.origin.lng, data.origin.lat],
+              zoom: 10,
+            });
+
+            mobileMapRef.current = Radar.ui.map({
+              container: "map-mobile",
+              style: "radar-default-v1",
+              center: [data.origin.lng, data.origin.lat],
+              zoom: 9,
+            });
+
+            data.locations?.forEach((consultant) => {
+              const infoWindow = renderToString(
+                <div className="map-marker">
+                  <strong>{consultant.displayName}</strong>
+                </div>
+              );
+
+              Radar.ui
+                .marker({ popup: { html: infoWindow, maxWidth: 400 } })
+                .setLngLat([consultant.longitude, consultant.latitude])
+                .addTo(mapRef.current);
+
+              Radar.ui
+                .marker({ popup: { html: infoWindow, maxWidth: 400 } })
+                .setLngLat([consultant.longitude, consultant.latitude])
+                .addTo(mobileMapRef.current);
+            });
+          })
+          .catch((err) => console.error("error:" + err));
+      }
+    };
+
+    getLocations();
+  }, [currentLocation, currentZip]);
 
     const sortAndSetConsultantList = (consultants) => {
       console.log(consultants);
@@ -170,7 +216,6 @@
 
     let i = 0;
 
-    // Asegúrate de que el contenedor del mapa ya existe en el DOM
     const mapContainer = document.getElementById("map");
     const mobileMapContainer = document.getElementById("map-mobile");
 
@@ -178,7 +223,6 @@
 
     console.log("origin:", [mapCenter.lng, mapCenter.lat]);
 
-    // Solo crear mapas si aún no existen
     if (!mapRef.current) {
       mapRef.current = Radar.ui.map({
         container: "map",
@@ -308,14 +352,14 @@
       }
     }, [zipcode]);
 
-      const updateOrigin = (zip) => {
-        setLocationsLoaded(false);
-        const mapDiv = document.getElementById("map");
-        if (mapDiv !== null) mapDiv.innerHTML = "";
-        setCurrentZip(zip); 
-        setSelectedConsultant(null);
-        setSelectedInfoWindow("");
-      };
+    const updateOrigin = (zip) => {
+      setSelectedConsultant(null);  
+      setSelectedInfoWindow("");
+      setLocationsLoaded(false);
+      const mapDiv = document.getElementById("map");
+      if (mapDiv !== null) mapDiv.innerHTML = "";
+      setCurrentZip(zip); 
+    };
 
     const renderResultsMessage = useMemo(() => {;
       if (currentZip) {
@@ -397,7 +441,11 @@
                 </UserContext.Provider>
             </div>
 
-            <div className="flex flex-col gap-4 w-full mt-6">{consultantCards}</div>
+            <div className="flex flex-col gap-4 w-full mt-6">
+            <Scrollbars autoHide style={{ width: "100%", height: 400 }}>
+                {consultantCards}
+              </Scrollbars>
+            </div>
           </div>
 
           <ConsultantViewDetails
@@ -406,6 +454,20 @@
             selectConsultantHandler={setPrefPartner}
             dict={props.dict}
           />
+          {consultantList.length > 0 && (
+          <>
+            <div className="lg:hidden">
+              <MapAccordion />
+            </div>
+            <div className="mt-3">
+            </div>
+            <div
+              id="map"
+              className="hidden lg:block modal-container__right map-container rounded-r-lg"
+              style={{ height: "100%", width: "100%", maxWidth: "600px" }}
+            ></div>
+          </>
+        )}
         </div>
       </div>
     ) : (
@@ -459,6 +521,7 @@
                 <div className="flex flex-col gap-4 w-full">{consultantCards}</div>
               )}
             </div>
+          
           </div>
 
           <div
@@ -513,7 +576,6 @@
             </div>
           ) : null}
         </div>
-
         <div className="hidden lg:block max-w-730">
           <div className="map-loading flex flex-col justify-center items-center h-full relative xl:w-730">
             <Image
