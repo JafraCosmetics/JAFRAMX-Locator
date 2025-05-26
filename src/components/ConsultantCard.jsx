@@ -86,7 +86,7 @@ const ConsultantCard = (props) => {
           <a
             id="consultant-card-select-insider"
             className="text-xs cursor-pointer flex items-center gap-2 bg-mine-shaft text-white hover:bg-black rounded px-4 py-2 w-[120px] flex-shrink-0"
-            href={`https://jafra-mx.myshopify.com/?pws=${props.consultant.siteName}`} //reemplazar la URL para JAFRA MX
+            href={`https://jafra-mx.myshopify.com/?pws=${props.consultant.siteName}`}
             target="_parent"
           >
             <IoBagOutline />

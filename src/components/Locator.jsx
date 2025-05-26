@@ -39,7 +39,7 @@
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
     const findConsultantByEmail = async (email) => {
-    const url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
+    const url = `https://ymr9llt1u6.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${email}`;
 
     const options = {
       method: "GET",
@@ -86,9 +86,9 @@
     const getLocations = async () => {
       let url = "";
       if (currentZip) {
-        url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
+        url = `https://ymr9llt1u6.execute-api.us-west-2.amazonaws.com/Prod/locator?zip=${currentZip}`;
       } else if (currentLocation) {
-        url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
+        url = `https://ymr9llt1u6.execute-api.us-west-2.amazonaws.com/Prod/locator?lat=${currentLocation.lat}&lng=${currentLocation.lng}`;
       }
 
       if (url !== "") {
@@ -190,7 +190,7 @@
         event.preventDefault();
 
         try {
-          const response = await fetch(`https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${consultant.email}`, {
+          const response = await fetch(`https://ymr9llt1u6.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${consultant.email}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
           });
