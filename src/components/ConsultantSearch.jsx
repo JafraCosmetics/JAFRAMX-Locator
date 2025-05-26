@@ -27,7 +27,7 @@ export default function ConsultantSearch(props) {
       setSelectedConsultant(null);
       setLoadingConsultants(true);
 
-      const url = `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=LOCATOR&locator=${encodeURIComponent(query)}`;
+      const url = `https://ymr9llt1u6.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=LOCATOR&locator=${encodeURIComponent(query)}`;
       const options = {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -63,7 +63,7 @@ export default function ConsultantSearch(props) {
 
     try {
       const response = await fetch(
-        `https://ona4umtl22.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${consultant.email}`,
+        `https://ymr9llt1u6.execute-api.us-west-2.amazonaws.com/Prod/partners/partner-search?searchType=EMAIL&email=${consultant.email}`,
         { method: "GET", headers: { "Content-Type": "application/json" } }
       );
       const data = await response.json();
