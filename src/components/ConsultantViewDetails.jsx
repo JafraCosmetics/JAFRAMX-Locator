@@ -243,6 +243,7 @@ const ConsultantViewDetails = (props) => {
                           id= "view-products"
                           rel="noopener noreferrer"
                           className="mt-auto bg-purple-600 text-white py-1 rounded hover:bg-purple-700 text-sm text-center w-full max-w-[130px] self-center"
+                          target="_parent"
                         >
                           Ver producto
                         </a>
