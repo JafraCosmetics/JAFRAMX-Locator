@@ -29,7 +29,7 @@
     "view_details": "View Details",
     "loading_insiders": "Loading List of Consultants in Your Area.",
     "no_insiders_found": "There are no Consultants in your area.",
-    "results_found_within": "Results Found Within 5 Mi of",
+    "results_found_within": "Results Found Within your area",
     "results_found_near_you": "Results Found Near You",
     "loading": "Loading...",
     "zip_error_msg": "Please Enter A Valid Zip Code"

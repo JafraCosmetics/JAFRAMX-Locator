@@ -67,6 +67,10 @@ const ConsultantCard = (props) => {
             {props.consultant.aboutYou ??
             "Mi pasión es ayudar a las personas a sentirse y verse bien. Me encanta compartir mis conocimientos sobre el cuidado de la piel y el maquillaje, y estoy aquí para ayudarte a encontrar los productos perfectos para ti."}
             </p>
+            <p >
+              {props.consultant.distance}{" "}
+              {props.dict.consultant_card.distance}
+            </p>
         </div>
         {/* Botones */}
         <div className="flex flex-wrap gap-1 mt-6 justify-center md:justify-start">
