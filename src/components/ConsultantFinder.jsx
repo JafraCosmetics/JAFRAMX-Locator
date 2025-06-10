@@ -45,7 +45,7 @@ export default function ConsultantFinder(props) {
                 <CloseIcon className="close-icon" onClick={closeModal} />
               </div>
               <div className="flex justify-center items-center mb-6">
-                <Image src={AvatarImage} alt="Default Avatar" width={100} height={100} />
+                <Image src="/images/avatar.png" alt="Default Avatar" width={100} height={100} />
               </div>
               <br />
               <div className="modal-heading jafra-purple font-bold object-contain">
