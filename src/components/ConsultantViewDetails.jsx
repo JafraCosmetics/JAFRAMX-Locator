@@ -170,6 +170,7 @@ const ConsultantViewDetails = (props) => {
                   <div className="flex flex-col">
                     <h4 className="text-[11px] font-bold">Años de experiencia</h4>
                     <p>{props.consultant.experience}</p>
+
                   </div>
                 </div>
 
