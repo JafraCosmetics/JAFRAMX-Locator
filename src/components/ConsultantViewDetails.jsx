@@ -172,7 +172,7 @@ const ConsultantViewDetails = (props) => {
                     className="icon-small"
                   />
                   <div className="flex flex-col">
-                    <h4 className="text-[11px] font-bold">Años de experiencia</h4>
+                    <h4 className="text-[11px] font-bold">Experiencia</h4>
                     <p>{props.consultant.experience}</p>
                   </div>
                 </div>
@@ -198,7 +198,7 @@ const ConsultantViewDetails = (props) => {
                     className="icon-small"
                   />
                   <div className="flex flex-col">
-                    <h4 className="text-[11px] font-bold">Top en ventas de</h4>
+                    <h4 className="text-[11px] font-bold">Top en</h4>
                     <p>{props.consultant.salesLevel}</p>
                   </div>
                 </div>
